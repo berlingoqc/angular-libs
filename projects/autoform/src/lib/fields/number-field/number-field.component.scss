@@ -1,0 +1,16 @@
+
+
+
+.align-right {
+  text-align: right;
+}
+
+
+input.disable-spin::-webkit-outer-spin-button,
+input.disable-spin::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.disable-spin {
+  -moz-appearance: textfield;
+}

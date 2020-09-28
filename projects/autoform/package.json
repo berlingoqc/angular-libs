@@ -1,0 +1,13 @@
+{
+    "name": "@berlingoqc/ngx-autoform",
+    "description": "Librarie pour la génération de formulaire de façon déclarative",
+    "version": "0.0.1",
+    "author": {
+        "name": "William Quintal"
+    },
+    "repository": {
+        "type": "git",
+        "url": "ssh://git@github.com:berlingoqc/angular-libs"
+    },
+    "peerDependencies": {}
+}

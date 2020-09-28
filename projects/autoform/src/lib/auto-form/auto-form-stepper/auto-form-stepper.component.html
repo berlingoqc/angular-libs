@@ -1,0 +1,56 @@
+<mat-horizontal-stepper
+  *ngIf="
+    !formData.typeData.direction || formData.typeData.direction == 'horizontal';
+    else vertical
+  "
+  #stepper
+  [linear]="formData.typeData.linear"
+>
+  <mat-step
+    *ngFor="let item of formData.items"
+    [stepControl]="formGroup.controls[item.name]"
+  >
+    <ng-template matStepLabel>{{ item.name }} </ng-template>
+    <ng-container
+      [ngTemplateOutlet]="innerstep"
+      [ngTemplateOutletContext]="{ item: item, stepper: stepper }"
+    ></ng-container>
+  </mat-step>
+</mat-horizontal-stepper>
+
+<ng-template #vertical>
+  <mat-vertical-stepper #stepper2 [linear]="formData.typeData.linear">
+    <mat-step
+      *ngFor="let item of formData.items"
+      [stepControl]="formGroup.controls[item.name]"
+    >
+      <ng-template matStepLabel>{{ item.name }} </ng-template>
+      <ng-container
+        [ngTemplateOutlet]="innerstep"
+        [ngTemplateOutletContext]="{
+          item: item,
+          stepper: stepper2,
+          control: formGroup.controls[item.name]
+        }"
+      ></ng-container>
+    </mat-step>
+  </mat-vertical-stepper>
+</ng-template>
+
+<ng-template
+  #innerstep
+  let-item="item"
+  let-stepper="stepper"
+  let-control="control"
+>
+  <autoform-object-field
+    [data]="item"
+    [abstractControl]="formGroup.controls[item.name]"
+  ></autoform-object-field>
+  <autoform-step-controls
+    [controls]="
+      contolType
+        | new: stepper:formGroup.controls[item.name]:formData.items.length
+    "
+  ></autoform-step-controls>
+</ng-template>

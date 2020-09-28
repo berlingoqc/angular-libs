@@ -1,0 +1,22 @@
+{
+    "name": "@berlingoqc/ngx-loopback",
+    "description": "Ensemble d'outils pour accéder et exposer les API du serveur loopback 4",
+    "version": "1.0.0",
+    "author": {
+        "name": "William Quintal"
+    },
+    "repository": {
+        "type": "git",
+        "url": "ssh://git@github.com:berlingoqc/angular-libs"
+    },
+    "peerDependencies": {
+        "@angular/animations": "^10.0.7",
+        "@angular/cdk": "^10.1.1",
+        "@angular/common": "^10.0.7",
+        "@angular/compiler": "^10.0.7",
+        "@angular/forms": "^10.0.7",
+        "@angular/material": "^10.1.1",
+        "@angular/platform-browser": "^10.0.7",
+        "@angular/platform-browser-dynamic": "^10.0.7"
+    }
+}

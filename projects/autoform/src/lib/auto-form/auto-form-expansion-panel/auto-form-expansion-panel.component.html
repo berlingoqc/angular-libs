@@ -1,0 +1,23 @@
+<mat-accordion>
+  <mat-expansion-panel
+    *ngFor="let item of formData.items; index as i"
+    [expanded]="step === i"
+    (opened)="step = i"
+    hideToggle
+  >
+    <mat-expansion-panel-header>
+      {{ item.name }}
+    </mat-expansion-panel-header>
+    <autoform-object-field
+      [data]="item"
+      [abstractControl]="formGroup.controls[item.name]"
+    ></autoform-object-field>
+
+    <autoform-step-controls
+      [controls]="
+        controlType
+          | new: formData.items.length:i:formGroup.controls[item.name]:this
+      "
+    ></autoform-step-controls>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,21 @@
+<ng-container [ngSwitch]="data.component?.name">
+  <div *ngSwitchDefault>
+    <my-mat-input
+      [abstractControl]="abstractControl"
+      [type]="data.type"
+      [data]="data"
+      [preffix]="data.preffix"
+      [suffix]="data.suffix"
+      [step]="data.step"
+      [hint]="data.hint"
+      [hintAlign]="data.hintAlign"
+    ></my-mat-input>
+  </div>
+
+  <div *ngSwitchCase="'slider'">
+    <slider-control
+      [property]="data"
+      [formControl]="abstractControl"
+    ></slider-control>
+  </div>
+</ng-container>

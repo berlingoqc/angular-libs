@@ -1,0 +1,13 @@
+<div style="width: 100%;" [autoFormDecorator]="data.decorators" autoFormElementID="container">
+<div
+  *ngFor="let f of items; trackBy: trackBy; index as i">
+    <ng-template></ng-template>
+    <button mat-stroked-button *ngIf="canDelete(i)"  (click)="deleteIndex(i)">Supprimer</button>
+  </div>
+  <button mat-stroked-button *ngIf="canAdd" (click)="addItem()">Ajouter un item</button>
+ <!-- <div>
+    <autoform-field-error text="Required" [control]="abstractControl" errorName="required">
+    </autoform-field-error>
+  </div>
+  -->
+</div>

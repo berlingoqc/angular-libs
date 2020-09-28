@@ -1,0 +1,10 @@
+<div [formGroup]="formGroup">
+  <div *ngFor="let i of items" class="row">
+    <mat-form-field>
+      <input matInput type="text" readonly [value]="i.k" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" [formControlName]="i.k" [placeholder]="i.v" />
+    </mat-form-field>
+  </div>
+</div>

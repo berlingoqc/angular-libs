@@ -1,0 +1,38 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2015",
+        "resolveJsonModule": true,
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["es2018", "dom"],
+        "paths": {
+            "@berlingoqc/ngx-common": ["dist/common/common", "dist/common"],
+            "@berlingoqc/ngx-loopback": [
+                "dist/loopback/loopback",
+                "dist/loopback"
+            ],
+            "@berlingoqc/ngx-autoform": [
+                "dist/autoform/autoform",
+                "dist/autoform"
+            ]
+        }
+    },
+    "angularCompilerOptions": {
+        "enableIvy": false,
+        "skipTemplateCodegen": false,
+        "strictMetadataEmit": true,
+        "fullTemplateTypeCheck": false,
+        "strictInjectionParameters": true,
+        "emitDecoratorMetadata": true,
+        "enableResourceInlining": true
+    }
+}

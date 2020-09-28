@@ -1,0 +1,33 @@
+<div
+  [autoFormDecorator]="data.decorators"
+  autoFormElementID="container"
+  [ngSwitch]="data.component?.name"
+>
+  <autoform-mat-select
+    *ngSwitchCase="'select'"
+    [type]="type"
+    [data]="data"
+    [component]="data.component"
+    [abstractControl]="abstractControl"
+    [hint]="data.hint"
+    [hintAlign]="data.hintAlign"
+    [suffix]="data.suffix"
+    [preffix]="data.preffix"
+  >
+  </autoform-mat-select>
+  <my-mat-input
+    *ngSwitchDefault
+    [autoFormDecorator]="data.decorators"
+    autoFormElementID="component"
+    [type]="type"
+    [textarea]="data.component?.name === 'textarea'"
+    [multipart]="data.component?.name === 'multipart' ? data.component : null"
+    [data]="data"
+    [autocomplete]="data.subtype"
+    [abstractControl]="abstractControl"
+    [hint]="data.hint"
+    [hintAlign]="data.hintAlign"
+    [suffix]="data.suffix"
+    [preffix]="data.preffix"
+  ></my-mat-input>
+</div>

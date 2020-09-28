@@ -1,0 +1,21 @@
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  @extend .flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  @extend .flex;
+  flex-direction: column;
+
+  .mat-form-field {
+    width: 100%;
+  }
+}
+
+.field {
+  margin-top: 10px;
+}
