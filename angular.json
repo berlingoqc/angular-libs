@@ -227,6 +227,46 @@
           }
         }
       }
+    },
+    "autotable": {
+      "projectType": "library",
+      "root": "projects/autotable",
+      "sourceRoot": "projects/autotable/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/autotable/tsconfig.lib.json",
+            "project": "projects/autotable/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/autotable/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/autotable/src/test.ts",
+            "tsConfig": "projects/autotable/tsconfig.spec.json",
+            "karmaConfig": "projects/autotable/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/autotable/tsconfig.lib.json",
+              "projects/autotable/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "demo",

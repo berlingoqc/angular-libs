@@ -3,7 +3,6 @@ import {
     AfterViewInit,
     Component,
     Input,
-    TemplateRef,
     ChangeDetectorRef,
     ViewChild,
     EventEmitter,
@@ -12,40 +11,26 @@ import {
 import { MatTableDataSource } from '@angular/material/table';
 import {
     LoopbackRestClient,
-    LoopbackTableRowDataSource,
-} from '../loopback-rest';
+    CRUDDataSource,
+    Where,
+    Include,
+} from '@berlingoqc/ngx-loopback';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Where, Include } from '../loopback-model';
 import { Observable, Subscription } from 'rxjs';
-
-// Définition d'une colonne dans LoopbackTable
-export interface TableColumn {
-    // definition de la column (son id), si null utilise le titre
-    def?: string;
-    // titre de la column
-    title: string;
-    // indique si on affiche la column
-    display?: boolean;
-    /** définit de la column
-     *
-     * string: nom de la property de l'object à affiché (permet le sorting)
-     * TemplateRef: Template utilisé recoit let-element
-     * (T) => string: Fonction utilisé pour transformer l'object
-     */
-    elementField:
-        | string
-        | TemplateRef<any>
-        | ((any) => string | Observable<string> | Promise<string>);
-}
-
-export class PageSettings {
-    nbrPage: number;
-}
+import { TableColumn } from '../model/column';
+import { AutoTableConfig } from '../model/table';
+import {
+    animate,
+    state,
+    style,
+    transition,
+    trigger,
+} from '@angular/animations';
 
 @Component({
-    selector: 'bsl-loopback-table',
-    templateUrl: './loopback-table.component.html',
+    selector: 'ngx-autotable',
+    templateUrl: './autotable.component.html',
     styles: [
         `
             table {
@@ -53,15 +38,26 @@ export class PageSettings {
             }
         `,
     ],
+    styleUrls: ['./autotable.component.scss'],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition(
+                'expanded <=> collapsed',
+                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
+            ),
+        ]),
+    ],
 })
-export class LoopbackTableComponent<T = any>
+export class AutoTableComponent<T = any>
     implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     private _columns: TableColumn[];
     private _client: LoopbackRestClient<T>;
 
-    lbSource: LoopbackTableRowDataSource<T>;
+    lbSource: CRUDDataSource<T>;
     dataSource = new MatTableDataSource<T>([]);
 
     currentOffset = 0;
@@ -77,14 +73,16 @@ export class LoopbackTableComponent<T = any>
     // Order poure requête loopback
     @Input() orderBy: string[] = [];
 
+    @Input() config: AutoTableConfig;
+
     // Source, client utilisé pour communiquer avec un serveur crud loopback
-    @Input() set source(source: LoopbackTableRowDataSource<T>) {
+    @Input() set source(source: CRUDDataSource<T>) {
         this.lbSource = source;
         this.refreshData();
         this.refreshCount();
     }
 
-    get source(): LoopbackTableRowDataSource<T> {
+    get source(): CRUDDataSource<T> {
         return this.lbSource;
     }
 
@@ -96,15 +94,14 @@ export class LoopbackTableComponent<T = any>
     @Input() set columns(c: TableColumn[]) {
         this._columns = c;
         this._columns.forEach((cc) => {
-            if (cc.def === undefined) {
-                cc.def = cc.title;
-            }
             if (cc.display === undefined) {
                 cc.display = true;
             }
         });
         this.detectorRef.detectChanges();
     }
+
+    expandedElement: T | null;
 
     sub: Subscription;
 
@@ -121,7 +118,7 @@ export class LoopbackTableComponent<T = any>
 
     get displayColumns(): string[] {
         if (this._columns) {
-            return this._columns.filter((c) => c.display).map((c) => c.def);
+            return this._columns.filter((c) => c.display).map((c) => c.id);
         } else {
             return [];
         }
@@ -143,6 +140,7 @@ export class LoopbackTableComponent<T = any>
     }
 
     onSortChange(sort: Sort) {
+        console.log('SORTING DATA', sort);
         this.orderBy = [
             sort.active + (sort.direction ? ` ${sort.direction}` : ''),
         ];
@@ -166,7 +164,7 @@ export class LoopbackTableComponent<T = any>
             })
             .subscribe((data) => {
                 this.dataSource.data = data;
-                //this.dataSource.connect().next(data);
+                // this.dataSource.connect().next(data);
             });
     }
 

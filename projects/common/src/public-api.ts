@@ -30,3 +30,19 @@ export * from './lib/layout-extra/layout-extra.module';
 export * from './lib/confirmation';
 
 export * from './lib/providers';
+
+export * from './lib/helper/template-content/template-content-type';
+export * from './lib/helper/template-content/template-content.component';
+export * from './lib/helper/template-content/template-content.module';
+
+export * from './lib/helper/data-resolver/data-resolver';
+export * from './lib/helper/data-resolver/data-resolver.module';
+export * from './lib/helper/data-resolver/data-resolver.pipe';
+
+export * from './lib/helper/data-transformer/data-transformer';
+
+export * from './lib/helper/data-decorator/data-decorator.directive';
+export * from './lib/helper/data-decorator/data-decorator.module';
+export * from './lib/helper/data-decorator/data-decorator.pipe';
+export * from './lib/helper/data-decorator/model';
+export * from './lib/helper/data-decorator/handlers/style.handler';

@@ -1,0 +1,63 @@
+<table
+    mat-table
+    matSort
+    (matSortChange)="onSortChange($event)"
+    [dataSource]="dataSource"
+    multiTemplateDataRows
+    [autoFormDecorator]="{}"
+    [autoFormElementID]="'id'"
+>
+    <ng-container *ngFor="let c of columns" [matColumnDef]="c.id">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            <template-content [content]="c.title"></template-content>
+        </th>
+        <td mat-cell *matCellDef="let e">
+            <template-content
+                [content]="c.elementField"
+                [parent]="e"
+            ></template-content>
+        </td>
+    </ng-container>
+
+    <ng-container *ngIf="config" matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
+            <div
+                class="example-element-detail"
+                [@detailExpand]="
+                    element == expandedElement ? 'expanded' : 'collapsed'
+                "
+            >
+                <template-content
+                    [content]="config.expandable.content"
+                ></template-content>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr
+        mat-row
+        *matRowDef="let element; columns: displayColumns"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element"
+    >
+        >
+    </tr>
+
+    <ng-container *ngIf="config?.expandable">
+        <tr
+            mat-row
+            *matRowDef="let row; columns: ['expandedDetail']"
+            class="example-detail-row"
+        ></tr>
+    </ng-container>
+</table>
+
+<mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    (page)="handlePage($event)"
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="[2, 5, 10, 25, 50]"
+>
+</mat-paginator>
