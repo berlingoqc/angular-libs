@@ -1,9 +1,9 @@
 {
-  "extends": "./tsconfig.lib.json",
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "enableIvy": false
-  }
+    "extends": "./tsconfig.lib.json",
+    "angularCompilerOptions": {
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "fullTemplateTypeCheck": false,
+        "enableIvy": false
+    }
 }

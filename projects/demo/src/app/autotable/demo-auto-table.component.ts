@@ -10,7 +10,10 @@ import {
     template: templateTable,
 })
 export class DemoAutoTableComponent {
-    dataSource = new StaticDataSource([{ id: 'dsafgaf' }, { id: 'abss' }]);
+    dataSource = new StaticDataSource([
+        { id: 'dsafgaf', name: 'george' },
+        { id: 'abss', name: 'paulin' },
+    ]);
     columns: TableColumn[] = [
         {
             id: 'id',
@@ -18,9 +21,20 @@ export class DemoAutoTableComponent {
                 type: 'string',
                 content: 'Identifiant',
             },
-            elementField: {
+            content: {
                 type: 'func',
                 content: (e) => e.id,
+            },
+        },
+        {
+            id: 'name',
+            title: {
+                type: 'string',
+                content: 'Nom',
+            },
+            content: {
+                type: 'func',
+                content: (e) => e.name,
             },
         },
     ];
@@ -32,7 +46,50 @@ export class DemoAutoTableComponent {
                 },
             },
         },
-        expandable: {
+        headers: [
+            {
+                decorators: {
+                    style: {
+                        headerRow: {
+                            style: {
+                                'font-style': 'italic',
+                            },
+                        },
+                    },
+                },
+                id: 'item-description',
+                content: {
+                    type: 'string',
+                    content: 'Description',
+                },
+            },
+        ],
+        footers: [
+            {
+                decorators: {
+                    style: {
+                        footerRow: {
+                            class: ['example-second-footer-row'],
+                        },
+                    },
+                },
+                id: 'footer',
+                content: {
+                    type: 'string',
+                    content: 'dsadsadsa',
+                },
+                colspan: 2,
+            },
+            /*{
+                attachTo: 'id',
+                content: {
+                    type: 'string',
+                    content: 'ID footer',
+                },
+                colspan: 2,
+            },*/
+        ],
+        /*expandable: {
             content: {
                 type: 'string',
                 content: 'more detail more detail',
@@ -42,6 +99,6 @@ export class DemoAutoTableComponent {
                     },
                 },
             },
-        },
+        },*/
     };
 }

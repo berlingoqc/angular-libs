@@ -5,11 +5,12 @@ export class StyleHandler implements DecoratorHandler {
     handle = 'style';
 
     handler = (component: ElementRef<HTMLElement>, data: StyleData) => {
-        if (data.class) {
+        console.log('APPLYING STYLE', data);
+        if (data?.class) {
             component.nativeElement.classList.add(...data.class);
         }
 
-        if (data.style) {
+        if (data?.style) {
             Object.entries(data.style).forEach(([k, v]) => {
                 component.nativeElement.style[k] = v;
             });

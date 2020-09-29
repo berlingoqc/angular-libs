@@ -1,2 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+.example-second-header-row {
+    font-style: italic;
+}
+
+.example-second-footer-row {
+    background-color: aqua;
+    color: red;
+}

@@ -8,7 +8,22 @@ import {
 export class AutoTableConfig implements Decorators {
     decorators?: DecoratorsData;
     expandable?: ExpendableConfig;
+    headers?: HeaderRow[];
+    footers?: FooterRow[];
 }
+
+export class AdditionalRow implements Decorators {
+    decorators?: DecoratorsData;
+    id?: string;
+    attachTo?: string;
+    content: TemplateContentData;
+    colspan?: number;
+    rowspan?: number;
+}
+
+export class HeaderRow extends AdditionalRow {}
+
+export class FooterRow extends AdditionalRow {}
 
 export interface ExpendableConfig {
     content: TemplateContentData;

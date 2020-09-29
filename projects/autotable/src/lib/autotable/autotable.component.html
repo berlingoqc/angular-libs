@@ -13,10 +13,19 @@
         </th>
         <td mat-cell *matCellDef="let e">
             <template-content
-                [content]="c.elementField"
+                [content]="c.content"
                 [parent]="e"
             ></template-content>
         </td>
+        <!--
+        <td mat-footer-cell *matFooterCellDef>
+            {{ footerExtraRow.attachElement[c.attachTo] }}
+            <template-content
+                *ngIf="footerExtraRow?.attachElement[c.attachTo]"
+                [content]="footerExtraRow.attachElement[c.attachTo].content"
+            ></template-content>
+        </td>
+      -->
     </ng-container>
 
     <ng-container *ngIf="config" matColumnDef="expandedDetail">
@@ -34,26 +43,60 @@
         </td>
     </ng-container>
 
+    <!-- header Extra Row -->
+    <ng-container
+        *ngFor="let row of headerExtraRow.aloneRow"
+        [matColumnDef]="row.id"
+    >
+        <th
+            mat-header-cell
+            *matHeaderCellDef
+            [autoFormDecorator]="row.decorators"
+            [autoFormElementID]="'headerRow'"
+            [colSpan]="row.colspan ? row.colspan : 1"
+        >
+            <template-content [content]="row.content"></template-content>
+        </th>
+    </ng-container>
+
+    <!-- footer Extra Row -->
+    <ng-container
+        *ngFor="let row of footerExtraRow.aloneRow"
+        [matColumnDef]="row.id"
+    >
+        <td
+            mat-footer-cell
+            *matFooterCellDef
+            [autoFormDecorator]="row.decorators"
+            [autoFormElementID]="'footerRow'"
+            [colSpan]="row.colspan ? row.colspan : 1"
+        >
+            <template-content [content]="row.content"></template-content>
+        </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="headerExtraRow.aloneRowId"></tr>
     <tr
         mat-row
         *matRowDef="let element; columns: displayColumns"
         class="exemple-element-row"
         [class.example-expanded-row]="expandedElement === element"
         (click)="expandedElement = expandedElement === element ? null : element"
-    >
-        >
-    </tr>
-
-    <ng-container *ngIf="config?.expandable">
+    ></tr>
+    <ng-container *ngIf="footerExtraRow.attachElement">
         <tr
-            mat-row
-            *matRowDef="let row; columns: ['expandedDetail']"
-            class="example-detail-row"
+            mat-footer-row
+            *matFooterRowDef="displayColumns"
+            class="example-first-footer-row"
         ></tr>
     </ng-container>
-</table>
+    <tr mat-footer-row *matFooterRowDef="footerExtraRow.aloneRowId"></tr>
 
+    <ng-container *ngIf="config?.expandable">
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"></tr>
+    </ng-container>
+</table>
 <mat-paginator
     [length]="length"
     [pageSize]="pageSize"

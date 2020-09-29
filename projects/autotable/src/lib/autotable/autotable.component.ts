@@ -20,7 +20,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Observable, Subscription } from 'rxjs';
 import { TableColumn } from '../model/column';
-import { AutoTableConfig } from '../model/table';
+import { AdditionalRow, AutoTableConfig, FooterRow } from '../model/table';
 import {
     animate,
     state,
@@ -28,6 +28,13 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
+
+class ExtraRow {
+    aloneRowId: string[];
+    aloneRow: AdditionalRow[];
+
+    attachElement?: { [id: string]: AdditionalRow };
+}
 
 @Component({
     selector: 'ngx-autotable',
@@ -75,7 +82,42 @@ export class AutoTableComponent<T = any>
     // Order poure requête loopback
     @Input() orderBy: string[] = [];
 
-    @Input() config: AutoTableConfig;
+    _config: AutoTableConfig;
+    @Input()
+    set config(config: AutoTableConfig) {
+        this._config = config;
+        if (config.footers) {
+            this.footerExtraRow = {
+                aloneRow: [],
+                aloneRowId: [],
+            };
+            config.footers.forEach((f: AdditionalRow) => {
+                if (f.id) {
+                    this.footerExtraRow.aloneRowId.push(f.id);
+                    this.footerExtraRow.aloneRow.push(f);
+                }
+                if (f.attachTo) {
+                    if (!this.footerExtraRow.attachElement) {
+                        this.footerExtraRow.attachElement = {};
+                    }
+                    this.footerExtraRow.attachElement[f.attachTo] = f;
+                }
+            });
+        }
+        if (config.headers) {
+            this.headerExtraRow = { aloneRow: [], aloneRowId: [] };
+            config.headers.forEach((f: AdditionalRow) => {
+                if (f.id) {
+                    this.headerExtraRow.aloneRowId.push(f.id);
+                    this.headerExtraRow.aloneRow.push(f);
+                }
+            });
+        }
+    }
+
+    get config(): AutoTableConfig {
+        return this._config;
+    }
 
     // Source, client utilisé pour communiquer avec un serveur crud loopback
     @Input() set source(source: CRUDDataSource<T>) {
@@ -106,6 +148,26 @@ export class AutoTableComponent<T = any>
     expandedElement: T | null;
 
     sub: Subscription;
+
+    footerExtraRow: ExtraRow = { aloneRow: [], aloneRowId: [] };
+    headerExtraRow: ExtraRow = { aloneRow: [], aloneRowId: [] };
+
+    snatchRow: { [id: string]: FooterRow } = {
+        id: {
+            attachTo: 'id',
+            decorators: {
+                style: {
+                    footerRow: {
+                        class: 'example-first-header-row',
+                    },
+                },
+            },
+            content: {
+                type: 'string',
+                content: 'FUCK THE WORLD',
+            },
+        },
+    };
 
     // emitter qui est subscribe pour trigger un refresh des données
     @Input() set updateEmitter(ee: EventEmitter<any>) {
@@ -167,6 +229,14 @@ export class AutoTableComponent<T = any>
                 this.dataSource.data = data;
                 // this.dataSource.connect().next(data);
             });
+    }
+
+    haveAttachedHeader() {}
+
+    haveAttachedFooter(id: string) {
+        const item = this.config?.footers?.find((x) => x.attachTo === id);
+        if (item) {
+        }
     }
 
     private refreshCount() {
