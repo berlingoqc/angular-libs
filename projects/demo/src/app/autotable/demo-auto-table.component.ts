@@ -5,11 +5,6 @@ import {
     AutoTableConfig,
     templateTable,
 } from 'projects/autotable/src/public-api';
-import {
-    ServiceTest,
-    TEMPLATE_CONTENT_CONTEXT,
-    TEMPLATE_CONTENT_PARENT,
-} from 'projects/common/src/public-api';
 
 @Component({
     template: templateTable,
@@ -30,6 +25,13 @@ export class DemoAutoTableComponent {
         },
     ];
     config: AutoTableConfig = {
+        decorators: {
+            style: {
+                table: {
+                    class: ['mat-elevation-z8'],
+                },
+            },
+        },
         expandable: {
             content: {
                 type: 'string',

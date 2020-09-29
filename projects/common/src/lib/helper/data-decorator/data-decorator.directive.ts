@@ -17,6 +17,15 @@ export class DecoratorsDirective {
         if (!decorators) {
             return;
         }
+        for (const handler of this.handlers) {
+            const type = handler.handle;
+            if (decorators[type] && this.autoFormElementID) {
+                handler.handler(
+                    this.elementRef,
+                    decorators[type][this.autoFormElementID],
+                );
+            }
+        }
 
         /*
         if (this.autoFormElementID && decorator[this.autoFormElementID]) {

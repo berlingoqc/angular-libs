@@ -8,8 +8,8 @@ import { MatSortModule } from '@angular/material/sort';
 import {
     CommonPipeModule,
     TemplateContentModule,
+    DataDecoratorModule,
 } from '@berlingoqc/ngx-common';
-import { DataDecoratorModule } from 'projects/common/src/public-api';
 
 /**
  * Truc a implenter

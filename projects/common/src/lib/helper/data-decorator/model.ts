@@ -5,9 +5,11 @@ export interface StyleData {
     class?: string[];
 }
 
+export type DecoratorsData = { [id: string]: { [id: string]: any } };
+
 export interface Decorators {
     // first key is for the handler and second is your the element to apply it on
-    decorators?: { [id: string]: { [id: string]: any } };
+    decorators?: DecoratorsData;
 }
 
 export interface DecoratorHandler {

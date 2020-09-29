@@ -1,7 +1,12 @@
-import { TemplateContentData } from '@berlingoqc/ngx-common';
+import {
+    TemplateContentData,
+    Decorators,
+    DecoratorsData,
+} from '@berlingoqc/ngx-common';
 
 // Optional configuration of the auto-table
-export class AutoTableConfig {
+export class AutoTableConfig implements Decorators {
+    decorators?: DecoratorsData;
     expandable?: ExpendableConfig;
 }
 

@@ -7,6 +7,7 @@ import {
     ViewChild,
     EventEmitter,
     OnDestroy,
+    ViewEncapsulation,
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -49,6 +50,7 @@ import {
             ),
         ]),
     ],
+    encapsulation: ViewEncapsulation.None,
 })
 export class AutoTableComponent<T = any>
     implements OnInit, AfterViewInit, OnDestroy {
@@ -140,7 +142,6 @@ export class AutoTableComponent<T = any>
     }
 
     onSortChange(sort: Sort) {
-        console.log('SORTING DATA', sort);
         this.orderBy = [
             sort.active + (sort.direction ? ` ${sort.direction}` : ''),
         ];
