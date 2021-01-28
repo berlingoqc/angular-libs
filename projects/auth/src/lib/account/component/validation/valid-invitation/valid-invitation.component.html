@@ -1,0 +1,66 @@
+<div *ngIf="visible && formGroup" class="box">
+  <div class="center-center">
+    <img src="{{ config.config.img }}" height="200" />
+  </div>
+  <div>
+    <h3>Finalisation de votre compte</h3>
+
+    <p>Entrez votre mot de passe pour créer votre compte</p>
+  </div>
+  <div class="form-container" [formGroup]="formGroup">
+    <div style="width: 100%;">
+      <mat-form-field style="width: 100%;">
+        <mat-label>OTP</mat-label>
+        <input
+          matInput
+          readonly
+          name="nfirst"
+          type="text"
+          formControlName="otp"
+          placeholder="OTP"
+        />
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          readonly
+          name="nemail"
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+        />
+      </mat-form-field>
+      <bsl-password-form-field
+        *ngIf="passwordConfig"
+        [passwordConfig]="passwordConfig"
+        [myGroup]="formGroup.controls.password"
+      ></bsl-password-form-field>
+      <alb-accept-agrement
+        [theControl]="formGroup.controls.contract"
+        formControlName="contract"
+        *ngIf="config.usingContract"
+      ></alb-accept-agrement>
+    </div>
+    <div
+      style="
+        width: 100%;
+        height: 75px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+      "
+    >
+      <span class="error-msg" *ngIf="exceptionRequest">
+        {{ exceptionRequest }}
+      </span>
+    </div>
+    <div class="button-row">
+      <button dynStyle itemId="FIRST_BTN" type="button" (click)="submit()">
+        Finaliser
+      </button>
+      <button dynStyle itemId="SECOND_BTN" type="button" (click)="onCancel()">
+        Annuler
+      </button>
+    </div>
+  </div>
+</div>

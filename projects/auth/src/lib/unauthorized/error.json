@@ -1,0 +1,14 @@
+{
+  "401": {
+    "main": "Oups, vous n'avez pas l'authorisation pour accéder à cette page.",
+    "sub": "Veuillez vous connecter ou nous contacter si le probème persiste et que vous êtes supposé avoir l'authorisation nécessaire"
+  },
+  "404": {
+    "main": "Oups, la page que vous recherchez semble introuvable.",
+    "sub": "Retournez à la page d'accueil ou contactez-nous si vous avez des questions."
+  },
+  "500": {
+    "main": "Oups, le serveur a rencontré un problème interne.",
+    "sub": "Retournez à la page d'accueil et réessayez plus tard ou contactez-nous si le problème persiste"
+  }
+}

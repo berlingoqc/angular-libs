@@ -1,0 +1,10 @@
+<mat-selection-list #selection>
+  <mat-list-option *ngFor="let factor of factors" [value]="factor">
+    <mat-icon matListIcon>{{factor.icon}}</mat-icon>
+    <h3 matLine> {{factor.mode}} </h3>
+    <p matLine>
+      <span> Recevoir le code de validation à </span>
+      <span class="demo-2"> -- {{email}} </span>
+    </p>
+  </mat-list-option>
+</mat-selection-list>

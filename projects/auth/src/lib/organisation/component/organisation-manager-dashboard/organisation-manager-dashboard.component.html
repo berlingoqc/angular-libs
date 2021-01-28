@@ -1,0 +1,26 @@
+<alb-admin-page *ngIf="org">
+  <alb-top-card>
+    <alb-organisation-card [org]="org"></alb-organisation-card>
+  </alb-top-card>
+
+  <ng-template albTopButton>
+    <mat-icon>contact_support</mat-icon>
+    <span>{{ 'dashboard.technical-service' | translate }}</span>
+  </ng-template>
+
+  <ng-template albTopButton>
+    <mat-icon>settings</mat-icon>
+    <span>{{ 'dashboard.technical-service' | translate }}</span>
+  </ng-template>
+
+
+  <ng-template albTabSection="{{ 'dashboard.employee' | translate }}">
+    <alb-user-managing [order]="[]" mode="org" [org]="org" (userInvite)="inviTable.table.refreshData()">
+    </alb-user-managing>
+  </ng-template>
+
+  <ng-template albTabSection="Invitations">
+    <bsl-top-bar name="Invitations"></bsl-top-bar>
+    <alb-organisation-invitation-table #invitationTable [org]="org"></alb-organisation-invitation-table>
+  </ng-template>
+</alb-admin-page>

@@ -1,0 +1,10 @@
+<mat-form-field style="width: 100%" *ngIf="orgs">
+  <mat-label>{{ selectLabel }}</mat-label>
+  <mat-select [formControl]="selectFormControl">
+    <mat-option [value]="null">--</mat-option>
+    <mat-option *ngFor="let org of orgs | async" [value]="org.id">{{
+      org.name
+    }}</mat-option>
+  </mat-select>
+  <mat-hint>{{ selectHint }}</mat-hint>
+</mat-form-field>

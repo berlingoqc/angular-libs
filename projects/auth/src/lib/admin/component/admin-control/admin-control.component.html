@@ -1,0 +1,21 @@
+<alb-admin-page>
+  <alb-top-card>
+    <h3 style="text-align: center">Administration du site</h3>
+  </alb-top-card>
+
+  <ng-template albTabSection="Usagers">
+    <div class="container-user-managing">
+      <alb-user-managing></alb-user-managing>
+    </div>
+  </ng-template>
+
+  <ng-template albTabSection="Courriel">
+    <bsl-top-bar name="Courriel"></bsl-top-bar>
+    <alb-email-template-table></alb-email-template-table>
+  </ng-template>
+
+  <ng-template albTabSection="Paramètres">
+    <bsl-top-bar name="Paramètres"></bsl-top-bar>
+    <alb-sso-info></alb-sso-info>
+  </ng-template>
+</alb-admin-page>

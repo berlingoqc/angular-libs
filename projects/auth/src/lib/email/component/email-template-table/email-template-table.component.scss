@@ -1,0 +1,38 @@
+// @import '../../../common/shared.scss';
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+
+  .top-bar {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: row;
+
+    .card {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .preview {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: 400px;
+    width: 50%;
+  }
+}
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}

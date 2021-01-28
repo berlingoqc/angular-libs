@@ -1,0 +1,11 @@
+<mat-card *ngIf="_currentPreview">
+  <mat-form-field class="full-width">
+    <mat-label>Sujet</mat-label>
+    <input matInput readonly [value]="_currentPreview.title" />
+  </mat-form-field>
+
+  <mat-card-content>
+    <div [innerHTML]="body"></div>
+  </mat-card-content>
+
+</mat-card>

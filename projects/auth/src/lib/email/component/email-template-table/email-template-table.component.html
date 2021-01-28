@@ -1,0 +1,101 @@
+<ng-container
+  [ngTemplateOutlet]="mode == 'table' ? table : mode == 'send' ? sender : form"
+></ng-container>
+
+<ng-template #options let-element="element">
+  <mat-chip-list>
+    <mat-chip (click)="preview(element)">Prévisualiser</mat-chip>
+    <mat-chip (click)="toSend(element)">Envoyer</mat-chip>
+  </mat-chip-list>
+</ng-template>
+
+<ng-template #table>
+  <ngx-autotable
+    [columns]="columns"
+    [source]="client"
+  ></ngx-autotable>
+</ng-template>
+
+<ng-template #form>
+  <div *ngIf="currentPreview" [formGroup]="formGroup" class="main-container">
+    <!---->
+    <div class="top-bar">
+      <mat-form-field class="field half-width ff-no-padding">
+        <input matInput formControlName="title" />
+      </mat-form-field>
+      <div class="center-center" style="margin-left: 10px;">
+        <button dynStyle itemId="FIRST_BTN" (click)="save()">
+          Sauvegarder
+        </button>
+        <button dynStyle itemId="SECOND_BTN" (click)="mode = 'table'">
+          Annuler / Retour
+        </button>
+      </div>
+    </div>
+
+    <div class="form">
+      <div class="card full-width">
+        <mat-form-field class="full-width">
+          <textarea
+            matInput
+            formControlName="template"
+            style="height: 300px;"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="center-center full-width">
+<!--        <alb-key-value-form
+          class="card"
+          formControlName="args"
+          [keys]="currentEmail.args"
+        ></alb-key-value-form>-->
+      </div>
+    </div>
+    <div class="full-width center-center">
+      <alb-email-preview
+        class="preview"
+        [currentPreview]="currentPreview"
+      ></alb-email-preview>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #sender>
+  <div
+    *ngIf="currentPreview"
+    style="min-height: 800px;"
+    [formGroup]="formGroup"
+    class="main-container row"
+  >
+    <div class="center-center column" style="width: 70%; margin-left: 50px;">
+      <mat-form-field class="full-width">
+        <mat-label>Envoyer à</mat-label>
+        <input matInput type="email" formControlName="to" />
+      </mat-form-field>
+      <!--
+      <alb-key-value-form
+        class="card"
+        formControlName="args"
+        [keys]="currentEmail.args"
+      ></alb-key-value-form>-->
+      <div class="center-center">
+        <button dynStyle itemId="FIRST_BTN" (click)="render()">
+          Rafraîchir la prévisualisation
+        </button>
+        <button dynStyle itemId="SECOND_BTN" (click)="sendEmail()">
+          Envoyer
+        </button>
+        <button dynStyle itemId="FIRST_BTN" (click)="mode = 'table'">
+          Annuler / Retour
+        </button>
+      </div>
+    </div>
+    <div class="full-width center-center">
+      <alb-email-preview
+        class="preview"
+        style="width: 90%;"
+        [currentPreview]="currentPreview"
+      ></alb-email-preview>
+    </div>
+  </div>
+</ng-template>

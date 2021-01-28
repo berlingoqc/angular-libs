@@ -1,0 +1,24 @@
+<ng-container
+  *ngFor="let o of ssoService.settings.userExtraFields"
+  [ngTemplateOutlet]="birthday"
+  [ngTemplateOutletContext]="{ field: o }"
+></ng-container>
+
+<ng-template #birthday let-field="field">
+  <mat-form-field>
+    <mat-label>Date de naissance</mat-label>
+    <input
+      matInput
+      [formControl]="extraFieldFormGroup.controls['birthday']"
+      [matDatepicker]="picker"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="extraFieldFormGroup.get('birthday').hasError('minAge')"
+      >Vous devez avoir plus de {{ field.validators.minAge }} ans</mat-error
+    >
+    <mat-error *ngIf="extraFieldFormGroup.get('birthday').hasError('required')"
+      >Date de naissance requise</mat-error
+    >
+  </mat-form-field>
+</ng-template>

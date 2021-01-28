@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="card">
+    <h4 *ngIf="isValide">
+      Votre compte est validé. Vous pouvez vous connecter.
+    </h4>
+    <alb-auth-service-error></alb-auth-service-error>
+
+    <div class="truc">
+      <div class="button-row">
+        <button
+          dynStyle
+          itemId="FIRST_BTN"
+          (click)="navigateService.navigate(['/'])"
+        >
+          Retour à l'acceuil
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

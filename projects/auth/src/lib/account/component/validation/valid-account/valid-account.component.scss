@@ -1,0 +1,17 @@
+// @import '../../../../common/shared.scss';
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  width: 50%;
+  height: 50%;
+  flex-direction: column;
+  justify-content: center;
+}

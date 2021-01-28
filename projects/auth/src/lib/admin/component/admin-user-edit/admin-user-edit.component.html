@@ -1,0 +1,56 @@
+<form class="form-container truc" [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div style="width: 100%;">
+    <mat-form-field style="width: 100%;">
+      <input matInput type="email" formControlName="email" readonly placeholder="Email" />
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+      <input matInput type="tel" formControlName="telephone" readonly placeholder="Téléphone" />
+    </mat-form-field>
+
+    <div>
+      <mat-slide-toggle formControlName="blocked">Bloquer l'usager</mat-slide-toggle>
+    </div>
+
+    <div style="display: flex; flex-direction: row">
+      <mat-form-field>
+        <mat-label>Valide jusqu'au</mat-label>
+        <input matInput autocomplete="off" formControlName="validUntil" [matDatepicker]="picker" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(fruit)">
+            {{ fruit.name }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Rôles" #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+            [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)" />
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+            {{ fruit.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <alb-extra-fields-form mode="patch" [extraFieldFormGroup]="formGroup.controls.extraFields"></alb-extra-fields-form>
+  </div>
+  <div style="width: 100%; height: 50px;">
+    <span class="error-msg" *ngIf="exceptionRequest">
+      {{ exceptionRequest }}
+    </span>
+  </div>
+  <div class="button-row">
+    <button type="submit" dynStyle itemId="FIRST_BTN">
+      Modifier
+    </button>
+    <button type="button" dynStyle itemId="SECOND_BTN" (click)="dialogRef.close()">
+      Annuler
+    </button>
+  </div>
+</form>

@@ -1,0 +1,31 @@
+<div>
+  <form class="form-container" [formGroup]="formGroup" (ngSubmit)="create()">
+    <div style="width: 100%;">
+      <div [formGroup]="formGroup.controls.name">
+        <mat-form-field style="width: 100%;">
+          <input matInput name="nfirst" type="text" formControlName="firstName" placeholder="Prénom" />
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+          <input matInput name="nfirst" type="text" formControlName="lastName" placeholder="Nom de famille" />
+        </mat-form-field>
+      </div>
+      <mat-form-field style="width: 100%;">
+        <input matInput name="nemail" type="email" formControlName="email" placeholder="Email" />
+      </mat-form-field>
+      <bsl-password-form-field [passwordConfig]="ssoSettings.settings.password" [myGroup]="formGroup.controls.password">
+      </bsl-password-form-field>
+
+      <alb-extra-fields-form [extraFieldFormGroup]="formGroup.controls.extraFields"></alb-extra-fields-form>
+    </div>
+    <alb-auth-service-error [emailControl]="formGroup.controls.email"
+      [passwordControl]="$any(formGroup.controls.password).controls.password"></alb-auth-service-error>
+    <div class="truc">
+      <div class="button-row">
+        <button dynStyle itemId="FIRST_BTN" type="submit">Créer</button>
+        <button dynStyle itemId="SECOND_BTN" type="button" (click)="onCancel()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

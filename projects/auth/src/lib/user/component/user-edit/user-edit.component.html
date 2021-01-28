@@ -1,0 +1,48 @@
+<h1 mat-dialog-title style="text-align: center;">Votre compte</h1>
+<form class="form-container truc" [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div style="width: 100%;">
+    <mat-form-field style="width: 100%;">
+      <mat-label>Courriel</mat-label>
+      <input matInput type="email" formControlName="email" readonly placeholder="Email" />
+    </mat-form-field>
+
+    <!--<mat-form-field style="width: 100%;" hidden="!ssoSettings.settings || !ssoSettings.settings.sso.multiFactor">
+      <mat-label>Téléphone</mat-label>
+      <input matInput type="tel" formControlName="telephone" readonly placeholder="Téléphone" />
+      <button matSuffix mat-stroked-button>
+        <mat-icon>mode_edit</mat-icon>
+      </button>
+    </mat-form-field>-->
+
+    <mat-form-field style="width: 100%;">
+      <mat-label>Prénom</mat-label>
+      <input matInput type="text" formControlName="firstname" placeholder="Prénom" />
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <mat-label>Nom de famille</mat-label>
+      <input matInput type="text" formControlName="lastname" placeholder="Nom de famille" />
+    </mat-form-field>
+  </div>
+  <div>
+    <h3>Mes rôles</h3>
+
+    <mat-chip-list>
+      <mat-chip *ngFor="let r of detail.roles">{{r}}</mat-chip>
+    </mat-chip-list>
+
+  </div>
+  <div style="width: 100%; height: 50px;">
+    <span class="error-msg" *ngIf="exceptionRequest">
+      {{ exceptionRequest }}
+    </span>
+  </div>
+  <div class="button-row">
+    <button type="submit" dynStyle itemId="FIRST_BTN">
+      Modifier
+    </button>
+    <button *ngIf="dialogRef" type="button" dynStyle itemId="SECOND_BTN" (click)="dialogRef.close()">
+      Annuler
+    </button>
+  </div>
+</form>

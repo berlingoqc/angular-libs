@@ -1,0 +1,23 @@
+<mat-accordion>
+  <mat-expansion-panel [ngClass]="style">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Contrat d'utilisation
+      </mat-panel-title>
+      <mat-panel-description>
+        Vous devez le lire le contrat afin de pouvoir cocher la case
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <cdk-virtual-scroll-viewport (scrolledIndexChange)="next($event)" itemSize="200" style="width: 100%; height: 200px;">
+      <div *cdkVirtualFor="let i of texts"  style="display: flex; justify-content: center;">
+        <div style="width: 60%;" [innerHTML]="i">
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+
+    <mat-action-row style="justify-content: flex-start !important;">
+      <mat-checkbox (change)="changeBox($event)" [disabled]="!canAccept" style="align-self: flex-start;">Accepter</mat-checkbox>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+

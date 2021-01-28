@@ -1,0 +1,67 @@
+<h2>Paramètres du serveur d'authentification</h2>
+
+<p>
+  Contactez le support technique pour la modification d'un des paramètres
+  suivants
+</p>
+<div [formGroup]="formGroup" class="container">
+  <mat-form-field>
+    <mat-label>Redirection de courriels</mat-label>
+    <input matInput readonly formControlName="emailRedirect" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Serveur de courriels</mat-label>
+    <input matInput readonly formControlName="emailHost" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Courriel de l'expéditeur</mat-label>
+    <input matInput readonly formControlName="emailFrom" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Durée d'une session</mat-label>
+    <input matInput readonly formControlName="tokenExpiresIn" />
+  </mat-form-field>
+  <mat-checkbox disabled formControlName="publicCreation"
+    >Création de compte public</mat-checkbox
+  >
+  <mat-checkbox disabled formControlName="multiFactor"
+    >Facteur d'authentification multiple</mat-checkbox
+  >
+  <mat-checkbox disabled formControlName="accountValidation"
+    >Validation de compte obligatoire</mat-checkbox
+  >
+  <div>
+    <h4>Rôle par défault</h4>
+
+    <mat-chip-list>
+      <mat-chip *ngFor="let r of sso.settings.sso.defaultRoles">{{
+        r
+      }}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div style="display: flex; flex-direction: column">
+    <h4>Configuration mot de passe</h4>
+    <mat-form-field>
+      <mat-label>Nombre minimal de caractères</mat-label>
+      <input matInput readonly type="number" formControlName="min" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Nombre maximal de caractères</mat-label>
+      <input matInput readonly type="number" formControlName="max" />
+    </mat-form-field>
+    <mat-checkbox disabled formControlName="caseLetter"
+      >Nécessite une lettre majuscule et une minuscule</mat-checkbox
+    >
+    <mat-checkbox disabled formControlName="symbol"
+      >Nécessite un symbole</mat-checkbox
+    >
+    <mat-checkbox disabled formControlName="repetition"
+      >Nécessite de ne pas avoir le même charactère trop de fois de
+      suite</mat-checkbox
+    >
+    <mat-checkbox disabled formControlName="numeric"
+      >Nécessite un chiffre</mat-checkbox
+    >
+  </div>
+</div>
