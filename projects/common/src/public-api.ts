@@ -17,6 +17,8 @@ export * from './lib/pipe/type-validation.pipe';
 
 export * from './lib/router-extra';
 
+export * from './lib/env';
+
 export * from './lib/form-extra/component/key-value-form/key-value-form.component';
 export * from './lib/form-extra/component/password-form-field/password-form-field.component';
 export * from './lib/form-extra/key';

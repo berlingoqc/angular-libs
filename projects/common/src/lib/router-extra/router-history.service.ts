@@ -35,7 +35,7 @@ export class RouterHistoryService implements OnDestroy {
 
   navigateToItem(item: HistoryItem) {
     return this.router.navigateByUrl(item.url, {
-      queryParams: item.queryParams,
+      //queryParams: item.queryParams,
     });
   }
 
