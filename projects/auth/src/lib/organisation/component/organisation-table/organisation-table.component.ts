@@ -7,7 +7,7 @@ import {
   CRUDDataSource,
   StaticDataSource,
 } from '@berlingoqc/ngx-loopback';
-import { TableColumn } from 'dist/autotable/public-api';
+import { TableColumn } from '@berlingoqc/ngx-autotable';
 import { AuthService } from '../../../auth';
 import { Organisation } from '../../model';
 

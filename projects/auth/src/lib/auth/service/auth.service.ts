@@ -48,7 +48,7 @@ export class AuthService {
   }
 
   constructor(
-    private config: AuthSettingConfig,
+    public config: AuthSettingConfig,
     private tokenService: TokenService,
     private httpClient: HttpClient,
     public matDialog: MatDialog,

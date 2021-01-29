@@ -1,16 +1,16 @@
 import {
-  DynamicStyleRegisterService,
-  PasswordValidatorService
+    DynamicStyleRegisterService,
+  envConfig,
+  EnvConfigurationService,
+    PasswordValidatorService,
 } from '@berlingoqc/ngx-common';
 import { NotificationModule } from '@berlingoqc/ngx-pwa';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { Actions } from '../account/model/redirect-action.config';
-import {
-  AuthService,
-} from './service/auth.service';
+import { AuthService } from './service/auth.service';
 import { NavigateService } from './service/navigate.service';
 import { SSOSettingsService } from '../sso/service/sso.service';
 
@@ -25,59 +25,78 @@ import { AuthGuard } from './guard';
 import { InviteUserDialogComponent } from '../invitation';
 
 @NgModule({
-  declarations: [
-  ],
-  imports: [
-    NotificationModule,
-    RouterModule,
-    NgxPermissionsModule.forRoot(),
-  ],
-  exports: [
-    NgxPermissionsModule,
-  ],
+    declarations: [],
+    imports: [NotificationModule, RouterModule, NgxPermissionsModule.forRoot()],
+    exports: [NgxPermissionsModule],
 })
 export class AuthModule {
-  public static forRoot(
-    config: AuthSettingConfig
-  ): ModuleWithProviders<AuthModule> {
-    return {
-      ngModule: AuthModule,
-      providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        { provide: AuthSettingConfig, useValue: config },
-        { provide: Actions, useValue: config.actions ?? {} },
-        {
-          provide: NavigateService,
-          useClass: config.navigate ?? NavigateService,
-        },
-        InvitationService,
-        AuthGuard,
-        UserAPI,
-        RoleAPI,
-        SSOSettingsService,
-        AuthDialogService,
-        TokenService,
-        AuthService,
-      ],
-    };
-  }
+    public static forRoot(): ModuleWithProviders<AuthModule> {
+        return {
+            ngModule: AuthModule,
+            providers: [
+                {
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: AuthInterceptor,
+                    multi: true,
+                },
+                AuthSettingConfig,
+                InvitationService,
+                AuthGuard,
+                UserAPI,
+                RoleAPI,
+                SSOSettingsService,
+                AuthDialogService,
+                TokenService,
+                AuthService,
+            ],
+        };
+    }
 
-  constructor(
-    private moduleSettings: AuthSettingConfig,
-    private authService: AuthService,
-    private authDialog: AuthDialogService,
-    private passwordValidatorService: PasswordValidatorService,
-    private authSettings: SSOSettingsService,
-    private dynamicStyle: DynamicStyleRegisterService
-  ) {
-    this.authDialog.inviteUserComponent = InviteUserDialogComponent;
-    this.authService.info().subscribe((info) => {
-      this.authSettings.settings = info;
-      this.passwordValidatorService.config = info.password;
-      this.authSettings.settingsUpdate.next(info);
-    });
-    Object.entries(this.moduleSettings.config.itemClass).forEach(([k, v]) => {
-      this.dynamicStyle.items[k] = { classList: v };
-    });
-  }
+    constructor(
+        private authDialog: AuthDialogService,
+    ) {
+        this.authDialog.inviteUserComponent = InviteUserDialogComponent;
+    }
 }
+
+export const loadSSOConfig = (configData: any) => (
+    config: AuthSettingConfig,
+    authService: AuthService,
+    authSettings: SSOSettingsService,
+    passwordValidator: PasswordValidatorService,
+    envService: EnvConfigurationService,
+) => {
+    return () => {
+        return new Promise<void>(async (resol) => {
+            for(const [k,v] of Object.entries(configData)) {
+              config[k] = v;
+            }
+
+            const c = await envService.load().toPromise();
+            config.backend = {url: c.sso};
+
+            authService
+                .info()
+                .toPromise()
+                .then((info) => {
+                    authSettings.settings = info;
+                    passwordValidator.config = info.password;
+                    authSettings.settingsUpdate.next(info);
+                    resol();
+                });
+        });
+    };
+};
+
+export const AUTH_APP_INITALIZER = (config:any) => ({
+    provide: APP_INITIALIZER,
+    useFactory: loadSSOConfig(config),
+    deps: [
+        AuthSettingConfig,
+        AuthService,
+        SSOSettingsService,
+        PasswordValidatorService,
+        EnvConfigurationService,
+    ],
+    multi: true,
+});

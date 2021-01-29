@@ -58,6 +58,8 @@ import { RoleGuard } from './guard';
     AcceptAgrementComponent,
     AskConnectDirective,
     CatchRedirectionDirective,
+    AuthDialogComponent,
+
   ],
   providers: [
     RoleGuard,

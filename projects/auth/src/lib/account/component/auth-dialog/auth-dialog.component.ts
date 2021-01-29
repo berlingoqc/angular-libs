@@ -51,6 +51,7 @@ export class AuthDialogComponent {
     public ssoSettings: SSOSettingsService,
     private authService: AuthService
   ) {
+    console.log('SERGIE', config);
     this.config = config.config;
     this.mode = configDialog?.mode ?? 'login';
     if (this.mode !== 'login') {
