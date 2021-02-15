@@ -21,7 +21,7 @@ type DialogMode = 'login' | 'fpwd' | 'femail' | 'new';
 @Component({
   selector: 'alb-auth-dialog',
   templateUrl: './auth-dialog.component.html',
-  styleUrls: ['./auth-dialog.component.scss'],
+  styleUrls: ['./auth-dialog.component.scss', '../../../common/shared.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: [],
 })

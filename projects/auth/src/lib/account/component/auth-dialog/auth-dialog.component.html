@@ -21,8 +21,8 @@
 
       <div class="truc">
         <div class="button-row">
-          <button dynStyle itemId="FIRST_BTN" type="submit">Connexion</button>
-          <button dynStyle itemId="SECOND_BTN" type="button" *ngIf="
+          <button mat-stroked-button dynStyle itemId="FIRST_BTN" type="submit">Connexion</button>
+          <button mat-stroked-button dynStyle itemId="SECOND_BTN" type="button" *ngIf="
               ssoSettings.settings && ssoSettings.settings.sso.publicCreation
             " (click)="mode = 'new'">
             Pas de compte ?

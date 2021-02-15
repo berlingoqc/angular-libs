@@ -17,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserModule } from '../user';
 import { AskConnectDirective, CatchRedirectionDirective, AskConnectComponent } from './directive';
 import { RoleGuard } from './guard';
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { RoleGuard } from './guard';
     MatStepperModule,
     MatExpansionModule,
     MatListModule,
+    MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
 

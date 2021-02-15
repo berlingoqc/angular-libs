@@ -153,6 +153,7 @@ export class AuthService {
   }
 
   me(): Observable<UserProfile> {
+    console.log(this.config)
     return this.httpClient.get<UserProfile>(
       this.config.backend.url + '/users/me'
     );
