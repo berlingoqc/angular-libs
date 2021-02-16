@@ -84,6 +84,7 @@ export const loadSSOConfig = (configData: any) => (
                     authSettings.settingsUpdate.next(info);
                     resol();
                 });
+            authService.init();
         });
     };
 };

@@ -25,6 +25,9 @@ import {
 import { TokenService } from './token.service';
 import { AuthSettingConfig } from '../model/auth-setting-config';
 import { nointercept } from '../../unauthorized/service/http-interceptor';
+import { envConfig } from '@berlingoqc/ngx-common';
+import { env } from 'process';
+
 
 export type LoginEvent = 'connected' | 'disconnected';
 
@@ -54,9 +57,13 @@ export class AuthService {
     public matDialog: MatDialog,
     public ngxPermissionService: NgxPermissionsService
   ) {
+  }
+
+  init() {
     const promiseToken = this.tokenService.loadFromStorage();
     if (promiseToken instanceof Promise) {
       this.loginObservable = new Observable((sub) => {
+        console.log('Evn ', envConfig);
         this.me()
           .toPromise()
           .then((profile) => {
