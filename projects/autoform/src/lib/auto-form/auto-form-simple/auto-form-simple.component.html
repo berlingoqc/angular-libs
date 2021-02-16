@@ -1,10 +1,10 @@
-<div *ngIf="formData">
+<ng-container *ngIf="formData">
   <autoform-object-field
     *ngFor="let item of formData.items"
     [data]="item"
     [abstractControl]="formGroup.controls[item.name]"
   ></autoform-object-field>
   <div>
-    <button (click)="submit()">Submit</button>
+    <button mat-stroked-button (click)="submit()">Submit</button>
   </div>
-</div>
+</ng-container>

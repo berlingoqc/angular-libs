@@ -27,7 +27,7 @@ export abstract class InjectorBaseFieldComponent<
     ViewContainerRef
   >;
 
-  @Input() data: T;
+  //@Input() data: T;
   @Input() abstractControl: C;
 
   components: BaseFieldComponent<any, any>[] = [];
