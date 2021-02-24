@@ -16,6 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {
     ComponentExtra,
     TemplateContentData,
+    TemplateContentDataStructure,
     TEMPLATE_CONTENT_CONTEXT,
     TEMPLATE_CONTENT_PARENT,
 } from './template-content-type';
@@ -39,7 +40,7 @@ export class DemoComponent {
 export class TemplateMarkerDirective {
     @Input('templateMarker') set tc(tc: TemplateContentComponent) {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-            tc.content.content as Type<any>,
+            tc.innerContent.content as Type<any>,
         );
 
         this.ref.clear();
@@ -64,7 +65,7 @@ export class TemplateMarkerDirective {
             inj,
         );
 
-        const extra: ComponentExtra = tc.content.extra;
+        const extra: ComponentExtra = tc.innerContent.extra;
         if (extra) {
             if (extra.inputs) {
                 Object.entries(extra.inputs).forEach(([k, v]) => {
@@ -80,7 +81,6 @@ export class TemplateMarkerDirective {
         private injector: Injector,
         private componentFactoryResolver: ComponentFactoryResolver,
     ) {
-        console.log('STRING STRINGs');
     }
 }
 
@@ -99,18 +99,18 @@ export class ServiceTest {
         `,
     ],
     template: `
-        <ng-container *ngIf="content" [ngSwitch]="content.type">
+        <ng-container *ngIf="innerContent" [ngSwitch]="innerContent.type">
             <ng-container *ngSwitchCase="'string'">
-                {{ content.content }}
+                {{ innerContent.content }}
             </ng-container>
             <ng-container *ngSwitchCase="'pipe'">
-                {{ content.content }}
+                {{ innerContent.content }}
             </ng-container>
             <ng-container *ngSwitchCase="'translation'">
-                {{ content.content | translate }}
+                {{ innerContent.content | translate }}
             </ng-container>
             <div *ngSwitchCase="'component'">
-                <div *templateMarker="{ content: content }"></div>
+                <div *templateMarker="{ content: innerContent }"></div>
                 <!--<ng-container
                     *ngComponentOutlet="
                         content.content;
@@ -120,11 +120,11 @@ export class ServiceTest {
             </div>
             <ng-container *ngSwitchCase="'template'">
                 <ng-container
-                    [ngTemplateOutlet]="content.content"
+                    [ngTemplateOutlet]="innerContent.content"
                     [ngTemplateOutletContext]="{
                         parent: parent,
-                        context: context,
-                        extra: content.extra
+                        context: innerContext,
+                        extra: innerContent.extra
                     }"
                 >
                 </ng-container>
@@ -132,8 +132,8 @@ export class ServiceTest {
             <ng-container *ngSwitchCase="'func'">
                 {{ callFunction() | asyncAll }}
             </ng-container>
-            <div *ngSwitchCase="'html'" [innerHTML]="content.content"></div>
-            <mat-icon *ngSwitchCase="'icon'"> {{ content.content }}</mat-icon>
+            <div *ngSwitchCase="'html'" [innerHTML]="innerContent.content"></div>
+            <mat-icon *ngSwitchCase="'icon'"> {{ innerContent.content }}</mat-icon>
         </ng-container>
     `,
     changeDetection: ChangeDetectionStrategy.Default,
@@ -142,6 +142,7 @@ export class TemplateContentComponent
     implements AfterViewInit, OnInit, AfterViewInit {
     shadowThis;
     @Input() content: TemplateContentData;
+    @Input() innerContent: TemplateContentDataStructure;
     // Reference to the parent component
     @Input() parent: Type<any>;
     // Reference to the exection content
@@ -157,13 +158,23 @@ export class TemplateContentComponent
     }
 
     ngOnInit() {
-        if (this.content?.type === 'html') {
-            this.content.content = this.sanitizer.bypassSecurityTrustHtml(
-                this.content.content as any,
+        const typeContent = typeof this.content;
+        if(typeContent == 'string') {
+          this.innerContent = {type: 'string', content: this.content as string};
+          return;
+        } else if(typeContent == 'function') {
+          this.innerContent = {type: 'func', content: this.content as any}
+          return;
+        } else {
+          this.innerContent = this.content as TemplateContentDataStructure;
+        }
+        if (this.innerContent?.type === 'html') {
+            this.innerContent.content = this.sanitizer.bypassSecurityTrustHtml(
+                this.innerContent.content as any,
             ) as any;
-        } else if (this.content?.type === 'pipe') {
+        } else if (this.innerContent?.type === 'pipe') {
             this.renderPipe();
-        } else if (this.content?.type === 'component') {
+        } else if (this.innerContent?.type === 'component') {
             this.customInjector = Injector.create({
                 providers: [
                     {
@@ -181,11 +192,11 @@ export class TemplateContentComponent
 
     // Dans le cas d'une fonction comme contenu
     callFunction() {
-        return (this.content.content as any)(this.parent, this.context);
+        return (this.innerContent.content as any)(this.parent, this.context);
     }
 
     // Render pipe
     renderPipe() {
-        const d = this.injector.get(this.content.extra.pipe) as PipeTransform;
+        const d = this.injector.get(this.innerContent.extra.pipe) as PipeTransform;
     }
 }

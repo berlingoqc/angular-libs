@@ -31,11 +31,13 @@ export type TemplateContentType =
     | 'icon' // Affiche un mat-icon
     | 'html'; // Affiche du contenu html
 
-export interface TemplateContentData {
+export type TemplateContentDataStructure = {
     content: TemplateContent;
     type: TemplateContentType;
     extra?: any;
 }
+
+export type TemplateContentData = TemplateContentDataStructure | string | ((d:any) => any);
 
 export interface PipeExtra {
     pipe: Type<any>; // La pipe a injecté

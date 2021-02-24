@@ -48,3 +48,6 @@ export * from './lib/helper/data-decorator/data-decorator.module';
 export * from './lib/helper/data-decorator/data-decorator.pipe';
 export * from './lib/helper/data-decorator/model';
 export * from './lib/helper/data-decorator/handlers/style.handler';
+
+export * from './lib/helper/rxjs';
+export * from './lib/helper/unsubscriber';
