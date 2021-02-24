@@ -1,5 +1,7 @@
-<h3>{{data.name}}</h3>
-<div [autoFormDecorator]="data.decorators" autoFormElementID="container"
-     [formGroup]="abstractControl">
-  <ng-template #comp *ngFor="let f of data.properties"> </ng-template>
+<div
+    [autoFormDecorator]="data.decorators"
+    autoFormElementID="container"
+    [formGroup]="abstractControl"
+>
+    <ng-template #comp *ngFor="let f of data.properties"> </ng-template>
 </div>

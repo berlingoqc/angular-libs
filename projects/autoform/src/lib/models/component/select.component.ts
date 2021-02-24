@@ -1,41 +1,41 @@
-import { TemplateContentData } from '../../helper';
+import { TemplateContentData } from '@berlingoqc/ngx-common';
 import { PropertyComponent } from '../component';
 
 // Une option a selectionner dans la mat-select
 export interface SelectOption {
-  // La valeur de cette options
-  value: any;
-  // La facon de la display
-  display: TemplateContentData;
+    // La valeur de cette options
+    value: any;
+    // La facon de la display
+    display: TemplateContentData;
 }
 
 export class SelectOptionGroup {
-  display: TemplateContentData;
-  options: SelectOption[];
+    display: TemplateContentData;
+    options: SelectOption[];
 }
 
 export interface SelectOptionGroups {
-  [id: string]: SelectOptionGroup;
+    [id: string]: SelectOptionGroup;
 }
 
 export class SelectComponent implements PropertyComponent {
-  name: 'select';
+    name: 'select';
 
-  // Si on display le menu select nativement ou lui de angular material
-  type?: 'mat' | 'native';
+    // Si on display le menu select nativement ou lui de angular material
+    type?: 'mat' | 'native';
 
-  // Si on peut sélectionner de multiple value
-  multiple?: boolean;
+    // Si on peut sélectionner de multiple value
+    multiple?: boolean;
 
-  // disableRipple animation
-  disableRipple?: boolean;
+    // disableRipple animation
+    disableRipple?: boolean;
 
-  // La classe du panel ouvert par le mat-select
-  panelClass?: string;
+    // La classe du panel ouvert par le mat-select
+    panelClass?: string;
 
-  // noneOption, si on affiche une options null
-  noneOption?: TemplateContentData;
+    // noneOption, si on affiche une options null
+    noneOption?: TemplateContentData;
 
-  // Les options du mat-select
-  options: SelectOption[] | SelectOptionGroups;
+    // Les options du mat-select
+    options: SelectOption[] | SelectOptionGroups;
 }

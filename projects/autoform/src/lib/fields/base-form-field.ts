@@ -8,7 +8,7 @@ import {
     ViewChildren,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TemplateContent } from '../helper';
+import { TemplateContent } from '@berlingoqc/ngx-common';
 import { InputProperty } from '../models';
 import { CVA } from '../service/cva';
 
