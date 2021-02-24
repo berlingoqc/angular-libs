@@ -1,15 +1,22 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
-    "declarationMap": true,
-    "target": "es2015",
-    "declaration": true,
-    "inlineSources": true,
-    "experimentalDecorators": true,
-    "types": [],
-    "lib": ["dom", "es2018"]
-  },
-  "angularCompilerOptions": {},
-  "exclude": ["src/test.ts", "**/*.spec.ts"]
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../out-tsc/lib",
+        "declarationMap": true,
+        "target": "es2015",
+        "declaration": true,
+        "inlineSources": true,
+        "experimentalDecorators": true,
+        "types": [],
+        "lib": ["dom", "es2018"]
+    },
+    "angularCompilerOptions": {
+        "enableIvy": false,
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "fullTemplateTypeCheck": true,
+        "strictInjectionParameters": true,
+        "enableResourceInlining": true
+    },
+    "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 import { NotificationModule } from '@berlingoqc/ngx-notification';
 import { AppUpdateService } from './update.service';
 
 @NgModule({
-    imports: [NotificationModule, MatSnackBarModule],
+    imports: [NotificationModule],
     providers: [AppUpdateService],
 })
 export class PWAModule {
