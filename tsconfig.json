@@ -28,10 +28,11 @@
                 "dist/autotable/autotable",
                 "dist/autotable"
             ],
-            "@berlingoqc/ngx-pwa": [
-                "dist/pwa/pwa",
-                "dist/pwa"
-            ],
+            "@berlingoqc/ngx-pwa": ["dist/pwa/pwa", "dist/pwa"],
+            "@berlingoqc/ngx-notification": [
+                "dist/notification/notification",
+                "dist/notification"
+            ]
         }
     },
     "angularCompilerOptions": {
