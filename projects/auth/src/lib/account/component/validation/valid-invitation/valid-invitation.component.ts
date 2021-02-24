@@ -1,125 +1,132 @@
-import { NotificationService } from '@berlingoqc/ngx-pwa';
+import { NotificationService } from '@berlingoqc/ngx-notification';
 import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Optional,
-  Output,
+    Component,
+    EventEmitter,
+    OnInit,
+    Optional,
+    Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PasswordConfig, PasswordValidatorService } from '@berlingoqc/ngx-common';
-import { NavigateService, AuthDialogService, InvitationService } from '../../../../auth';
+import {
+    PasswordConfig,
+    PasswordValidatorService,
+} from '@berlingoqc/ngx-common';
+import {
+    NavigateService,
+    AuthDialogService,
+    InvitationService,
+} from '../../../../auth';
 import { AuthSettingConfig } from '../../../../auth/model/auth-setting-config';
-import { SSOSettingsService } from '../../../../sso'
+import { SSOSettingsService } from '../../../../sso';
 @Component({
-  selector: 'alb-valid-invitation',
-  templateUrl: './valid-invitation.component.html',
-  styleUrls: ['./valid-invitation.component.scss'],
+    selector: 'alb-valid-invitation',
+    templateUrl: './valid-invitation.component.html',
+    styleUrls: ['./valid-invitation.component.scss'],
 })
 export class ValidInvitationComponent implements OnInit {
-  formGroup: FormGroup;
+    formGroup: FormGroup;
 
-  exceptionRequest: string;
+    exceptionRequest: string;
 
-  visible = false;
+    visible = false;
 
-  @Output() beginning = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
-  @Output() end = new EventEmitter<void>();
+    @Output() beginning = new EventEmitter<void>();
+    @Output() cancel = new EventEmitter<void>();
+    @Output() end = new EventEmitter<void>();
 
-  passwordConfig: PasswordConfig;
+    passwordConfig: PasswordConfig;
 
-  constructor(
-    private navigateService: NavigateService,
-    private notificationService: NotificationService,
-    @Optional() public config: AuthSettingConfig,
-    private authDialogService: AuthDialogService,
-    private InvitationService: InvitationService,
-    public ssoSettings: SSOSettingsService,
-    public passwordValidatorService: PasswordValidatorService
-  ) {
-    this.ssoSettings.settingsUpdate.asObservable().subscribe((s) => {
-      this.passwordConfig = s.password;
-      this.formGroup = new FormGroup({
-        otp: new FormControl(''),
-        email: new FormControl(''),
-        password: this.passwordValidatorService.getPasswordFormGroup(),
-      });
-      if (this.config.usingContract) {
-        this.formGroup.addControl(
-          'contract',
-          new FormControl(false, [Validators.requiredTrue])
-        );
-      }
-      const search = window.location.search;
-      const items = search.split('?');
-      if (items[1]) {
-        const kv = items[1].split('&');
+    constructor(
+        private navigateService: NavigateService,
+        private notificationService: NotificationService,
+        @Optional() public config: AuthSettingConfig,
+        private authDialogService: AuthDialogService,
+        private InvitationService: InvitationService,
+        public ssoSettings: SSOSettingsService,
+        public passwordValidatorService: PasswordValidatorService,
+    ) {
+        this.ssoSettings.settingsUpdate.asObservable().subscribe((s) => {
+            this.passwordConfig = s.password;
+            this.formGroup = new FormGroup({
+                otp: new FormControl(''),
+                email: new FormControl(''),
+                password: this.passwordValidatorService.getPasswordFormGroup(),
+            });
+            if (this.config.usingContract) {
+                this.formGroup.addControl(
+                    'contract',
+                    new FormControl(false, [Validators.requiredTrue]),
+                );
+            }
+            const search = window.location.search;
+            const items = search.split('?');
+            if (items[1]) {
+                const kv = items[1].split('&');
 
-        let query = {};
+                let query = {};
 
-        kv.forEach((x) => {
-          const kv = x.split('=');
-          query[kv[0]] = kv[1];
+                kv.forEach((x) => {
+                    const kv = x.split('=');
+                    query[kv[0]] = kv[1];
+                });
+
+                if (query['otp'] && query['email']) {
+                    this.visible = true;
+                    this.beginning.next();
+                    this.formGroup.controls.otp.setValue(query['otp']);
+                    this.formGroup.controls.email.setValue(query['email']);
+                } else {
+                    this.navigateService.navigate(['/']);
+                    this.cancel.next();
+                }
+            } else {
+                this.navigateService.navigate(['/']);
+                this.cancel.next();
+            }
         });
+    }
 
-        if (query['otp'] && query['email']) {
-          this.visible = true;
-          this.beginning.next();
-          this.formGroup.controls.otp.setValue(query['otp']);
-          this.formGroup.controls.email.setValue(query['email']);
+    ngOnInit(): void {}
+
+    submit() {
+        if (this.formGroup.valid) {
+            const request = this.formGroup.value;
+            request.password = request.password.password;
+            this.InvitationService.accepteInvitation(request).subscribe(
+                () => {
+                    this.navigateService.navigate(['/']);
+                    this.end.next();
+                    this.notificationService.openNotification({
+                        body: `<p>Vous pouvez vous connecter avec ${request.email}</p>`,
+                        title: 'Votre compte est activé',
+                        actions: [
+                            {
+                                text: 'Connection',
+                                color: '',
+                                click: () => this.authDialogService.openLogin(),
+                            },
+                        ],
+                        duration: 8000,
+                    });
+                },
+                (e) => {
+                    if (typeof e === 'object') {
+                        console.error(e);
+                        this.exceptionRequest = 'Erreur lors de la requête';
+                    } else {
+                        this.exceptionRequest = e;
+                    }
+                },
+            );
         } else {
-          this.navigateService.navigate(['/']);
-          this.cancel.next();
+            this.formGroup.markAllAsTouched();
         }
-      } else {
-        this.navigateService.navigate(['/']);
-        this.cancel.next();
-      }
-    });
-  }
+    }
 
-  ngOnInit(): void { }
-
-  submit() {
-    if (this.formGroup.valid) {
-      const request = this.formGroup.value;
-      request.password = request.password.password;
-      this.InvitationService.accepteInvitation(request).subscribe(
-        () => {
-          this.navigateService.navigate(['/']);
-          this.end.next();
-          this.notificationService.openNotification({
-            body: `<p>Vous pouvez vous connecter avec ${request.email}</p>`,
-            title: 'Votre compte est activé',
-            actions: [
-              {
-                text: 'Connection',
-                color: '',
-                click: () => this.authDialogService.openLogin(),
-              },
-            ],
-            duration: 8000,
-          });
-        },
-        (e) => {
-          if (typeof e === 'object') {
-            console.error(e);
-            this.exceptionRequest = 'Erreur lors de la requête';
-          } else {
-            this.exceptionRequest = e;
-          }
+    onCancel() {
+        this.cancel.emit();
+        if (this.navigateService) {
+            this.navigateService.navigate(['/']);
         }
-      );
-    } else {
-      this.formGroup.markAllAsTouched();
     }
-  }
-
-  onCancel() {
-    this.cancel.emit();
-    if (this.navigateService) {
-      this.navigateService.navigate(['/']);
-    }
-  }
 }

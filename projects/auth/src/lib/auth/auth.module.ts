@@ -1,10 +1,10 @@
 import {
     DynamicStyleRegisterService,
-  envConfig,
-  EnvConfigurationService,
+    envConfig,
+    EnvConfigurationService,
     PasswordValidatorService,
 } from '@berlingoqc/ngx-common';
-import { NotificationModule } from '@berlingoqc/ngx-pwa';
+import { NotificationModule } from '@berlingoqc/ngx-notification';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -52,9 +52,7 @@ export class AuthModule {
         };
     }
 
-    constructor(
-        private authDialog: AuthDialogService,
-    ) {
+    constructor(private authDialog: AuthDialogService) {
         this.authDialog.inviteUserComponent = InviteUserDialogComponent;
     }
 }
@@ -68,12 +66,12 @@ export const loadSSOConfig = (configData: any) => (
 ) => {
     return () => {
         return new Promise<void>(async (resol) => {
-            for(const [k,v] of Object.entries(configData)) {
-              config[k] = v;
+            for (const [k, v] of Object.entries(configData)) {
+                config[k] = v;
             }
 
             const c = await envService.load().toPromise();
-            config.backend = {url: c.sso};
+            config.backend = { url: c.sso };
 
             authService
                 .info()
@@ -89,7 +87,7 @@ export const loadSSOConfig = (configData: any) => (
     };
 };
 
-export const AUTH_APP_INITALIZER = (config:any) => ({
+export const AUTH_APP_INITALIZER = (config: any) => ({
     provide: APP_INITIALIZER,
     useFactory: loadSSOConfig(config),
     deps: [
