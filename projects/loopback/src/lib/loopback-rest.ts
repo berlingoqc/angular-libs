@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
+import { Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Where, Count, Filter } from './loopback-model';
+import { Where, Count, Filter, AnyObject } from './loopback-model';
+
+import { CachingRequest } from '@berlingoqc/ngx-common';
 
 function isNumeric(num) {
     return !isNaN(num);
@@ -57,6 +60,46 @@ function assembleQueryParams(
         });
     }
     return items;
+}
+
+export class LoopbackRelationClient<T> implements CRUDDataSource<T> {
+    baseURL = '';
+
+    public parentKey: string;
+
+    get url(): string {
+        return `${this.baseURL}${this.parentPath}/${this.parentKey}/${this.name}`;
+    }
+
+    constructor(
+        private httpClient: HttpClient,
+        private parentPath: string,
+        private name: string,
+    ) {}
+
+    get = (filter?: Filter<any>) => {
+        return this.httpClient.get<T[]>(
+            this.url + toQueryParams('filter', filter),
+        );
+    };
+
+    post = (body: T) => {
+        return this.httpClient.post<T>(this.url, body);
+    };
+
+    getById = (id: string, filter?: Filter<any>) => {
+        return this.httpClient.get<T>(
+            `${this.url}/${id}` + toQueryParams('filter', filter),
+        );
+    };
+
+    updateById = (id: string, data: Partial<T>) => {
+        return this.httpClient.put<void>(`${this.url}/${id}`, data);
+    };
+
+    delete = (id: string) => {
+        return this.httpClient.delete<void>(`${this.url}/${id}`);
+    };
 }
 
 // Classe de base pour fournir les appels de base vers un controller CRUD de loopback2+
@@ -130,6 +173,57 @@ export interface CRUDDataSource<T> {
     count?: (where?: Where) => Observable<Count>;
 }
 
+export function Caching<T>(type: any) {
+    return class extends type {
+        requestGet = new CachingRequest();
+        requestFind = new CachingRequest();
+        requestCount = new CachingRequest();
+
+        constructor(...args: any[]) {
+            super(...args);
+        }
+
+        get = (filter?: Filter) => {
+            return this.requestGet.getObs(filter, super.get(filter)) as any;
+        };
+        getById = super.getById
+            ? (id: string, filter?: Filter) => {
+                  return this.requestFind.getObs(
+                      id,
+                      super.getById(id, filter),
+                  ) as any;
+              }
+            : undefined;
+
+        patch = super.patch
+            ? (id: string, d: T) => {
+                  return super.patch(id, d);
+              }
+            : undefined;
+        post = super.post
+            ? (body: T) => {
+                  return super.post(body);
+              }
+            : undefined;
+        updateById = (id: string, data: Partial<T>) => {
+            return this.requestFind.onModif(super.updateById(id, data) as any);
+        };
+        delete = super.delete
+            ? (id: string) => {
+                  return super.delete(id);
+              }
+            : undefined;
+        count = super.count
+            ? (where: Where) => {
+                  return this.requestCount.getObs(
+                      where,
+                      super.count(where),
+                  ) as any;
+              }
+            : undefined;
+    };
+}
+
 export class StaticDataSource<T> implements CRUDDataSource<T> {
     constructor(public data: T[]) {}
 
@@ -154,3 +248,9 @@ export class StaticDataSource<T> implements CRUDDataSource<T> {
         return of({ count: this.data.length });
     }
 }
+
+export class LoopbackCachingClient<T> extends Caching(LoopbackRestClient) {}
+
+export class LoopbackCachingRelationClient extends Caching(
+    LoopbackRelationClient,
+) {}
