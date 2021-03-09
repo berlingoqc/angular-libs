@@ -3,20 +3,11 @@
     "version": "1.0.10",
     "description": "Librairie pour les utilitaire d'applications progressive",
     "author": {
-        "name": "Alborea"
+        "name": "berlingoqc"
     },
-    "scripts": {
-        "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
-        "copy:collection": "cp -r schematics ../../dist/pwa/",
-        "postbuild": "npm run copy:collection"
-    },
-    "schematics": "./schematics/collection.json",
     "repository": {
         "type": "git",
         "url": "https://github.com/berlingoqc/angular-libs/"
-    },
-    "ng-add": {
-        "save": "dependencies"
     },
     "peerDependencies": {}
 }
