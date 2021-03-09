@@ -1,12 +1,13 @@
+import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { of } from 'rxjs';
 import {
     AutoFormData,
     FormObject,
     InputProperty,
+    MatCheckboxComponent,
+    SelectComponent,
 } from '@berlingoqc/ngx-autoform';
-import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { SelectComponent } from 'projects/autoform/src/lib/models/component/select.component';
-import { of } from 'rxjs';
 
 export const baseForm: AutoFormData = {
     items: [],
@@ -17,6 +18,12 @@ export const baseForm: AutoFormData = {
         linear: true,
         labelPosition: 'start',
     },
+};
+
+export const simpleForm: AutoFormData = {
+    items: [],
+    onSubmitValid: () => console.log(''),
+    type: 'simple',
 };
 
 @Component({
@@ -249,6 +256,15 @@ export const baseObject2: FormObject[] = [
                 name: 'street',
                 type: 'string',
                 required: true,
+            },
+            {
+                name: 'appartment',
+                type: 'bool',
+                required: true,
+                component: {
+                    name: 'radio',
+                    labelPosition: 'after',
+                } as MatCheckboxComponent,
             },
         ],
     },

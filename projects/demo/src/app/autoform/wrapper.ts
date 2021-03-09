@@ -6,7 +6,7 @@ import {
     FormRegistry,
     ModelRegistry,
 } from 'projects/autoform/src/public-api';
-import { baseForm, baseObject, baseObject2 } from './forms';
+import { baseForm, baseObject, baseObject2, simpleForm } from './forms';
 
 @Component({
     template: `
@@ -25,7 +25,7 @@ export class BaseComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.current = this.activatedRoute.snapshot.queryParams.model;
+        this.current = 'one'; //this.activatedRoute.snapshot.queryParams.model;
     }
 
     changeForm(name: string) {
@@ -60,8 +60,9 @@ export class BaseComponent implements OnInit {
 })
 export class AutoFormRegisterWrapperModule {
     constructor(modelRegister: ModelRegistry, formRegistery: FormRegistry) {
-        modelRegister.models.one = baseObject;
+        modelRegister.models.one = baseObject2;
         modelRegister.models.two = baseObject2;
-        formRegistery.forms.base = baseForm;
+        formRegistery.forms.vertical = baseForm;
+        formRegistery.forms.base = simpleForm;
     }
 }
