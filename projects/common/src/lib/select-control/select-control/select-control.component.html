@@ -1,0 +1,11 @@
+<mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>{{ name | asyncAll }}</mat-label>
+    <mat-select>
+        <mat-option
+            *ngFor="let item of data | asyncAll"
+            [value]="display.value(item) | asyncAll"
+        >
+            {{ display.display(item) | asyncAll }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

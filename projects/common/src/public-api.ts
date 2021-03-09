@@ -51,3 +51,5 @@ export * from './lib/helper/data-decorator/handlers/style.handler';
 
 export * from './lib/helper/rxjs';
 export * from './lib/helper/unsubscriber';
+
+export * from './lib/select-control';
