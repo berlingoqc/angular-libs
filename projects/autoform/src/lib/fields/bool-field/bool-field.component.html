@@ -1,24 +1,28 @@
-<div [ngSwitch]="data.subtype.name">
-  <div *ngSwitchDefault>
-    <mat-checkbox [color]="data.color" [formControl]="abstractControl">
-      {{data.name}}
-    </mat-checkbox>
-  </div>
+<div [ngSwitch]="data.component?.name">
+    <div *ngSwitchCase="'checkbox'">
+        <mat-checkbox
+            [color]="data.color"
+            [labelPosition]="data.component?.labelPosition"
+            [formControl]="abstractControl"
+        >
+            {{ data.name }}
+        </mat-checkbox>
+    </div>
 
-  <div *ngSwitchCase="'radio'">
-    <mat-radio-group class="radio-group" [color]="data.color" [formControl]="abstractControl">
-      <mat-radio-button [value]="true">Oui</mat-radio-button>
-      <mat-radio-button [value]="false">Non</mat-radio-button>
-    </mat-radio-group>
-  </div>
+    <div *ngSwitchCase="'radio'">
+        <mat-radio-group
+            class="radio-group"
+            [color]="data.color"
+            [formControl]="abstractControl"
+        >
+            <mat-radio-button [value]="true">Oui</mat-radio-button>
+            <mat-radio-button [value]="false">Non</mat-radio-button>
+        </mat-radio-group>
+    </div>
 
-  <div *ngSwitchCase="'toggle'">
-    <mat-slide-toggle
-      [color]="data.color"
-      [formControl]="abstractControl"
-      >
-      {{data.name}}
-    </mat-slide-toggle>
-
-  </div>
+    <div *ngSwitchCase="'toggle'">
+        <mat-slide-toggle [color]="data.color" [formControl]="abstractControl">
+            {{ data.name }}
+        </mat-slide-toggle>
+    </div>
 </div>

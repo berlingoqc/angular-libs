@@ -184,10 +184,14 @@ export class AutoFormModule {
             mainComponentType: ObjectFieldComponent,
             typeComponentHandler: [],
         });
-
         register.registerSubTypeHandler(
             'autocomplete',
             new AutocompleteSubTypeHandler(),
         );
+        register.registerComponent({
+            type: 'bool',
+            mainComponentType: BoolFieldComponent,
+            typeComponentHandler: [],
+        });
     }
 }
