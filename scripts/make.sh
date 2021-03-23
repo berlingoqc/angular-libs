@@ -20,7 +20,7 @@ function build() {
   for p in ${packages[@]}; do
     echo "Building $p"
     cd "./projects/$p" && \
-    ng build --prod $p && cd ../..
+    npx ng build --prod $p && cd ../..
   done
 }
 
