@@ -1,9 +1,9 @@
-name: libs
+name: angular-libs pipeline build
 
 on:
   push:
-    tags:
-      - master
+    branches:
+      - "*"
 
 jobs:
   proxy:
@@ -15,5 +15,9 @@ jobs:
           node-version: "10.x"
           registry-url: "https://npm.pkg.github.com"
           scope: "@berlingoqc"
-      - name: Building
-        run: npm run build:all
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: ./scripts/make.sh build
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.PAT }}

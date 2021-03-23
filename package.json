@@ -1,7 +1,7 @@
 {
-    "name": "angular-libs",
+    "name": "@berlingoqc/ng-lib",
     "description": "Project for all of @berlingoqc librairies",
-    "version": "0.0.0",
+    "version": "1.0.99",
     "scripts": {
         "build:all": "ng build common && ng build loopback && ng build autoform && ng build autotable && ng build notification && ng build pwa",
         "build:all:prod": "ng build --prod common && ng build --prod loopback && ng build --prod autoform && ng build --prod autotable",
@@ -12,7 +12,8 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "formatting:check": "prettier --check .",
-        "formatting:write": "prettier --write ."
+        "formatting:write": "prettier --write .",
+        "version": "node -p \"require('./package.json').version\""
     },
     "repository": {
         "type": "git",

@@ -1,14 +1,11 @@
 {
     "name": "@berlingoqc/ngx-notification",
-    "version": "0.0.2",
+    "version": "0.0.0",
     "repository": {
         "type": "git",
         "url": "ssh://git@github.com:berlingoqc/angular-libs"
     },
-    "peerDependencies": {
-        "@angular/common": "^11.1.0",
-        "@angular/core": "^11.1.0"
-    },
+    "peerDependencies": {},
     "dependencies": {
         "tslib": "^2.0.0"
     }

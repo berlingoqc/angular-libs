@@ -1,16 +1,16 @@
 {
-	"name": "@berlingoqc/auth",
-	"version": "1.1.23",
-	"description": "Libraire pour les composantes partagés pour l'authentification",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/berlingoqc/angular-libs/"
-	},
-	"license": "MIT",
-	"keywords": [
-		"angular2",
-		"typescript",
-		"angular-material"
-	],
-	"peerDependencies": {}
+    "name": "@berlingoqc/auth",
+    "version": "0.0.0",
+    "description": "Libraire pour les composantes partagés pour l'authentification",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/berlingoqc/angular-libs/"
+    },
+    "license": "MIT",
+    "keywords": [
+        "angular2",
+        "typescript",
+        "angular-material"
+    ],
+    "peerDependencies": {}
 }
