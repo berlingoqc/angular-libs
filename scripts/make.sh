@@ -26,8 +26,7 @@ function build() {
 function publish() {
   ## Release theme all
   for p in ${packages[@]}; do
-    cd "./dist/$p" && \
-    npm publish
+    (cd "./dist/$p" && npm publish)
   done
 }
 
