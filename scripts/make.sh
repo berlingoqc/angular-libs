@@ -19,8 +19,7 @@ function version() {
 function build() {
   for p in ${packages[@]}; do
     echo "Building $p"
-    cd "./projects/$p" && \
-    npx ng build --prod $p && cd ../..
+    npx ng build --prod $p
   done
 }
 
