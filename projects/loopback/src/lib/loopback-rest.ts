@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Where, Count, Filter, AnyObject } from './loopback-model';
+import { Where, Count, Filter, AnyObject, Include } from './loopback-model';
 
 import { CachingRequest } from '@berlingoqc/ngx-common';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Constructor } from '@angular/cdk/table';
+import { take } from 'rxjs/operators';
 
 function isNumeric(num) {
     return !isNaN(num);
@@ -63,44 +66,62 @@ function assembleQueryParams(
 }
 
 export class LoopbackRelationClient<T> implements CRUDDataSource<T> {
-    baseURL = '';
-
-    public parentKey: string;
 
     get url(): string {
-        return `${this.baseURL}${this.parentPath}/${this.parentKey}/${this.name}`;
+        return `${this.parent.baseURL}${this.parent.route}/${this.parentKey}/${this.name}`;
     }
 
     constructor(
-        private httpClient: HttpClient,
-        private parentPath: string,
-        private name: string,
+        public parent: LoopbackRestClient<any>,
+        public name: string,
+        public parentKey: string,
     ) {}
 
     get = (filter?: Filter<any>) => {
-        return this.httpClient.get<T[]>(
+        return this.parent.httpClient.get<T[]>(
             this.url + toQueryParams('filter', filter),
         );
     };
 
     post = (body: T) => {
-        return this.httpClient.post<T>(this.url, body);
+        return this.parent.httpClient.post<T>(this.url, body);
     };
 
     getById = (id: string, filter?: Filter<any>) => {
-        return this.httpClient.get<T>(
+        return this.parent.httpClient.get<T>(
             `${this.url}/${id}` + toQueryParams('filter', filter),
         );
     };
 
     updateById = (id: string, data: Partial<T>) => {
-        return this.httpClient.put<void>(`${this.url}/${id}`, data);
+        return this.parent.httpClient.put<void>(`${this.url}/${id}`, data);
     };
 
     delete = (id: string) => {
-        return this.httpClient.delete<void>(`${this.url}/${id}`);
+        return this.parent.httpClient.delete<void>(`${this.url}/${id}`);
     };
 }
+
+export function LoopbackRelationClientMixin<T>(): Constructor<
+    LoopbackRelationClient<T>
+> {
+    return class extends LoopbackRelationClient<T> {};
+}
+
+export type LoopbackRelationAccessor<K,T> = (key: K) => LoopbackRelationClient<T>;
+
+export interface WithRelations {
+  [id: string]: LoopbackRelationAccessor<any, any>;
+}
+
+export function addLoopbackRelation<K,P,T>(
+  parent: LoopbackRestClient<P>,
+  type: Constructor<LoopbackRelationClient<T>>,
+  name: string,
+): LoopbackRelationAccessor<K, T> {
+  return (key) => new type(parent, name, key);
+}
+
 
 // Classe de base pour fournir les appels de base vers un controller CRUD de loopback2+
 export abstract class LoopbackRestClient<T> implements CRUDDataSource<T> {
@@ -111,13 +132,13 @@ export abstract class LoopbackRestClient<T> implements CRUDDataSource<T> {
         return this.baseURL + this.route;
     }
 
-    constructor(protected httpClient: HttpClient, protected route: string) {}
+    constructor(public httpClient: HttpClient, public route: string) {}
 
-    protected getPath(...items: string[]): string {
+    public getPath(...items: string[]): string {
         return `${this.url}/${items.join('/')}`;
     }
 
-    protected getPathWithId(id: string, ...items: string[]) {
+    public getPathWithId(id: string, ...items: string[]) {
         return this.getPath(id, ...items);
     }
 
@@ -158,6 +179,10 @@ export abstract class LoopbackRestClient<T> implements CRUDDataSource<T> {
     }
 }
 
+export function LoopbackRestClientMixin<T>(): Constructor<LoopbackRestClient<T>> {
+  return class extends LoopbackRestClient<T> {}
+}
+
 export interface CRUDDataSource<T> {
     get: (filter?: Filter) => Observable<T[]>;
 
@@ -170,18 +195,45 @@ export interface CRUDDataSource<T> {
     updateById?: (id: string, data: Partial<T>) => Observable<void>;
 
     delete?: (id: string) => Observable<void>;
+
     count?: (where?: Where) => Observable<Count>;
 }
 
-export function Caching<T>(type: any) {
+
+/**
+ * ResolveSourceRouteData data that can be pass
+ * to a Resolving mixin to include in the request
+ */
+export interface ResolveSourceRouteData {
+  include?: Include[];
+}
+
+/**
+ * Mixin to implements the Resolve<T> interface for using with AngularRouting
+ * call the getById function and extra data can be pass with the ResolveSourceRouteData
+ * interface
+ * @param type Constructor of a CRUDDataSource
+ */
+export function Resolving<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
+    return class extends type implements Resolve<T> {
+      resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        const id = route.params.id;
+        const data = route.data as ResolveSourceRouteData;
+        return this.getById(id, data).pipe(take(1));
+      }
+    }
+}
+
+/**
+ * Mixin to add Caching feature to your CRUDDataSource.
+ * Using CachingRequest from @berlingoqc/ngx-common
+ * @param type Constructor of a CRUDDataSource
+ */
+export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
     return class extends type {
         requestGet = new CachingRequest();
         requestFind = new CachingRequest();
         requestCount = new CachingRequest();
-
-        constructor(...args: any[]) {
-            super(...args);
-        }
 
         get = (filter?: Filter) => {
             return this.requestGet.getObs(filter, super.get(filter)) as any;
@@ -206,7 +258,7 @@ export function Caching<T>(type: any) {
               }
             : undefined;
         updateById = (id: string, data: Partial<T>) => {
-            return this.requestFind.onModif(super.updateById(id, data) as any);
+            return this.requestFind.onModif(super.updateById(id, data)) as Observable<void>;
         };
         delete = super.delete
             ? (id: string) => {
@@ -224,6 +276,10 @@ export function Caching<T>(type: any) {
     };
 }
 
+/**
+ * Implementation of CRUDDataSource for static array
+ * of data.
+ */
 export class StaticDataSource<T> implements CRUDDataSource<T> {
     constructor(public data: T[]) {}
 
@@ -248,9 +304,3 @@ export class StaticDataSource<T> implements CRUDDataSource<T> {
         return of({ count: this.data.length });
     }
 }
-
-export class LoopbackCachingClient<T> extends Caching(LoopbackRestClient) {}
-
-export class LoopbackCachingRelationClient extends Caching(
-    LoopbackRelationClient,
-) {}

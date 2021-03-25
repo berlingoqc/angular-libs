@@ -60,7 +60,7 @@ export class AskConnectDirective implements OnInit {
 @Component({
   selector: "alb-ask-connect",
   template: `
-    <button dynStyle itemId="FIRST_BTN" (click)="authDialogService.openLogin()">
+    <button mat-stroked-button dynStyle itemId="FIRST_BTN" (click)="authDialogService.openLogin()">
       Connectez-vous
     </button>
   `,
