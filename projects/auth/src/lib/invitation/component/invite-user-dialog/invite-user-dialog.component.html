@@ -18,8 +18,8 @@
       </span>
     </div>
     <div class="button-row">
-      <button type="submit" dynStyle itemId="FIRST_BTN">Inviter</button>
-      <button type="button" dynStyle itemId="SECOND_BTN" (click)="dialogRef.close()">Annuler</button>
+      <button type="submit" class="primary">Inviter</button>
+      <button type="button" class="accent" (click)="dialogRef.close()">Annuler</button>
     </div>
   </form>
   <div *ngIf="currentSubscription" style="width: 100%; display: flex; justify-content: center;">

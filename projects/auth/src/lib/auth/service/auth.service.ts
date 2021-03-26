@@ -26,7 +26,6 @@ import { TokenService } from './token.service';
 import { AuthSettingConfig } from '../model/auth-setting-config';
 import { nointercept } from '../../unauthorized/service/http-interceptor';
 import { envConfig } from '@berlingoqc/ngx-common';
-import { env } from 'process';
 
 
 export type LoginEvent = 'connected' | 'disconnected';
