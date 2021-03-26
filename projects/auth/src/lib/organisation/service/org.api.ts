@@ -7,15 +7,14 @@ import {
 } from '@berlingoqc/ngx-loopback';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AUTH_BACKEND_URL } from '../../common';
 import { Organisation } from '../model';
-import { User } from '../../auth';
+import { AuthSettingConfig, User } from '../../auth';
 
 @Injectable()
 export class OrganisationAPI extends LoopbackRestClient<Organisation> {
-  constructor(http: HttpClient, @Inject(AUTH_BACKEND_URL) url: string) {
+  constructor(http: HttpClient, config: AuthSettingConfig) {
     super(http, '/organisations');
-    this.baseURL = url;
+    this.baseURL = config.backend.url;
   }
 
   users(id: string, filter?: Filter<User>): Observable<User[]> {

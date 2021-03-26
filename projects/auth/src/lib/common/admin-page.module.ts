@@ -58,11 +58,11 @@ const stylePage = `
 }
 
 .main-container {
-  min-height: 80vh;
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-botton: 50px;
 }
 
 .top-container {
@@ -183,7 +183,7 @@ export class TopButtonDirective {
       <div class="spacer"></div>
       <!-- Center container -->
       <div class="center-container">
-        <mat-tab-group mat-stretch-tabs class="full" [(selectedIndex)]="index">
+        <mat-tab-group mat-stretch-tabs dynamicHeight class="full" [(selectedIndex)]="index">
           <mat-tab *ngFor="let t of tabs" label="{{ t.name }}">
             <ng-container [ngTemplateOutlet]="t.viewRef"></ng-container>
           </mat-tab>

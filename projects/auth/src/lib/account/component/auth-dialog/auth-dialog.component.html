@@ -1,46 +1,88 @@
 <div class="layout {{ config?.mainContainerClass }}">
-  <div class="img-div">
-    <img src="{{ config.img }}" />
+    <div class="img-div">
+        <img src="{{ config.img }}" />
 
-    <h3>{{ getTitle() }}</h3>
-  </div>
-  <div [ngSwitch]="mode">
-    <!-- FORMULAIRE LOGIN -->
-    <form *ngSwitchCase="'login'" class="form-container" [formGroup]="loginFormGroup" (ngSubmit)="login()">
-      <div style="width: 100%;">
-        <mat-form-field style="width: 100%;">
-          <input matInput type="email" formControlName="email" placeholder="Email" />
-        </mat-form-field>
-        <mat-form-field style="width: 100%;">
-          <input matInput type="password" formControlName="password" placeholder="Mot de passe" />
-        </mat-form-field>
-      </div>
+        <h3>{{ getTitle() }}</h3>
+    </div>
+    <div [ngSwitch]="mode">
+        <!-- FORMULAIRE LOGIN -->
+        <form
+            *ngSwitchCase="'login'"
+            class="form-container"
+            [formGroup]="loginFormGroup"
+            (ngSubmit)="login()"
+        >
+            <div style="width: 100%">
+                <mat-form-field style="width: 100%">
+                    <input
+                        matInput
+                        type="email"
+                        formControlName="email"
+                        placeholder="Email"
+                    />
+                </mat-form-field>
+                <mat-form-field style="width: 100%">
+                    <input
+                        matInput
+                        type="password"
+                        formControlName="password"
+                        placeholder="Mot de passe"
+                    />
+                </mat-form-field>
+            </div>
 
-      <alb-auth-service-error [emailControl]="loginFormGroup.controls.email"
-        [passwordControl]="loginFormGroup.controls.password"></alb-auth-service-error>
+            <alb-auth-service-error
+                [emailControl]="loginFormGroup.controls.email"
+                [passwordControl]="loginFormGroup.controls.password"
+            ></alb-auth-service-error>
 
-      <div class="truc">
-        <div class="button-row">
-          <button mat-stroked-button dynStyle itemId="FIRST_BTN" type="submit">Connexion</button>
-          <button mat-stroked-button dynStyle itemId="SECOND_BTN" type="button" *ngIf="
-              ssoSettings.settings && ssoSettings.settings.sso.publicCreation
-            " (click)="mode = 'new'">
-            Pas de compte ?
-          </button>
-          <button mat-stroked-button dynStyle itemId="THIRD_BTN" (click)="mode = 'fpwd'">
-            Mot de passe oublié
-          </button>
+            <div class="truc">
+                <div class="button-row">
+                    <div>
+                        <button
+                            mat-stroked-button
+                            class="primary"
+                            type="submit"
+                        >
+                            Connexion
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            mat-stroked-button
+                            class="primary"
+                            type="button"
+                            *ngIf="
+                                ssoSettings.settings &&
+                                ssoSettings.settings.sso.publicCreation
+                            "
+                            (click)="mode = 'new'"
+                        >
+                            Pas de compte ?
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            mat-stroked-button
+                            class="accent"
+                            (click)="mode = 'fpwd'"
+                        >
+                            Mot de passe oublié
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- FORMULAIRE MOT DE PASSE OUBLIÉ -->
+
+        <div *ngSwitchCase="'fpwd'">
+            <alb-forgot-password
+                (exit)="onCancel('login')"
+            ></alb-forgot-password>
         </div>
-      </div>
-    </form>
-    <!-- FORMULAIRE MOT DE PASSE OUBLIÉ -->
 
-    <div *ngSwitchCase="'fpwd'">
-      <alb-forgot-password (exit)="onCancel('login')"></alb-forgot-password>
+        <div *ngSwitchCase="'new'">
+            <alb-create-user (cancel)="onCancel('login')"></alb-create-user>
+        </div>
     </div>
-
-    <div *ngSwitchCase="'new'">
-      <alb-create-user (cancel)="onCancel('login')"></alb-create-user>
-    </div>
-  </div>
 </div>

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../../auth/model/user';
 import { Organisation } from '../model/organisation';
 import { AuthSettingConfig } from '../../auth/model/auth-setting-config';
+import { envConfig } from '@berlingoqc/ngx-common';
 
 export interface OrgUserLink {
   id: number;
