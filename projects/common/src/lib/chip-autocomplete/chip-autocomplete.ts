@@ -182,11 +182,6 @@ export class ChipAutoCompleteComponent<T = any> implements OnInit {
             this.allFruits.splice(indexItem, 1);
             this._setFilter();
         } else {
-            console.log(
-                'ERRROR ITEM SELCTED DONT EXISTS',
-                this.allFruits,
-                value,
-            );
         }
     }
 

@@ -41,7 +41,6 @@ export class BaseAutoFormComponent {
     ) {
         if (formData) {
             this.formData = formData;
-            console.log(this.formGroup.value);
             if (formInitialData) this.formGroup.setValue(formInitialData);
         }
     }

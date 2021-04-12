@@ -45,7 +45,6 @@ export class ObjectFieldComponent
 
   ngAfterViewInit() {
     this.initialize();
-    console.log('QUERT', this.abstractControl);
   }
 
   getTemplateField(i: number): FormProperty {

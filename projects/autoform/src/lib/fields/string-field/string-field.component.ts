@@ -29,12 +29,10 @@ export class StringFieldComponent
   }
 
   registerOnChange(fnChange) {
-    console.log('REGISTER ON CHANGE');
   }
 
   registerOnTouched(fnTouch) {}
 
   writeValue(value: any) {
-    console.log('WRITING VALUE');
   }
 }

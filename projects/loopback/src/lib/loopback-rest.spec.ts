@@ -28,7 +28,6 @@ describe('Test queryParam', () => {
       o1: ['21das', 232, false],
     };
     const queryParams = toQueryParams('filter', obj);
-    console.log(queryParams);
   });
 
   fit('Serialize array of nested object', () => {
@@ -37,7 +36,6 @@ describe('Test queryParam', () => {
       o1: ['21das', '232', 'false'],
     };
     const queryParams = toQueryParams('filter', obj);
-    console.log(queryParams);
     expect(queryParams).toEqual(
       '?filter[o2][0]=2&filter[o1][0]=21das&filter[o1][1]=232&filter[o1][2]=false'
     );

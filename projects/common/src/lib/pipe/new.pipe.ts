@@ -6,7 +6,6 @@ import { Pipe, PipeTransform, Type } from '@angular/core';
 })
 export class NewPipe implements PipeTransform {
   transform(type: Type<any>, ...argv: any[]): any {
-    console.log('TYPE', type);
     return new type(...argv);
   }
 }

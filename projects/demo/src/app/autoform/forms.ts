@@ -11,7 +11,7 @@ import {
 
 export const baseForm: AutoFormData = {
     items: [],
-    onSubmitValid: () => console.log(''),
+    onSubmitValid: () => {},
     type: 'expansion-panel',
     typeData: {
         direction: 'vertical',
@@ -22,7 +22,7 @@ export const baseForm: AutoFormData = {
 
 export const simpleForm: AutoFormData = {
     items: [],
-    onSubmitValid: () => console.log(''),
+    onSubmitValid: () => {},
     type: 'simple',
 };
 

@@ -29,7 +29,6 @@ export class BaseComponent implements OnInit {
     }
 
     changeForm(name: string) {
-        console.log('NAVIGATE THIS');
         this.router.navigate(['autoform'], {
             queryParamsHandling: 'merge',
             queryParams: {

@@ -16,7 +16,6 @@ export class ReturnPreviousDirective implements OnInit {
 
     @HostListener('click') onClick() {
         if (this.returnUrl) {
-            console.log('BACK TO', this.returnUrl);
             this.historyService.navigateToItem({ url: this.returnUrl });
         } else {
             this.historyService.back();

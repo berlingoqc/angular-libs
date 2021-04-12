@@ -14,7 +14,6 @@ export class AutoFormSimpleComponent
   ngOnInit(): void {}
 
   submit() {
-    console.log(this.formGroup);
     if (this.formGroup.valid) {
       this.formData.onSubmitValid(this.formGroup.value)
     } else {

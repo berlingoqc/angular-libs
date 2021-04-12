@@ -61,7 +61,6 @@ export class AutoFormGroupBuilder {
                     // WARNING
                 }
             }
-            console.log('FORM CONTROL', value);
             return new FormControl(
                 {
                     value: '',

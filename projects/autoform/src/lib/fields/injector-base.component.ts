@@ -43,7 +43,6 @@ export abstract class InjectorBaseFieldComponent<
   abstract getTemplateField(i: number): FormProperty;
 
   initialize() {
-    console.log(this.templates);
     this.templates.forEach((template, i) => {
       const p = this.getTemplateField(i);
       this.initContextData(p, template, i);
@@ -71,7 +70,6 @@ export abstract class InjectorBaseFieldComponent<
     const instance = component.instance as BaseFieldComponent<any, any>;
     instance.data = field;
     instance.abstractControl = this.getAbstractControl(field, i);
-    console.log(instance.abstractControl);
     const htmlElement = component.location.nativeElement as HTMLElement;
     htmlElement.classList.add('field');
 

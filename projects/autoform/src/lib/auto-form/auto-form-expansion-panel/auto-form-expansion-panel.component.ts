@@ -10,7 +10,6 @@ export class AutoFormStepControlMatAccordion implements FormStepControlImpl {
     private control: AbstractControl,
     private component: AutoFormExpansionPanelComponent
   ) {
-    console.log('COMPONENT', component);
   }
 
   get fistPage() {

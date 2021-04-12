@@ -69,10 +69,7 @@ export class AutoFormRegisterComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.formGroup);
     if (this.formGroup.valid) {
-      console.log('FORM VALID');
-      console.log(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }

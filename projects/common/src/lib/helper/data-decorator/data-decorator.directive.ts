@@ -13,7 +13,6 @@ export class DecoratorsDirective {
     ) {}
 
     @Input() set autoFormDecorator(decorators: Decorators) {
-        console.log('GOT HANDLERS', this.handlers);
         if (!decorators) {
             return;
         }
@@ -35,7 +34,6 @@ export class DecoratorsDirective {
             this.elementRef.nativeElement.classList.add(...decorator.class);
         }
         if (decorator?.style) {
-            console.log(Object.entries(decorator.style));
             Object.entries(decorator.style).forEach(([k, v]) => {
                 this.elementRef.nativeElement.style[k] = v;
             });

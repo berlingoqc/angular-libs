@@ -5,7 +5,6 @@ export class StyleHandler implements DecoratorHandler {
     handle = 'style';
 
     handler = (component: ElementRef<HTMLElement>, data: StyleData) => {
-        console.log('APPLYING STYLE', data);
         if (data?.class) {
             component.nativeElement.classList.add(...data.class);
         }

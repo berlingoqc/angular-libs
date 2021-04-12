@@ -69,7 +69,6 @@ export class TemplateMarkerDirective {
         if (extra) {
             if (extra.inputs) {
                 Object.entries(extra.inputs).forEach(([k, v]) => {
-                    console.log(k, v);
                     componentRef.instance[k] = v;
                 });
             }

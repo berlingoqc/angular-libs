@@ -41,17 +41,25 @@
                     <div>
                         <button
                             mat-stroked-button
-                            class="primary"
-                            type="submit"
+                            class="accent"
                         >
                             Connexion
+                        </button>
+                    </div>
+
+                    <div>
+                        <button
+                            mat-stroked-button
+                            class="primary"
+                            (click)="mode = 'fpwd'"
+                        >
+                            Mot de passe oublié
                         </button>
                     </div>
                     <div>
                         <button
                             mat-stroked-button
-                            class="primary"
-                            type="button"
+                            class="accent"
                             *ngIf="
                                 ssoSettings.settings &&
                                 ssoSettings.settings.sso.publicCreation
@@ -59,15 +67,6 @@
                             (click)="mode = 'new'"
                         >
                             Pas de compte ?
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            mat-stroked-button
-                            class="accent"
-                            (click)="mode = 'fpwd'"
-                        >
-                            Mot de passe oublié
                         </button>
                     </div>
                 </div>

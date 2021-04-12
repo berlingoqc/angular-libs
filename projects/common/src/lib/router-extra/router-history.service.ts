@@ -44,10 +44,8 @@ export class RouterHistoryService implements OnDestroy {
       this.history.push({
         url: this.router.url,
       });
-      console.log('ITEM ADDED', this.history);
     }
     if (event instanceof NavigationEnd) {
-      console.log('Navigation end', event.url, event.urlAfterRedirects);
     }
   }
 }

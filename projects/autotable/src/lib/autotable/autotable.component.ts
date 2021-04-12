@@ -15,6 +15,7 @@ import {
     CRUDDataSource,
     Where,
     Include,
+    Filter,
 } from '@berlingoqc/ngx-loopback';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';

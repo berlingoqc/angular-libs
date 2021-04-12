@@ -272,7 +272,6 @@ export class MultiPartMatInputComponent
   }
 
   autoFocusNext(control: AbstractControl, index: number): void {
-    console.log('NEXT ?', !control.errors, index);
     if (!control.errors && index + 1 < this.inputs.length) {
       this.focusMonitor.focusVia(this.inputs.toArray()[index + 1], 'program');
     }
@@ -293,7 +292,6 @@ export class MultiPartMatInputComponent
     // Crée le form group depuis les informations de l'input
     const controls: { [id: string]: AbstractControl } = {};
     entries.forEach(([k, v]) => {
-      console.log(this.pValue[k]);
       // Crée des validators pour le configuration du field
       controls[k] = new FormControl(this.pValue[k], [
         Validators.required,
