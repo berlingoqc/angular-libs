@@ -6,6 +6,10 @@ import { EnvironmentConfiguration } from './model';
 
 export let envConfig: EnvironmentConfiguration;
 
+export function setEnvConfig(config: any) {
+  envConfig = config;
+}
+
 @Injectable()
 export class EnvConfigurationService {
   private readonly configUrl = 'assets/config/config.json';
