@@ -262,7 +262,7 @@ export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
         };
         delete = super.delete
             ? (id: string) => {
-                  return super.delete(id);
+                  return this.requestFind.onModif(super.delete(id)) as Observable<void>;
               }
             : undefined;
         count = super.count
