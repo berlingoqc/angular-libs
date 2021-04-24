@@ -98,6 +98,7 @@
     </ng-container>
 </table>
 <mat-paginator
+    *ngIf="pageSize > 0"
     [length]="length"
     [pageSize]="pageSize"
     (page)="handlePage($event)"
