@@ -61,8 +61,7 @@ class ExtraRow {
     encapsulation: ViewEncapsulation.None,
 })
 export class AutoTableComponent<T = any>
-    implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    implements OnInit,OnDestroy {
 
     private _columns: TableColumn[];
     private _client: LoopbackRestClient<T>;
@@ -72,7 +71,9 @@ export class AutoTableComponent<T = any>
 
     currentOffset = 0;
     // Nombre d'item par page
-    @Input() pageSize = 50;
+    @Input() pageSize = 10;
+    @Input() pageSizeOptions: number[] = [2, 5, 10, 25, 50];
+    @Input() showFirstLastButtons: boolean = true;
 
     length: number;
 
@@ -146,6 +147,7 @@ export class AutoTableComponent<T = any>
         this.detectorRef.detectChanges();
     }
 
+
     expandedElement: T | null;
 
     sub: Subscription;
@@ -193,11 +195,6 @@ export class AutoTableComponent<T = any>
 
     ngOnInit() {}
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-        this.detectorRef.detectChanges();
-    }
-
     ngOnDestroy() {
         if (this.sub) {
             this.sub.unsubscribe();
@@ -212,8 +209,9 @@ export class AutoTableComponent<T = any>
     }
 
     handlePage(e: any) {
-        this.pageSize = e.pageSize;
         this.currentOffset = e.pageIndex;
+        this.length = e.length;
+        this.pageSize = e.pageSize;
         this.refreshData();
     }
 

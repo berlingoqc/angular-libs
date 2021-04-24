@@ -14,7 +14,7 @@
         <td mat-cell *matCellDef="let e">
             <template-content
                 [content]="c.content"
-                [parent]="e"
+                [context]="e"
             ></template-content>
         </td>
         <!--
@@ -76,7 +76,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-    <tr mat-header-row *matHeaderRowDef="headerExtraRow.aloneRowId"></tr>
+    <!--<tr mat-header-row *matHeaderRowDef="headerExtraRow.aloneRowId"></tr>-->
     <tr
         mat-row
         *matRowDef="let element; columns: displayColumns"
@@ -91,7 +91,7 @@
             class="example-first-footer-row"
         ></tr>
     </ng-container>
-    <tr mat-footer-row *matFooterRowDef="footerExtraRow.aloneRowId"></tr>
+    <!--<tr mat-footer-row *matFooterRowDef="footerExtraRow.aloneRowId"></tr>-->
 
     <ng-container *ngIf="config?.expandable">
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"></tr>
@@ -101,7 +101,7 @@
     [length]="length"
     [pageSize]="pageSize"
     (page)="handlePage($event)"
-    [showFirstLastButtons]="true"
-    [pageSizeOptions]="[2, 5, 10, 25, 50]"
+    [showFirstLastButtons]="showFirstLastButtons"
+    [pageSizeOptions]="pageSizeOptions"
 >
 </mat-paginator>
