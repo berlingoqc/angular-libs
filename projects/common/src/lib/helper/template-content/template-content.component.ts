@@ -38,19 +38,23 @@ export class DemoComponent {
     selector: '[templateMarker]',
 })
 export class TemplateMarkerDirective {
-    @Input('templateMarker') set tc(tc: TemplateContentComponent) {
+    @Input('templateMarker') set tc(tc: {
+      content: TemplateContentDataStructure,
+      context: any,
+      parent: any,
+    }) {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-            tc.innerContent.content as Type<any>,
+            tc.content.content as Type<any>,
         );
 
         this.ref.clear();
 
         const inj = Injector.create({
             providers: [
-                {
-                    provide: TEMPLATE_CONTENT_CONTEXT,
-                    useValue: tc.context,
-                },
+              {
+                provide: TEMPLATE_CONTENT_CONTEXT,
+                useValue: tc.context,
+              },
                 {
                     provide: TEMPLATE_CONTENT_PARENT,
                     useValue: tc.parent,
@@ -65,7 +69,7 @@ export class TemplateMarkerDirective {
             inj,
         );
 
-        const extra: ComponentExtra = tc.innerContent.extra;
+        const extra: ComponentExtra = tc.content.extra;
         if (extra) {
             if (extra.inputs) {
                 Object.entries(extra.inputs).forEach(([k, v]) => {
@@ -109,20 +113,14 @@ export class ServiceTest {
                 {{ innerContent.content | translate }}
             </ng-container>
             <div *ngSwitchCase="'component'">
-                <div *templateMarker="{ content: innerContent }"></div>
-                <!--<ng-container
-                    *ngComponentOutlet="
-                        content.content;
-                        injector: customInjector
-                    "
-                ></ng-container>-->
+                <div *templateMarker="{ content: content, context: context, parent: parent }"></div>
             </div>
             <ng-container *ngSwitchCase="'template'">
                 <ng-container
                     [ngTemplateOutlet]="innerContent.content"
                     [ngTemplateOutletContext]="{
                         parent: parent,
-                        context: innerContext,
+                        context: context,
                         extra: innerContent.extra
                     }"
                 >
@@ -173,17 +171,6 @@ export class TemplateContentComponent
             ) as any;
         } else if (this.innerContent?.type === 'pipe') {
             this.renderPipe();
-        } else if (this.innerContent?.type === 'component') {
-            this.customInjector = Injector.create({
-                providers: [
-                    {
-                        provide: ServiceTest,
-                        useFactory: () => new ServiceTest(),
-                        deps: [],
-                    },
-                ],
-                parent: this.injector,
-            });
         }
     }
 
@@ -191,7 +178,7 @@ export class TemplateContentComponent
 
     // Dans le cas d'une fonction comme contenu
     callFunction() {
-        return (this.innerContent.content as any)(this.parent, this.context);
+        return (this.innerContent.content as any)(this.context, this.parent);
     }
 
     // Render pipe
