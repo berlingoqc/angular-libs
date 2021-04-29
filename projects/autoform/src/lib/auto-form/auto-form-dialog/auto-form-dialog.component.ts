@@ -1,30 +1,92 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseAutoFormComponent } from '../auto-form.base';
-
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Inject,
+    OnInit,
+    Optional,
+} from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AutoFormData } from '../../models';
+import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
+import {
+    BaseAutoFormComponent,
+    AUTO_FORM_DATA,
+    AUTO_FORM_INITAL_DATA,
+    AUTO_FORM_EXPOSITION,
+} from '../auto-form.base';
 
 @Component({
-  template: ''
+    template: `
+        <mat-dialog-content>
+            <ng-container *ngIf="formData">
+                <autoform-object-field
+                    *ngFor="let item of formData.items"
+                    [data]="item"
+                    [abstractControl]="formGroup.controls[item.name]"
+                ></autoform-object-field>
+            </ng-container>
+        </mat-dialog-content>
+
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-button (click)="submit()" cdkFocusInitial>
+                Confirm
+            </button>
+        </mat-dialog-actions>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutoFormDialogComponent extends BaseAutoFormComponent implements OnInit {
+export class AutoFormDialogComponent implements OnInit {
+    get formData(): AutoFormData {
+        return this.data?.formData;
+    }
+    get formGroup() {
+        return this.data?.formGroup;
+    }
 
-  ngOnInit(): void {}
+    constructor(
+      @Inject(MAT_DIALOG_DATA) private data: any,
+      private dialogRef: MatDialogRef<any>,
+    ) {}
 
+    ngOnInit(): void {}
+
+    submit() {
+      this.dialogRef.close(this.formGroup.value);
+      this.formData.onSubmitValid(this.formGroup.value);
+    }
 }
 
-
 @Component({
-  selector: 'lib-auto-form-dialog',
-  template: ''
+    selector: 'lib-auto-form-dialog',
+    template: '',
 })
-export class AutoFormDialogPlaceholderComponent extends BaseAutoFormComponent implements OnInit {
+export class AutoFormDialogPlaceholderComponent
+    extends BaseAutoFormComponent
+    implements OnInit {
+    constructor(
+        @Optional() @Inject(AUTO_FORM_DATA) formData: AutoFormData,
+        @Optional() @Inject(AUTO_FORM_INITAL_DATA) formInitialData: any,
+        @Optional() @Inject(AUTO_FORM_EXPOSITION) exposition: any,
+        autoFormBuilder: AutoFormGroupBuilder,
+        private dialog: MatDialog,
+    ) {
+        super(formData, formInitialData, exposition, autoFormBuilder);
+    }
 
-  ngOnInit(): void {
-    this.exposition['open'] = (data: any) => this.open(data);
-  }
+    ngOnInit(): void {
+        this.exposition['open'] = (data: any) => this.open(data);
+    }
 
-
-  open(data: any) {
-    console.log('OPENNING', data);
-  }
-
+    open(data: any) {
+        if (data) {
+          this.formGroup.setValue(data);
+        }
+        return this.dialog.open(AutoFormDialogComponent, {
+            data: {
+                formData: this.formData,
+                formGroup: this.formGroup,
+            },
+        });
+    }
 }
