@@ -20,9 +20,9 @@ import {
         <mat-dialog-content>
             <ng-container *ngIf="formData">
                 <autoform-object-field
-                    *ngFor="let item of formData.items"
+                    *ngFor="let item of data.formData.items"
                     [data]="item"
-                    [abstractControl]="formGroup.controls[item.name]"
+                    [abstractControl]="data.formGroup.controls[item.name]"
                 ></autoform-object-field>
             </ng-container>
         </mat-dialog-content>
@@ -34,7 +34,6 @@ import {
             </button>
         </mat-dialog-actions>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutoFormDialogComponent implements OnInit {
     get formData(): AutoFormData {

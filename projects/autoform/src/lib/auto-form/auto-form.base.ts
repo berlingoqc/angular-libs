@@ -56,6 +56,7 @@ export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContain
         protected autoFormBuilder: AutoFormGroupBuilder,
     ) {
         this.exposition = exposition;
+        this.exposition['this'] = this;
         if (formData) {
             this.formData = formData;
             if (formInitialData) this.formGroup.setValue(formInitialData);

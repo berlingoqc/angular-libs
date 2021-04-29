@@ -30,12 +30,11 @@ export class BaseFormField extends CVA<any> implements AfterViewInit {
     @ViewChildren('myInput') myInput: QueryList<any>;
     currentInput: HTMLInputElement | any;
 
-    /*constructor(protected cdr: ChangeDetectorRef) {
+    constructor(public cdr: ChangeDetectorRef) {
         super();
-    }*/
+    }
 
     ngAfterViewInit() {
         this.currentInput = this.myInput.first.nativeElement;
-        //this.cdr.detectChanges();
     }
 }

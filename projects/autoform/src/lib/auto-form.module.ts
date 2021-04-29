@@ -51,6 +51,7 @@ import { AUTO_FORM_TYPE_REGISTER } from './auto-form/auto-form.base';
 import { ControlsModule } from './helper/form-ops/controls/controls.module';
 import { MultiPartMatInputComponent } from './fields/multi-part-mat-input.component';
 import { MatSelectModule } from '@angular/material/select';
+import { ComponentFieldService } from './fields/field.service';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -130,6 +131,7 @@ import { MatSelectModule } from '@angular/material/select';
     providers: [
         ComponentRegisterService,
         AutoFormGroupBuilder,
+        ComponentFieldService,
         {
             provide: AUTO_FORM_TYPE_REGISTER,
             useValue: {

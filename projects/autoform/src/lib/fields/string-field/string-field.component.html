@@ -5,6 +5,7 @@
 >
   <autoform-mat-select
     *ngSwitchCase="'select'"
+    #myInput
     [type]="type"
     [data]="data"
     [component]="data.component"
@@ -17,6 +18,7 @@
   </autoform-mat-select>
   <my-mat-input
     *ngSwitchDefault
+    #myInput
     [autoFormDecorator]="data.decorators"
     autoFormElementID="component"
     [type]="type"

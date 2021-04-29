@@ -42,7 +42,6 @@ export class FormStepControlMatStepper implements FormStepControlImpl {
   selector: 'lib-auto-form-stepper',
   templateUrl: './auto-form-stepper.component.html',
   styleUrls: ['./auto-form-stepper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutoFormStepperComponent extends
 BaseAutoFormComponent<StepperFormContainer> {

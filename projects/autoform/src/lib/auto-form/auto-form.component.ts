@@ -5,7 +5,9 @@ import {
     Injector,
     Inject,
     Optional,
+    AfterViewInit,
 } from '@angular/core';
+import { ComponentFieldService } from '../fields/field.service';
 import { AutoFormData } from '../models/form';
 import { AutoFormSimpleComponent } from './auto-form-simple/auto-form-simple.component';
 import {
@@ -29,7 +31,7 @@ import {
         ></ng-container>
     `,
 })
-export class AutoFormComponent implements OnInit {
+export class AutoFormComponent implements OnInit, AfterViewInit {
     @Input() formData: AutoFormData;
 
     @Input() initialData: any;
@@ -42,7 +44,6 @@ export class AutoFormComponent implements OnInit {
 
 
     get exposition(): any {
-      console.log(this.expositionObject);
       return this.expositionObject;
     }
 
@@ -55,6 +56,7 @@ export class AutoFormComponent implements OnInit {
         @Inject(AUTO_FORM_TYPE_REGISTER)
         public formTypeRegister: FormTypeRegister,
         private injector: Injector,
+        public componentFieldService: ComponentFieldService,
     ) {
         if (formData) {
             this.formData = formData;
@@ -77,5 +79,8 @@ export class AutoFormComponent implements OnInit {
             ],
             parent: this.injector,
         });
+    }
+
+    ngAfterViewInit() {
     }
 }

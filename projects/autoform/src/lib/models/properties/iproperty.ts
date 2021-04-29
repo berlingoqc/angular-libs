@@ -4,6 +4,7 @@ import {
     ValidatorFn,
 } from '@angular/forms';
 import { TemplateContentData } from '@berlingoqc/ngx-common';
+import { Observable } from 'rxjs';
 import { PropertyComponent } from '../component';
 import { ISubType } from '../subtype';
 
@@ -49,6 +50,8 @@ export interface IProperty {
     validators?: ValidatorFn | ValidatorFn[] | AbstractControlOptions;
     // Validators async qui seront appliquées au champs
     asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[];
+
+    configChange?: Observable<any>;
 }
 
 export interface FieldErrors {

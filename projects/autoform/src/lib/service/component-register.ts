@@ -3,7 +3,7 @@
  * subtype available with is implementation that can be instanciate
  */
 
-import { Input, Injectable, Directive } from '@angular/core';
+import { Input, Injectable, Directive, ViewChild } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { IPropertyComponentHandler, SubTypeHandler } from '../models';
 import { IProperty, IPropertyType } from '../models/properties/iproperty';
@@ -14,6 +14,8 @@ export abstract class BaseFieldComponent<
   C extends AbstractControl
 > {
   private innerData: T;
+
+  @ViewChild('myInput') input: any;
 
   @Input()
   set data(t: T) {

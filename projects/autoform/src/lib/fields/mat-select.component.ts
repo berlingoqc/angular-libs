@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { resolveData } from '@berlingoqc/ngx-common';
+import { Subject } from 'rxjs';
 import { SelectComponent } from '../models/component/select.component';
 import { BaseFormField } from './base-form-field';
 
@@ -39,7 +41,7 @@ import { BaseFormField } from './base-form-field';
         </ng-container>
         <ng-container>
           <mat-option
-            *ngFor="let value of $any(component.options.options.value | dataResolver)"
+            *ngFor="let value of options"
             [value]="value"
           >
             <template-content [content]="component.options.displayContent" [context]="value"></template-content>
@@ -115,12 +117,19 @@ import { BaseFormField } from './base-form-field';
       }}</mat-error>-->
     </mat-form-field>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyMatSelectComponent extends BaseFormField {
+export class MyMatSelectComponent extends BaseFormField implements OnInit{
   @Input() component: SelectComponent;
 
-  /*constructor(cdr: ChangeDetectorRef) {
+  @Input() options: any;
+
+  constructor(cdr: ChangeDetectorRef) {
     super(cdr);
-  }*/
+  }
+
+  ngOnInit() {
+    resolveData((this.component.options.options as any).value).subscribe((data) => {
+      this.options = data;
+    });
+  }
 }

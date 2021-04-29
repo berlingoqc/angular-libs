@@ -13,16 +13,19 @@ import {
   Injector,
   Input,
   Directive,
+  OnDestroy,
 } from '@angular/core';
 import { FormProperty, FormObject } from '../models/object';
 import { DecoratorsDirective } from '../directive/decorator-directive';
 import { IProperty } from '../models';
+import { ComponentFieldService } from './field.service';
+import { Observable } from 'rxjs';
 
 @Directive()
 export abstract class InjectorBaseFieldComponent<
   T extends IProperty,
   C extends AbstractControl
-> extends BaseFieldComponent<T, C> {
+> extends BaseFieldComponent<T, C> implements OnDestroy {
   @ViewChildren(TemplateRef, { read: ViewContainerRef }) templates: QueryList<
     ViewContainerRef
   >;
@@ -30,7 +33,13 @@ export abstract class InjectorBaseFieldComponent<
   //@Input() data: T;
   @Input() abstractControl: C;
 
+  @Input() configChange: Observable<any>;
+
   components: BaseFieldComponent<any, any>[] = [];
+
+  componentFieldService: ComponentFieldService;
+
+  field: IProperty | FormObject
 
   constructor(
     register: ComponentRegisterService,
@@ -38,6 +47,7 @@ export abstract class InjectorBaseFieldComponent<
     protected injector: Injector
   ) {
     super(register);
+    this.componentFieldService = this.injector.get(ComponentFieldService);
   }
 
   abstract getTemplateField(i: number): FormProperty;
@@ -78,5 +88,15 @@ export abstract class InjectorBaseFieldComponent<
     decoratorsDirective.autoFormDecorator = field.decorators;
 
     component.changeDetectorRef.detectChanges();
+
+    console.log('REGISTE', field.name);
+    this.componentFieldService.items[field.name] = component;
+
+    this.field = field;
+  }
+
+  ngOnDestroy() {
+    this.componentFieldService.items[this.field.name].destroy();
+    delete this.componentFieldService.items[this.field.name];
   }
 }
