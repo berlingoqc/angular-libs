@@ -10,5 +10,7 @@ export * from './lib/service/subtypecomponent';
 export * from './lib/auto-form.module';
 export * from './lib/auto-form/auto-form.component';
 
+export * from './lib/fields';
+
 export * from './lib/helper';
 export * from './lib/auto-form-register';

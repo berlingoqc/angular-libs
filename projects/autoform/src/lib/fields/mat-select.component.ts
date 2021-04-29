@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { SelectComponent } from '../models/component/select.component';
 import { BaseFormField } from './base-form-field';
 
@@ -27,6 +27,7 @@ import { BaseFormField } from './base-form-field';
       <mat-select
         #myInput
         *ngIf="!component.type || component.type == 'mat'"
+        [formControl]="abstractControl"
         [required]="data.required"
       >
         <ng-container *ngIf="component.noneOption">
@@ -38,10 +39,10 @@ import { BaseFormField } from './base-form-field';
         </ng-container>
         <ng-container>
           <mat-option
-            *ngFor="let option of $any(component.options)"
-            [value]="option.value"
+            *ngFor="let value of $any(component.options.options.value | dataResolver)"
+            [value]="value"
           >
-            <template-content [content]="option.display"></template-content>
+            <template-content [content]="component.options.displayContent" [context]="value"></template-content>
           </mat-option>
         </ng-container>
       </mat-select>
@@ -61,12 +62,12 @@ import { BaseFormField } from './base-form-field';
           </option>
         </ng-container>
         <ng-container>
-          <option
-            *ngFor="let option of $any(component.options)"
-            [value]="option.value"
+          <!--<option
+            *ngFor="let value of $any(component.options.options | dataResolver)"
+            [value]="value"
           >
-            <template-content [content]="option.display"></template-content>
-          </option>
+            <template-content [content]="option.display" [context]="value"></template-content>
+          </option>-->
         </ng-container>
       </select>
 
@@ -107,14 +108,19 @@ import { BaseFormField } from './base-form-field';
         ></template-content>
       </mat-hint>
 
-      <!--Affichage des erreurs-->
+
+      <!--Affichage des erreurs
       <mat-error *ngFor="let e of data.errors | errorFilter: abstractControl">{{
         e.text
-      }}</mat-error>
+      }}</mat-error>-->
     </mat-form-field>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyMatSelectComponent extends BaseFormField {
   @Input() component: SelectComponent;
+
+  /*constructor(cdr: ChangeDetectorRef) {
+    super(cdr);
+  }*/
 }

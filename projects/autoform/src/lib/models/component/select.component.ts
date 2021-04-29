@@ -1,17 +1,15 @@
-import { TemplateContentData } from '@berlingoqc/ngx-common';
+import { DataResolver, TemplateContentData } from '@berlingoqc/ngx-common';
 import { PropertyComponent } from '../component';
 
 // Une option a selectionner dans la mat-select
 export interface SelectOption {
-    // La valeur de cette options
-    value: any;
-    // La facon de la display
-    display: TemplateContentData;
+    value: DataResolver<any[]>;
 }
 
 export class SelectOptionGroup {
-    display: TemplateContentData;
-    options: SelectOption[];
+    displayTitle: TemplateContentData;
+    displayContent: TemplateContentData;
+    options: SelectOption;
 }
 
 export interface SelectOptionGroups {
@@ -37,5 +35,5 @@ export class SelectComponent implements PropertyComponent {
     noneOption?: TemplateContentData;
 
     // Les options du mat-select
-    options: SelectOption[] | SelectOptionGroups;
+    options: SelectOptionGroup | SelectOptionGroups;
 }

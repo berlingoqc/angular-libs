@@ -144,7 +144,7 @@ export class MyMatInput extends BaseFormField {
 
   @Input() autocomplete: AutocompleteSubType;
 
-  constructor(cdr: ChangeDetectorRef) {
+  /*constructor(cdr: ChangeDetectorRef) {
     super(cdr);
-  }
+  }*/
 }

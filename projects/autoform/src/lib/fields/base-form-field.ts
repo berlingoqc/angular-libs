@@ -3,6 +3,7 @@
 import {
     AfterViewInit,
     ChangeDetectorRef,
+    Directive,
     Input,
     QueryList,
     ViewChildren,
@@ -13,6 +14,7 @@ import { InputProperty } from '../models';
 import { CVA } from '../service/cva';
 
 // qui wrappe autour d'un formfield
+@Directive({})
 export class BaseFormField extends CVA<any> implements AfterViewInit {
     // Type of the mat-input
     @Input() type: string;
@@ -28,12 +30,12 @@ export class BaseFormField extends CVA<any> implements AfterViewInit {
     @ViewChildren('myInput') myInput: QueryList<any>;
     currentInput: HTMLInputElement | any;
 
-    constructor(protected cdr: ChangeDetectorRef) {
+    /*constructor(protected cdr: ChangeDetectorRef) {
         super();
-    }
+    }*/
 
     ngAfterViewInit() {
         this.currentInput = this.myInput.first.nativeElement;
-        this.cdr.detectChanges();
+        //this.cdr.detectChanges();
     }
 }

@@ -10,6 +10,7 @@
     "lib": ["dom", "es2018"]
   },
   "angularCompilerOptions": {
+    "enableIvy": true,
     "annotateForClosureCompiler": false,
     "fullTemplateTypeCheck": false,
     "strictInjectionParameters": true,

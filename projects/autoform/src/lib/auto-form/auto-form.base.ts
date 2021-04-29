@@ -1,4 +1,4 @@
-import { Inject, InjectionToken, Input, Optional, Type } from '@angular/core';
+import { Directive, Inject, InjectionToken, Input, Optional, Type } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AutoFormData } from '../models';
 import { AutoFormGroupBuilder } from '../service/auto-form-group-builder';
@@ -19,6 +19,8 @@ export const AUTO_FORM_TYPE_REGISTER = new InjectionToken<FormTypeRegister>(
     'AUTO_FORM_TYPE_REGISTER',
 );
 
+
+@Directive({})
 export class BaseAutoFormComponent {
     private pFormData: AutoFormData;
 
