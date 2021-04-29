@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { FormStepControlImpl } from '../../helper/form-ops/form-ops';
+import { StepperFormContainer } from '../../models/form-container/stepper-form-container';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import { BaseAutoFormComponent } from '../auto-form.base';
 
@@ -41,7 +42,9 @@ export class FormStepControlMatStepper implements FormStepControlImpl {
   selector: 'lib-auto-form-stepper',
   templateUrl: './auto-form-stepper.component.html',
   styleUrls: ['./auto-form-stepper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutoFormStepperComponent extends BaseAutoFormComponent {
+export class AutoFormStepperComponent extends
+BaseAutoFormComponent<StepperFormContainer> {
   contolType = FormStepControlMatStepper;
 }

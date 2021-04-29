@@ -6,3 +6,4 @@ export * from './form-groups';
 export * from './object';
 export * from './properties';
 export * from './subtype';
+export * from './form-container';

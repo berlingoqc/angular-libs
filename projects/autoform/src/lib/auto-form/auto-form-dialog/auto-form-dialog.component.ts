@@ -83,6 +83,7 @@ export class AutoFormDialogPlaceholderComponent
           this.formGroup.setValue(data);
         }
         return this.dialog.open(AutoFormDialogComponent, {
+            ...this.typeData,
             data: {
                 formData: this.formData,
                 formGroup: this.formGroup,

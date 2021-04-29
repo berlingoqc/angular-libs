@@ -1,10 +1,10 @@
 <mat-horizontal-stepper
   *ngIf="
-    !formData.typeData.direction || formData.typeData.direction == 'horizontal';
+    !typeData.direction || typeData.direction == 'horizontal';
     else vertical
   "
   #stepper
-  [linear]="formData.typeData.linear"
+  [linear]="typeData.linear"
 >
   <mat-step
     *ngFor="let item of formData.items"
@@ -19,7 +19,7 @@
 </mat-horizontal-stepper>
 
 <ng-template #vertical>
-  <mat-vertical-stepper #stepper2 [linear]="formData.typeData.linear">
+  <mat-vertical-stepper #stepper2 [linear]="typeData.linear">
     <mat-step
       *ngFor="let item of formData.items"
       [stepControl]="formGroup.controls[item.name]"

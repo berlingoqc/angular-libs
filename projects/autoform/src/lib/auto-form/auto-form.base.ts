@@ -1,6 +1,7 @@
 import { Directive, Inject, InjectionToken, Input, Optional, Type } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AutoFormData } from '../models';
+import { BaseFormContainer } from '../models/form-container/form-container';
 import { AutoFormGroupBuilder } from '../service/auto-form-group-builder';
 
 export const AUTO_FORM_DATA = new InjectionToken<AutoFormData>(
@@ -25,7 +26,7 @@ export const AUTO_FORM_TYPE_REGISTER = new InjectionToken<FormTypeRegister>(
 
 
 @Directive({})
-export class BaseAutoFormComponent {
+export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContainer> {
     private pFormData: AutoFormData;
 
     formGroup: FormGroup;
@@ -38,6 +39,10 @@ export class BaseAutoFormComponent {
     }
     get formData(): AutoFormData {
         return this.pFormData;
+    }
+
+    get typeData(): T {
+      return (this.formData.typeData ?? {}) as T
     }
 
     exposition: any;

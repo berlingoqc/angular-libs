@@ -3,6 +3,7 @@ import { FormObject, FormProperty } from './object';
 import { FormGroup } from '@angular/forms';
 import { Container } from './container';
 import { TemplateContent } from '@berlingoqc/ngx-common';
+import { BaseFormContainer } from './form-container/form-container';
 
 export interface AutoFormData extends Container {
     // Templates qui peuvent être injecter autout des différents éléments.
@@ -29,7 +30,7 @@ export interface AutoFormData extends Container {
         | string;
     // Représente les données propores au type de formulaire choisis (type)
 
-    typeData?: any;
+    typeData?: BaseFormContainer;
     // Ensemble des FormObject qui forme le formulaire
     items: FormObject[];
 
