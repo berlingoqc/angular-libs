@@ -1,6 +1,5 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { TemplateContentData } from '@berlingoqc/ngx-common';
-import { DataTransformerImpl } from '../../helper/data-transformer/data-transformer';
+import { TemplateContentData, DataTransformerImpl } from '@berlingoqc/ngx-common';
 import { PropertyComponent } from '../component';
 import { Container, ContainerData } from '../container';
 import { Input } from '../properties';

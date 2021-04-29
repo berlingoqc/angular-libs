@@ -9,7 +9,7 @@ import { ISubType, SubTypeHandler } from '../..';
 import {
   DataResolver,
   resolveData,
-} from '../../../helper/data-resolver/data-resolver';
+} from '@berlingoqc/ngx-common';
 import { BaseFieldComponent } from '../../../service/component-register';
 import { FieldErrors } from '../iproperty';
 

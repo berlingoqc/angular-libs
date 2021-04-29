@@ -1,7 +1,4 @@
 import { Component, OnInit, Input, Optional, Inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { AutoFormData } from '../../models';
-import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import { BaseAutoFormComponent, AUTO_FORM_DATA } from '../auto-form.base';
 
 @Component({
@@ -14,8 +11,8 @@ export class AutoFormSimpleComponent
   ngOnInit(): void {}
 
   submit() {
-    if (this.formGroup.valid) {
-      this.formData.onSubmitValid(this.formGroup.value)
+    if (this.formGroup.valid && this.formData.event) {
+      this.formData.event.submit(this.formGroup.value).subscribe();
     } else {
       this.formGroup.markAllAsTouched();
     }

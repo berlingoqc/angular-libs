@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Container } from './container';
 import { TemplateContent } from '@berlingoqc/ngx-common';
 import { BaseFormContainer } from './form-container/form-container';
+import { AutoFormEvent } from './event';
 
 export interface AutoFormData extends Container {
     // Templates qui peuvent être injecter autout des différents éléments.
@@ -32,7 +33,8 @@ export interface AutoFormData extends Container {
 
     typeData?: BaseFormContainer;
     // Ensemble des FormObject qui forme le formulaire
+    // TODO ACCEPTER DIRECTEMENT UN FORMOBJECT
     items: FormObject[];
 
-    onSubmitValid: (data: any) => void;
+    event?: AutoFormEvent;
 }

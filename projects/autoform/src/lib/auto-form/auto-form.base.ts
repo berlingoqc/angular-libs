@@ -1,5 +1,7 @@
 import { Directive, Inject, InjectionToken, Input, Optional, Type } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { resolveData } from '@berlingoqc/ngx-common';
+import { take } from 'rxjs/operators';
 import { AutoFormData } from '../models';
 import { BaseFormContainer } from '../models/form-container/form-container';
 import { AutoFormGroupBuilder } from '../service/auto-form-group-builder';
@@ -57,6 +59,13 @@ export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContain
         if (formData) {
             this.formData = formData;
             if (formInitialData) this.formGroup.setValue(formInitialData);
+            if (this.formData.event?.initialData) {
+              resolveData(this.formData.event.initialData)
+                .pipe(take(1))
+                .subscribe((data) => {
+                  this.formGroup.patchValue(data);
+                });
+            }
         }
     }
 }

@@ -53,7 +53,9 @@ export class AutoFormDialogComponent implements OnInit {
 
     submit() {
       this.dialogRef.close(this.formGroup.value);
-      this.formData.onSubmitValid(this.formGroup.value);
+      if (this.formData.event) {
+        this.formData.event.submit(this.formGroup.value).subscribe(() => {});
+      }
     }
 }
 

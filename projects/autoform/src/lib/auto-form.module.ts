@@ -29,10 +29,9 @@ import { MyMatSelectComponent } from './fields/mat-select.component';
 import { GetDecoratorDataPipe } from './pipe/decorator.pipe';
 import { FieldErrorComponent } from './fields/field-error/field-error.component';
 import { DecoratorsDirective } from './directive/decorator-directive';
-import { TemplateContentModule } from '@berlingoqc/ngx-common';
+import { DataResolverModule, TemplateContentModule } from '@berlingoqc/ngx-common';
 
 import { CommonPipeModule } from '@berlingoqc/ngx-common';
-import { DataResolverModule } from './helper/data-resolver/data-resolver.module';
 import { AutocompleteSubTypeHandler } from './models/properties/subtype/autocomplete';
 import { AutoFormGroupBuilder } from './service/auto-form-group-builder';
 import { AutoFormExpansionPanelComponent } from './auto-form/auto-form-expansion-panel/auto-form-expansion-panel.component';
