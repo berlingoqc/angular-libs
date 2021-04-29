@@ -37,7 +37,7 @@ import { AutocompleteSubTypeHandler } from './models/properties/subtype/autocomp
 import { AutoFormGroupBuilder } from './service/auto-form-group-builder';
 import { AutoFormExpansionPanelComponent } from './auto-form/auto-form-expansion-panel/auto-form-expansion-panel.component';
 import { AutoFormCardComponent } from './auto-form/auto-form-card/auto-form-card.component';
-import { AutoFormDialogComponent } from './auto-form/auto-form-dialog/auto-form-dialog.component';
+import { AutoFormDialogComponent, AutoFormDialogPlaceholderComponent } from './auto-form/auto-form-dialog/auto-form-dialog.component';
 import { AutoFormStepperComponent } from './auto-form/auto-form-stepper/auto-form-stepper.component';
 import { AutoFormTabsComponent } from './auto-form/auto-form-tabs/auto-form-tabs.component';
 import { MatCardModule } from '@angular/material/card';
@@ -83,6 +83,7 @@ import { MatSelectModule } from '@angular/material/select';
         AutoFormExpansionPanelComponent,
         AutoFormCardComponent,
         AutoFormDialogComponent,
+        AutoFormDialogPlaceholderComponent,
         AutoFormStepperComponent,
         AutoFormTabsComponent,
         DictFieldComponent,
@@ -136,7 +137,7 @@ import { MatSelectModule } from '@angular/material/select';
                 simple: AutoFormSimpleComponent,
                 'bottom-sheet': AutoFormBottonSheetComponent,
                 card: AutoFormCardComponent,
-                dialog: AutoFormDialogComponent,
+                dialog: AutoFormDialogPlaceholderComponent,
                 'expansion-panel': AutoFormExpansionPanelComponent,
                 stepper: AutoFormStepperComponent,
                 tabs: AutoFormTabsComponent,

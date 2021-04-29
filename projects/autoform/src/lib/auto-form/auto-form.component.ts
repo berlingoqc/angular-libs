@@ -10,6 +10,7 @@ import { AutoFormData } from '../models/form';
 import { AutoFormSimpleComponent } from './auto-form-simple/auto-form-simple.component';
 import {
     AUTO_FORM_DATA,
+  AUTO_FORM_EXPOSITION,
     AUTO_FORM_INITAL_DATA,
     AUTO_FORM_TYPE_REGISTER,
     FormTypeRegister,
@@ -39,6 +40,14 @@ export class AutoFormComponent implements OnInit {
 
     customInjector: Injector;
 
+
+    get exposition(): any {
+      console.log(this.expositionObject);
+      return this.expositionObject;
+    }
+
+    private expositionObject: any;
+
     constructor(
         @Optional()
         @Inject(AUTO_FORM_DATA)
@@ -53,6 +62,7 @@ export class AutoFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.expositionObject = {};
         this.customInjector = Injector.create({
             providers: [
                 { provide: AUTO_FORM_DATA, useValue: this.formData },
@@ -60,6 +70,10 @@ export class AutoFormComponent implements OnInit {
                     provide: AUTO_FORM_INITAL_DATA,
                     useValue: this.initialData,
                 },
+                {
+                  provide: AUTO_FORM_EXPOSITION,
+                  useValue: this.expositionObject,
+                }
             ],
             parent: this.injector,
         });

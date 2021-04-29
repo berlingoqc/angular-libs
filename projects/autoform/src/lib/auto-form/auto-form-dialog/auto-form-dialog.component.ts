@@ -1,15 +1,30 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseAutoFormComponent } from '../auto-form.base';
+
+
+@Component({
+  template: ''
+})
+export class AutoFormDialogComponent extends BaseAutoFormComponent implements OnInit {
+
+  ngOnInit(): void {}
+
+}
+
 
 @Component({
   selector: 'lib-auto-form-dialog',
-  templateUrl: './auto-form-dialog.component.html',
-  styleUrls: ['./auto-form-dialog.component.css']
+  template: ''
 })
-export class AutoFormDialogComponent implements OnInit {
-
-  constructor() { }
+export class AutoFormDialogPlaceholderComponent extends BaseAutoFormComponent implements OnInit {
 
   ngOnInit(): void {
+    this.exposition['open'] = (data: any) => this.open(data);
+  }
+
+
+  open(data: any) {
+    console.log('OPENNING', data);
   }
 
 }

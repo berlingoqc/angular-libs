@@ -11,6 +11,10 @@ export const AUTO_FORM_INITAL_DATA = new InjectionToken<any>(
     'AUTO_FORM_INITIAL_DATA',
 );
 
+export const AUTO_FORM_EXPOSITION = new InjectionToken<any>(
+  'AUTO_FORM_EXPOSITION'
+)
+
 export interface FormTypeRegister {
     [id: string]: Type<BaseAutoFormComponent>;
 }
@@ -36,11 +40,15 @@ export class BaseAutoFormComponent {
         return this.pFormData;
     }
 
+    exposition: any;
+
     constructor(
         @Optional() @Inject(AUTO_FORM_DATA) formData: AutoFormData,
         @Optional() @Inject(AUTO_FORM_INITAL_DATA) formInitialData: any,
+        @Optional() @Inject(AUTO_FORM_EXPOSITION) exposition: any,
         protected autoFormBuilder: AutoFormGroupBuilder,
     ) {
+        this.exposition = exposition;
         if (formData) {
             this.formData = formData;
             if (formInitialData) this.formGroup.setValue(formInitialData);
