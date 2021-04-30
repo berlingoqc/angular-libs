@@ -5,6 +5,7 @@ import {
     OnInit,
     Optional,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AutoFormData } from '../../models';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
@@ -17,6 +18,10 @@ import {
 
 @Component({
     template: `
+        <h2 *ngIf="formData?.templates && formData.templates['header']">
+          <template-content [content]="formData.templates['header']">
+          </template-content>
+        </h2>
         <mat-dialog-content>
             <ng-container *ngIf="formData">
                 <autoform-object-field
@@ -29,7 +34,7 @@ import {
 
         <mat-dialog-actions align="end">
             <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button (click)="submit()" cdkFocusInitial>
+            <button mat-button [disabled]="!formGroup.valid" (click)="submit()">
                 Confirm
             </button>
         </mat-dialog-actions>
@@ -39,7 +44,7 @@ export class AutoFormDialogComponent implements OnInit {
     get formData(): AutoFormData {
         return this.data?.formData;
     }
-    get formGroup() {
+    get formGroup(): FormGroup {
         return this.data?.formGroup;
     }
 
@@ -55,6 +60,8 @@ export class AutoFormDialogComponent implements OnInit {
       if (this.formData.event) {
         this.formData.event.submit(this.formGroup.value).subscribe(() => {});
       }
+      console.log('RESETING');
+      this.formGroup.reset({emitEvent: false});
     }
 }
 

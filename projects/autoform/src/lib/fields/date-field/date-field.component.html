@@ -1,1 +1,19 @@
-<p>date-field works!</p>
+<div
+  [autoFormDecorator]="data.decorators"
+  autoFormElementID="container"
+  [ngSwitch]="data.component?.name"
+>
+  <my-mat-date
+    *ngSwitchDefault
+    #myInput
+    [autoFormDecorator]="data.decorators"
+    autoFormElementID="component"
+    [type]="type"
+    [data]="data"
+    [abstarctControl]="abstractControl"
+    [hint]="data.hint"
+    [hintAlign]="data.hintAlign"
+    [suffix]="data.suffix"
+    [preffix]="data.suffix"
+  ></my-mat-date>
+</div>

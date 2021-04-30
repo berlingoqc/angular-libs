@@ -261,8 +261,13 @@
                             "projects/demo/src/favicon.ico",
                             "projects/demo/src/assets"
                         ],
-                        "styles": ["projects/demo/src/styles.scss"],
-                        "scripts": []
+                        "styles": [
+                          "projects/demo/src/styles.scss",
+                          "node_modules/prismjs/themes/prism.css"
+                        ],
+                        "scripts": [
+                          "node_modules/prismjs/prism.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

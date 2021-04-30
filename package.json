@@ -5,6 +5,7 @@
     "scripts": {
         "build:all": "ng build common && ng build loopback && ng build autoform && ng build autotable && ng build notification && ng build pwa",
         "build:all:prod": "ng build --prod common && ng build --prod loopback && ng build --prod autoform && ng build --prod autotable",
+        "build:demo": "ng build --prod demo",
         "publishversion": "cd projects/$NAME/ && npm version $TYPE && cd ../../ && ng build --prod $NAME && cd dist/$NAME && npm publish",
         "postpublishversion": "./scripts/publish.sh",
         "documentation": "compodoc -p ./tsconfig.json",
@@ -36,6 +37,7 @@
         "@ngx-translate/core": "^13.0.0",
         "@ngx-translate/http-loader": "^6.0.0",
         "ngx-permissions": "^8.1.1",
+        "prismjs": "^1.23.0",
         "rxjs": "^6.6.0",
         "tslib": "^2.0.0",
         "zone.js": "^0.10.3"

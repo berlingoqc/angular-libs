@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AutoFormModule, FormSaverModule } from '@berlingoqc/ngx-autoform';
 import { MatIconModule } from '@angular/material/icon';
-import { FancyLabel } from './forms';
+import { FancyLabel } from './models';
 
 @NgModule({
     declarations: [FancyLabel],

@@ -11,26 +11,38 @@ import {
     AutoFormModule,
     AutoFormRegister,
 } from 'projects/autoform/src/public-api';
+
+
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TestMultiPartMatInputComponent } from './autoform/test-multi-part-mat-input.component';
 import { DemoAutoTableComponent } from './autotable/demo-auto-table.component';
 import { AutoTableModule } from '@berlingoqc/ngx-autotable';
 import { DataDecoratorModule } from '@berlingoqc/ngx-common';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        TestMultiPartMatInputComponent,
         DemoAutoTableComponent,
+        HomeComponent,
     ],
     imports: [
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule,
         AutoformModule,
         AutoFormModule.forRoot(),
         AutoFormRegister,
+        HttpClientModule,
 
         AutoTableModule,
 

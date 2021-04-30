@@ -14,6 +14,7 @@ import {
   Input,
   Directive,
   OnDestroy,
+  ComponentRef,
 } from '@angular/core';
 import { FormProperty, FormObject } from '../models/object';
 import { DecoratorsDirective } from '../directive/decorator-directive';
@@ -39,7 +40,9 @@ export abstract class InjectorBaseFieldComponent<
 
   componentFieldService: ComponentFieldService;
 
-  field: IProperty | FormObject
+  field: IProperty | FormObject;
+
+  componentRef: ComponentRef<any>;
 
   constructor(
     register: ComponentRegisterService,
@@ -89,14 +92,14 @@ export abstract class InjectorBaseFieldComponent<
 
     component.changeDetectorRef.detectChanges();
 
-    console.log('REGISTE', field.name);
-    this.componentFieldService.items[field.name] = component;
+    this.componentRef = component;
 
     this.field = field;
   }
 
   ngOnDestroy() {
-    this.componentFieldService.items[this.field.name].destroy();
-    delete this.componentFieldService.items[this.field.name];
+    this.componentRef.destroy();
+    //this.componentFieldService.items[this.field.name].destroy();
+    //delete this.componentFieldService.items[this.field.name];
   }
 }

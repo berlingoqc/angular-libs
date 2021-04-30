@@ -1,6 +1,8 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { Component, Inject, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { AutoFormComponent } from '../auto-form/auto-form.component';
 import { AutoFormData } from '../models';
 import { DEFAULT_AUTO_FORM } from '../models/model-context';
 import { AutoFormGroupBuilder } from '../service/auto-form-group-builder';
@@ -10,9 +12,10 @@ import { ModelRegistry } from './model-registry';
 
 @Component({
   selector: 'lib-auto-form-register',
-  template: ` <autoform-form [formData]="formData"></autoform-form> `,
+  template: ` <autoform-form *ngIf="formData" [formData]="formData"></autoform-form> `,
 })
 export class AutoFormRegisterComponent implements OnInit {
+  @ViewChild(AutoFormComponent) autoFormComponent: AutoFormComponent;
   // Le nom du forms a loader
   @Input() forms: string;
   // Le noms du model a venir injecter dans le form, si aucune utilise lui
@@ -32,22 +35,21 @@ export class AutoFormRegisterComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((queryparams) =>
-      this.loadForm(queryparams)
-    );
-  }
+  ngOnInit(): void {}
 
   loadForm(data: any) {
     // Regarde si le nom de model et de forms sont fournis directement
     this.formData = null;
     this.formGroup = null;
-    if (!this.model) {
-      // Si non va les chercher dans le activated route data
-      this.model = data.model;
-      this.forms = data.forms;
+
+    if (!data.model || !data.forms) {
+      return;
     }
+
+    this.model = data.model;
+    this.forms = data.forms;
     // Recupere la definition du model
+    console.log('REGISTER', this.modelRegister.models);
     const model = this.modelRegister.models[this.model];
     if (!model) {
       throw new Error('Model not found with key ' + this.model);
@@ -55,7 +57,7 @@ export class AutoFormRegisterComponent implements OnInit {
     let form: AutoFormData;
     // Si on n'a juste un model , utilise le AutoFormData par default
     if (this.forms) {
-      form = this.formRegister.forms[this.forms];
+      form = this.formRegister.forms[this.forms].data;
     } else {
       form = this.defaultAutoForm;
     }
@@ -63,9 +65,15 @@ export class AutoFormRegisterComponent implements OnInit {
     if (!form) {
       throw new Error('Form nout found with key ' + this.forms);
     }
-    form.items = model;
+    form.items = model.items;
     this.formData = form;
     this.formGroup = this.builder.getFormGroup(this.formData);
+
+
+    console.log('FORM DATA COMPONENT', this.autoFormComponent);
+    if (this.autoFormComponent) {
+      this.autoFormComponent.ngOnInit();
+    }
   }
 
   submit() {

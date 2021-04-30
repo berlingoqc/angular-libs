@@ -9,7 +9,7 @@ import { PropertyComponent } from '../component';
 import { ISubType } from '../subtype';
 
 export type IPropertyType =
-    | 'data'
+    | 'date'
     | 'dic'
     | 'string'
     | 'bool'

@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TestMultiPartMatInputComponent } from './autoform/test-multi-part-mat-input.component';
 import { DemoAutoTableComponent } from './autotable/demo-auto-table.component';
+import { HomeComponent } from './home.component';
 
 const routes: Routes = [
+    {
+      path: '',
+      component: HomeComponent,
+    },
     {
         path: 'autoform',
         loadChildren: () =>
@@ -12,11 +16,7 @@ const routes: Routes = [
             ),
     },
     {
-        path: 'test-multipart',
-        component: TestMultiPartMatInputComponent,
-    },
-    {
-        path: 'test-autotable',
+        path: 'autotable',
         component: DemoAutoTableComponent,
     },
 ];

@@ -52,6 +52,8 @@ import { ControlsModule } from './helper/form-ops/controls/controls.module';
 import { MultiPartMatInputComponent } from './fields/multi-part-mat-input.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ComponentFieldService } from './fields/field.service';
+import { MyMatDate } from './fields/mat-date.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -90,10 +92,13 @@ import { ComponentFieldService } from './fields/field.service';
         DateFieldComponent,
         AutoFormSimpleComponent,
         AutoFormBottonSheetComponent,
+        MyMatDate,
     ],
     imports: [
         CommonModule,
         ControlsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         MatDialogModule,
         MatInputModule,
         MatButtonModule,
@@ -190,6 +195,11 @@ export class AutoFormModule {
             'autocomplete',
             new AutocompleteSubTypeHandler(),
         );
+        register.registerComponent({
+            type: 'date',
+            mainComponentType: DateFieldComponent,
+            typeComponentHandler: []
+        });
         register.registerComponent({
             type: 'bool',
             mainComponentType: BoolFieldComponent,

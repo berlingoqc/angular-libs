@@ -1,30 +1,7 @@
-import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { of } from 'rxjs';
-import {
-    AutoFormData,
-    FormObject,
-    InputProperty,
-    MatCheckboxComponent,
-    SelectComponent,
-} from '@berlingoqc/ngx-autoform';
-
-export const baseForm: AutoFormData = {
-    items: [],
-    onSubmitValid: () => {},
-    type: 'expansion-panel',
-    typeData: {
-        direction: 'vertical',
-        linear: true,
-        labelPosition: 'start',
-    },
-};
-
-export const simpleForm: AutoFormData = {
-    items: [],
-    onSubmitValid: () => {},
-    type: 'simple',
-};
+import { Component } from "@angular/core";
+import { Validators } from "@angular/forms";
+import { FormObject, InputProperty } from "projects/autoform/src/public-api";
+import { of } from "rxjs";
 
 @Component({
     template: '<mat-icon>favorite</mat-icon><b> Fancy</b> <i> label</i>',
@@ -32,7 +9,7 @@ export const simpleForm: AutoFormData = {
 export class FancyLabel {}
 
 // Démonstration de hint, prefix , suffix, required et errors
-export const baseObject: FormObject[] = [
+export const inputPropertyObject: FormObject[] = [
     {
         name: 'BaseObject',
         decorators: {
@@ -172,16 +149,12 @@ export const baseObject: FormObject[] = [
                         type: 'string',
                         content: '--',
                     },
-                    options: [
-                        {
-                            value: 'value',
-                            display: {
-                                type: 'string',
-                                content: 'value 2',
-                            },
-                        },
-                    ],
-                } as SelectComponent,
+                    options: {
+                      options: {
+                        value: ['option1', 'option2']
+                      }
+                    }
+                } as any,
             },
             {
                 name: 'multi-choice string',
@@ -218,54 +191,5 @@ export const baseObject: FormObject[] = [
             },
         ],
         type: 'object',
-    },
-];
-
-export const baseObject2: FormObject[] = [
-    {
-        name: 'name',
-        type: 'object',
-        properties: [
-            {
-                name: 'fistName',
-                type: 'string',
-                required: true,
-            },
-            {
-                name: 'lastName',
-                type: 'string',
-            },
-        ],
-    },
-    {
-        name: 'addresse',
-        type: 'object',
-        decorators: {
-            style: {
-                display: 'flex',
-                'flex-direction': 'row',
-            },
-        },
-        properties: [
-            {
-                name: 'civic',
-                type: 'number',
-                required: true,
-            },
-            {
-                name: 'street',
-                type: 'string',
-                required: true,
-            },
-            {
-                name: 'appartment',
-                type: 'bool',
-                required: true,
-                component: {
-                    name: 'radio',
-                    labelPosition: 'after',
-                } as MatCheckboxComponent,
-            },
-        ],
     },
 ];

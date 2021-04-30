@@ -1,34 +1,71 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AutoFormData } from '../models';
+import { FormRegistry } from './form-registry';
 import { ModelRegistry } from './model-registry';
 
 @Component({
   selector: 'autoform-models-select',
   template: `
-    <mat-form-field>
-      <mat-label>Models disponibles</mat-label>
-      <mat-select [(value)]="current">
-        <mat-option *ngFor="let i of items" [value]="i">{{ i }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <autoform-form [formData]="form"></autoform-form>
   `,
 })
 export class ModelsSelectComponent implements OnInit {
-  @Output() changes = new EventEmitter<string>();
 
-  private _current = '';
-  @Input()
-  set current(v) {
-    this._current = v;
-    this.changes.next(v);
-  }
-  get current() {
-    return this._current;
-  }
-  items: string[] = [];
+  @Input() callback: (data) => Observable<void>;
 
-  constructor(private modelRegistery: ModelRegistry) {}
+  form: AutoFormData = {
+    type: 'simple',
+    items: [
+      {
+        name: 'object',
+        type: 'object',
+        properties: [
+          {
+            name: 'form',
+            type: 'string',
+            displayName: 'Form available',
+            component: {
+              name: 'select',
+              options: {
+                displayTitle: 'Form available',
+                displayContent: (e) => e,
+                options: {
+                  value: Object.keys(this.formRegistery.forms),
+                }
+              }
+            } as any,
+          },
+          {
+            name: 'model',
+            type: 'string',
+            displayName: 'Model available',
+            component: {
+              name: 'select',
+              options: {
+                displayTitle: 'Model available',
+                displayContent: (e) => e,
+                options: {
+                  value: Object.keys(this.modelRegistery.models),
+                }
+              }
+            } as any,
+          }
+        ]
+      }
+    ]
+  }
+
+  constructor(
+    private modelRegistery: ModelRegistry,
+    private formRegistery: FormRegistry,
+  ) {}
 
   ngOnInit() {
-    this.items = Object.keys(this.modelRegistery.models);
+    this.form.event = {
+      submit: this.callback,
+    }
+    //this.items = Object.keys(this.modelRegistery.models);
+    //this.forms = Object.keys(this.formRegistery.forms)
   }
 }

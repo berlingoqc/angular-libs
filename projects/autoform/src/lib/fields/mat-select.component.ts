@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { resolveData } from '@berlingoqc/ngx-common';
-import { Subject } from 'rxjs';
+import { resolveData, unsubscriber } from '@berlingoqc/ngx-common';
+import { Subject, Subscription } from 'rxjs';
 import { SelectComponent } from '../models/component/select.component';
 import { BaseFormField } from './base-form-field';
 
@@ -118,17 +118,20 @@ import { BaseFormField } from './base-form-field';
     </mat-form-field>
   `,
 })
+@unsubscriber
 export class MyMatSelectComponent extends BaseFormField implements OnInit{
   @Input() component: SelectComponent;
 
   @Input() options: any;
+
+  resolvingSub: Subscription;
 
   constructor(cdr: ChangeDetectorRef) {
     super(cdr);
   }
 
   ngOnInit() {
-    resolveData((this.component.options.options as any).value).subscribe((data) => {
+    this.resolvingSub = resolveData((this.component.options.options as any).value).subscribe((data) => {
       this.options = data;
     });
   }
