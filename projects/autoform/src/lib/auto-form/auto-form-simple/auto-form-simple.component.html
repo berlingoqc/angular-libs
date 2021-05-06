@@ -4,7 +4,5 @@
     [data]="item"
     [abstractControl]="formGroup.controls[item.name]"
   ></autoform-object-field>
-  <div>
-    <button mat-stroked-button (click)="submit()">Submit</button>
-  </div>
+  <autoform-actions-bar [actions]="formData.actionsButtons" [component]="this"></autoform-actions-bar>
 </ng-container>

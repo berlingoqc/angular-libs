@@ -6,6 +6,7 @@ import { TemplateContent } from '@berlingoqc/ngx-common';
 import { BaseFormContainer } from './form-container/form-container';
 import { AutoFormEvent } from './event';
 import { Observable } from 'rxjs';
+import { FormActions } from '../helper';
 
 export interface AutoFormData extends Container {
     // Templates qui peuvent être injecter autout des différents éléments.
@@ -38,4 +39,6 @@ export interface AutoFormData extends Container {
     items: FormObject[];
 
     event?: AutoFormEvent;
+
+    actionsButtons?: FormActions;
 }

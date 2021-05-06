@@ -1,3 +1,4 @@
+export * from './lib/buttons-row';
 export * from './lib/chip-autocomplete/module';
 export * from './lib/chip-autocomplete/chip-autocomplete';
 

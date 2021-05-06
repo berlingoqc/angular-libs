@@ -1,0 +1,67 @@
+<ng-container *ngIf="buttons">
+    <ng-container *ngFor="let button of buttons" [ngSwitch]="button.style">
+        <button
+            *ngSwitchDefault
+            mat-stroked-button
+            [color]="button.color"
+            (click)="button.click(router, context)"
+        >
+            <template-content
+                [content]="button.title"
+                [context]="context"
+            ></template-content>
+        </button>
+        <button
+            *ngSwitchCase="'mat-flat-button'"
+            mat-flat-button
+            [color]="button.color"
+            (click)="button.click(router, context)"
+        >
+            <template-content
+                [content]="button.title"
+                [context]="context"
+            ></template-content>
+        </button>
+        <button
+            *ngSwitchCase="'mat-button'"
+            mat-button
+            [color]="button.color"
+            (click)="button.click(router, context)"
+        >
+            <template-content
+                [content]="button.title"
+                [context]="context"
+            ></template-content>
+        </button>
+        <button
+            *ngSwitchCase="'mat-icon-button'"
+            mat-icon-button
+            [color]="button.color"
+            (click)="button.click(router, context)"
+        >
+            <mat-icon>{{ button.title }}</mat-icon>
+        </button>
+        <button
+            *ngSwitchCase="'mat-fab'"
+            mat-fab
+            [color]="button.color"
+            (click)="button.click(router, context)"
+        >
+            <template-content
+                [content]="button.title"
+                [context]="context"
+            ></template-content>
+        </button>
+        <button
+            *ngSwitchCase="'mat-mini-fab'"
+            mat-mini-fab
+            [color]="button.color"
+            (click)="button.click(router, context)"
+        >
+            <template-content
+                [content]="button.title"
+                [context]="context"
+            ></template-content>
+        </button>
+    </ng-container>
+</ng-container>
