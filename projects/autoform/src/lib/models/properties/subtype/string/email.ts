@@ -7,6 +7,7 @@ export interface EmailSubType extends ISubType {}
 
 export class EmailSubType implements SubTypeHandler<EmailSubType> {
     handle(data: EmailSubType, component: BaseFieldComponent<any, any>) {}
+
     getValidators(data: EmailSubType): [ValidatorFn[], AsyncValidatorFn[]] {
         return [null, null];
     }

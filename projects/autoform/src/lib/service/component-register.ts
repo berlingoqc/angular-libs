@@ -24,12 +24,14 @@ export abstract class BaseFieldComponent<
       const handler = this.componentRegister.getSubTypeHandler(
         this.data.subtype.name
       );
-      const errors = handler.getErrors(this.data.subtype);
-      Object.entries(errors).forEach(([k, v]) => {
-        if (!this.data.errors[k]) {
-          this.data.errors[k] = v;
-        }
-      });
+      if (handler.getErrors) {
+        const errors = handler.getErrors(this.data.subtype);
+        Object.entries(errors).forEach(([k, v]) => {
+          if (!this.data.errors[k]) {
+            this.data.errors[k] = v;
+          }
+        });
+      }
     }
   }
   get data(): T {

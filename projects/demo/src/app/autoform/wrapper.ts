@@ -8,7 +8,7 @@ import {
     ModelRegistry,
 } from 'projects/autoform/src/public-api';
 import { of } from 'rxjs';
-import { simpleObject, inputPropertyObject } from './models';
+import { simpleObject, inputPropertyObject, dateForm } from './models';
 import { simpleForm, expansionPanelForm } from './forms';
 import { CodeDemoModule } from '../code-demo/code-demo.module';
 import { map, tap } from 'rxjs/operators';
@@ -82,19 +82,25 @@ export class BaseComponent {
 })
 export class AutoFormRegisterWrapperModule {
     constructor(modelRegister: ModelRegistry, formRegistery: FormRegistry) {
-        modelRegister.models.simple = {
+        modelRegister.models['simple'] = {
           items: simpleObject,
           path: "/demo/src/app/autoform/models/simple.ts",
         };
-        modelRegister.models.two = {
+        modelRegister.models['imput-property'] = {
           items: inputPropertyObject,
           path: "/demo/src/app/autoform/models/input-property.ts",
         };
-        formRegistery.forms.vertical = {
+        modelRegister.models.date = {
+          items: dateForm,
+          path: "/demo/src/app/autoform/models/date.ts",
+        };
+
+
+        formRegistery.forms.simple = {
           data: simpleForm,
           path: "/demo/src/app/autoform/forms/simple.ts",
         };
-        formRegistery.forms.base = {
+        formRegistery.forms['expensaion-panel'] = {
           data: expansionPanelForm,
           path: "/demo/src/app/autoform/forms/expandanle-panel.ts",
         };

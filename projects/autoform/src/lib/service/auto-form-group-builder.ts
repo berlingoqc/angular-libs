@@ -48,14 +48,25 @@ export class AutoFormGroupBuilder {
                     const handler = this.componentRegister.getSubTypeHandler(
                         subType.name,
                     );
-                    const ret = handler.getValidators(subType);
-                    if (ret) {
-                        if (ret[0]) {
-                            validators.push(...ret[0]);
+                    if (handler.getValidators) {
+                        const ret = handler.getValidators(subType);
+                        if (ret) {
+                            if (ret[0]) {
+                                validators.push(...ret[0]);
+                            }
+                            if (ret[1]) {
+                                asyncValidators.push(...ret[1]);
+                            }
                         }
-                        if (ret[1]) {
-                            asyncValidators.push(...ret[1]);
-                        }
+                    }
+                    if (handler.getFormControl) {
+                      return handler.getFormControl({
+                        value: null,
+                        disabled: (value as IProperty).disabled,
+                      },
+                        validators,
+                        asyncValidators
+                      );
                     }
                 } else {
                     // WARNING

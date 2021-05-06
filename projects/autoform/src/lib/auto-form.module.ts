@@ -54,6 +54,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ComponentFieldService } from './fields/field.service';
 import { MyMatDate } from './fields/mat-date.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DateRangeSubTypeHandler } from './models';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -186,6 +187,7 @@ export class AutoFormModule {
             mainComponentType: NumberFieldComponent,
             typeComponentHandler: [],
         });
+
         register.registerComponent({
             type: 'object',
             mainComponentType: ObjectFieldComponent,
@@ -195,11 +197,15 @@ export class AutoFormModule {
             'autocomplete',
             new AutocompleteSubTypeHandler(),
         );
+
         register.registerComponent({
             type: 'date',
             mainComponentType: DateFieldComponent,
             typeComponentHandler: []
         });
+
+        register.registerSubTypeHandler('date-range', new DateRangeSubTypeHandler())
+
         register.registerComponent({
             type: 'bool',
             mainComponentType: BoolFieldComponent,

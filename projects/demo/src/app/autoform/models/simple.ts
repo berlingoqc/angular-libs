@@ -1,4 +1,4 @@
-import { FormObject } from "projects/autoform/src/public-api";
+import { FormObject, DateProperty } from "projects/autoform/src/public-api";
 
 export const simpleObject: FormObject[] = [
     {
@@ -18,7 +18,7 @@ export const simpleObject: FormObject[] = [
                 name: 'born',
                 type: 'date',
                 required: true,
-            },
+            } as DateProperty,
         ],
     },
     {
