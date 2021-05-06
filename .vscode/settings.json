@@ -15,7 +15,7 @@
   "editor.tabSize": 2,
   "editor.wordWrap": "on",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": false
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
