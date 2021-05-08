@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
-import { FormObject } from 'dist/autoform/public-api';
+import { FormObject } from '../../models';
 import { DateProperty } from '../../models/properties/date';
 import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 

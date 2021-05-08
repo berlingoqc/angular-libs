@@ -1,4 +1,3 @@
-import { DataResolver } from "dist/common/public-api";
 import { InputProperty } from "./input";
 
 
