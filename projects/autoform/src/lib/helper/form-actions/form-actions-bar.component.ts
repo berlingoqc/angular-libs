@@ -41,7 +41,6 @@ export class FormActionsBarComponent {
               .submit(this.component.formGroup.value)
               .subscribe();
       }
-      this.component.formGroup.reset();
     } else {
       this.component.formGroup.markAllAsTouched();
     }

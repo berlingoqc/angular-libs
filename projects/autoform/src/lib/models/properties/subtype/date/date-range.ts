@@ -1,4 +1,4 @@
-import { AsyncValidatorFn, FormControl, FormGroup, ValidatorFn } from "@angular/forms";
+import { AsyncValidatorFn, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { DataResolver } from "@berlingoqc/ngx-common";
 import { ISubType, SubTypeHandler } from "../../../subtype";
 
@@ -14,8 +14,8 @@ export class DateRangeSubTypeHandler implements SubTypeHandler<DateRangeSubType>
 
     getFormControl(formState: any,validators: ValidatorFn[], asyncValidators: AsyncValidatorFn[]) {
       return new FormGroup({
-        start: new FormControl(),
-        end: new FormControl(),
+        start: new FormControl(null, [Validators.required]),
+        end: new FormControl(null, [Validators.required]),
       });
     }
 

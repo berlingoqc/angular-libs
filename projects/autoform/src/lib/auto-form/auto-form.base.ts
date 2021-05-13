@@ -59,6 +59,9 @@ export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContain
         this.exposition['this'] = this;
         if (formData) {
             this.formData = formData;
+            if (this.formData.event?.afterFormCreated) {
+              this.formData.event.afterFormCreated(this.formGroup);
+            }
             if (formInitialData) this.formGroup.setValue(formInitialData);
             if (this.formData.event?.initialData) {
               resolveData(this.formData.event.initialData)

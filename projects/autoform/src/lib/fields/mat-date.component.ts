@@ -35,9 +35,9 @@ import { BaseFormField } from "./base-form-field";
 
       <mat-datepicker #picker></mat-datepicker>
 
-      <mat-date-range-input *ngIf="data.subtype?.name === 'date-range'" [rangePicker]="rangepicker">
-        <input #myInput [required]="data.required" matStartDate placeholder="Start">
-        <input matEndDate [required]="data.required" placeholder="End">
+      <mat-date-range-input [formGroup]="abstractControl" *ngIf="data.subtype?.name === 'date-range'" [rangePicker]="rangepicker">
+        <input #myInput formControlName="start" [required]="data.required" matStartDate placeholder="Start">
+        <input matEndDate formControlName="end" [required]="data.required" placeholder="End">
       </mat-date-range-input>
 
       <mat-datepicker-toggle *ngIf="data.subtype?.name === 'date-range'" matSuffix [for]="rangepicker">

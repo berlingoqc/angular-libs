@@ -19,6 +19,7 @@ import {
   FormControl,
   FormGroup,
   NgControl,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import {
@@ -254,6 +255,7 @@ export class MultiPartMatInputComponent
   onContainerClick(): void {
     let isFocus = false;
     const items = Object.entries(this.partsFormGroup.controls);
+    console.log('CONTAINER CLICK', items);
     items.forEach(([k, v], i) => {
       if (v.valid) {
         this.focusMonitor.focusVia(this.inputs.toArray()[i], 'program');
@@ -267,6 +269,11 @@ export class MultiPartMatInputComponent
   }
 
   handleInput(control: AbstractControl, index: number) {
+    this.pValue = this.partsFormGroup.value;
+    const errors = Object.values(this.partsFormGroup.controls)
+      .map((fc) => fc.errors)
+      .reduce((previous, current) => Object.assign(previous ?? {}, current))
+    console.log('ERRORS', errors);
     this.autoFocusNext(control, index);
     this.onChange(this.value);
   }
@@ -291,14 +298,13 @@ export class MultiPartMatInputComponent
     this.partsLength = entries.length;
     // Crée le form group depuis les informations de l'input
     const controls: { [id: string]: AbstractControl } = {};
-    console.log('PVALUE', this.pValue);
     entries.forEach(([k, v]) => {
       // Crée des validators pour le configuration du field
       controls[k] = new FormControl(this.pValue?.[k], [
         Validators.required,
         Validators.minLength(v.size),
         Validators.maxLength(v.size),
-        ...(this.component.validators ?? []),
+        ...((v.validators as ValidatorFn[]) ?? []),
       ]);
     });
     this.partsFormGroup = new FormGroup(controls);

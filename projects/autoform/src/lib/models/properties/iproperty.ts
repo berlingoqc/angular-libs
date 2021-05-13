@@ -7,6 +7,7 @@ import { TemplateContentData } from '@berlingoqc/ngx-common';
 import { Observable } from 'rxjs';
 import { PropertyComponent } from '../component';
 import { ISubType } from '../subtype';
+import { Validator } from './validator';
 
 export type IPropertyType =
     | 'date'
@@ -20,7 +21,7 @@ export type IPropertyType =
 
 // IProperty est l'interface de base pour les différents inputs
 // contient plusieur sous type pour les implémentation custom
-export interface IProperty {
+export interface IProperty extends Validator {
     // type de la propriété
     type: IPropertyType;
     // nom de la propriété
@@ -46,10 +47,6 @@ export interface IProperty {
     disabled?: boolean;
     // Message a afficher pour les différentes clé d'erreurs
     errors?: FieldErrors;
-    // Validators qui seront appliqués au champs
-    validators?: ValidatorFn | ValidatorFn[] | AbstractControlOptions;
-    // Validators async qui seront appliquées au champs
-    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[];
 
     configChange?: Observable<any>;
 }
