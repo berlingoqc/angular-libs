@@ -203,6 +203,12 @@ export class AutoFormModule {
         );
 
         register.registerComponent({
+          type: 'array',
+          mainComponentType: ArrayFieldComponent,
+          typeComponentHandler: []
+        });
+
+        register.registerComponent({
             type: 'date',
             mainComponentType: DateFieldComponent,
             typeComponentHandler: []

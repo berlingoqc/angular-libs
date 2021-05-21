@@ -68,12 +68,6 @@ export class AutoFormRegisterComponent implements OnInit {
     form.items = model.items;
     this.formData = form;
     this.formGroup = this.builder.getFormGroup(this.formData);
-
-
-    console.log('FORM DATA COMPONENT', this.autoFormComponent);
-    if (this.autoFormComponent) {
-      this.autoFormComponent.ngOnInit();
-    }
   }
 
   submit() {

@@ -21,18 +21,42 @@ import {
 @Component({
     selector: 'autoform-form',
     template: `
+      <ng-container *ngIf="pFormData">
         <ng-container
             *ngComponentOutlet="
-                formTypeRegister[formData.type]
-                    ? formTypeRegister[formData.type]
+                formTypeRegister[pFormData.type]
+                    ? formTypeRegister[pFormData.type]
                     : forms.simple;
                 injector: customInjector
             "
         ></ng-container>
-    `,
+       </ng-container>
+   `,
 })
-export class AutoFormComponent implements OnInit, AfterViewInit {
-    @Input() formData: AutoFormData;
+export class AutoFormComponent {
+    pFormData: AutoFormData;
+    @Input()
+    set formData( formData: AutoFormData) {
+      this.pFormData = formData;
+      this.expositionObject = {};
+        this.customInjector = Injector.create({
+            providers: [
+                { provide: AUTO_FORM_DATA, useValue: this.formData },
+                {
+                    provide: AUTO_FORM_INITAL_DATA,
+                    useValue: this.initialData,
+                },
+                {
+                  provide: AUTO_FORM_EXPOSITION,
+                  useValue: this.expositionObject,
+                }
+            ],
+            parent: this.injector,
+        });
+    }
+    get formData() {
+      return this.pFormData;
+    }
 
     @Input() initialData: any;
 
@@ -61,26 +85,5 @@ export class AutoFormComponent implements OnInit, AfterViewInit {
         if (formData) {
             this.formData = formData;
         }
-    }
-
-    ngOnInit(): void {
-        this.expositionObject = {};
-        this.customInjector = Injector.create({
-            providers: [
-                { provide: AUTO_FORM_DATA, useValue: this.formData },
-                {
-                    provide: AUTO_FORM_INITAL_DATA,
-                    useValue: this.initialData,
-                },
-                {
-                  provide: AUTO_FORM_EXPOSITION,
-                  useValue: this.expositionObject,
-                }
-            ],
-            parent: this.injector,
-        });
-    }
-
-    ngAfterViewInit() {
     }
 }

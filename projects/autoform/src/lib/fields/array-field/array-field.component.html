@@ -1,6 +1,6 @@
 <div style="width: 100%;" [autoFormDecorator]="data.decorators" autoFormElementID="container">
 <div
-  *ngFor="let f of items; trackBy: trackBy; index as i">
+  *ngFor="let f of abstractControl; trackBy: trackBy; index as i">
     <ng-template></ng-template>
     <button mat-stroked-button *ngIf="canDelete(i)"  (click)="deleteIndex(i)">Supprimer</button>
   </div>
