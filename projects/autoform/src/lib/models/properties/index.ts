@@ -5,4 +5,5 @@ export * from './number';
 export * from './string';
 export * from './bool';
 export * from './date';
+export * from './union';
 export * from './subtype';
