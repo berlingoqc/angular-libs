@@ -35,6 +35,7 @@ export class FormActionsBarComponent {
   buttons: Button[];
 
   submit() {
+    console.log('VALUE', this.component.formGroup.value);
     if (this.component.formGroup.valid) {
       if (this.component.formData.event) {
         this.component.formData.event

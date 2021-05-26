@@ -206,6 +206,12 @@ export class AutoFormModule {
         );
 
         register.registerComponent({
+          type: 'union',
+          mainComponentType: UnionFieldComponent,
+          typeComponentHandler: []
+        });
+
+        register.registerComponent({
           type: 'array',
           mainComponentType: ArrayFieldComponent,
           typeComponentHandler: []

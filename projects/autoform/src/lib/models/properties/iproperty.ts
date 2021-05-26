@@ -16,6 +16,7 @@ export type IPropertyType =
     | 'bool'
     | 'number'
     | 'blob'
+    | 'union'
     | 'object'
     | 'array';
 

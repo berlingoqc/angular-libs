@@ -86,9 +86,9 @@ export abstract class InjectorBaseFieldComponent<
     const htmlElement = component.location.nativeElement as HTMLElement;
     htmlElement.classList.add('field');
 
-    const decoratorsDirective = new DecoratorsDirective(component.location);
-    decoratorsDirective.autoFormElementID = 'component';
-    decoratorsDirective.autoFormDecorator = field.decorators;
+    //const decoratorsDirective = new DecoratorsDirective(component.location);
+    //decoratorsDirective.autoFormElementID = 'component';
+    //decoratorsDirective.autoFormDecorator = field.decorators;
 
     component.changeDetectorRef.detectChanges();
 
@@ -98,7 +98,7 @@ export abstract class InjectorBaseFieldComponent<
   }
 
   ngOnDestroy() {
-    this.componentRef.destroy();
+    this.componentRef?.destroy();
     //this.componentFieldService.items[this.field.name].destroy();
     //delete this.componentFieldService.items[this.field.name];
   }

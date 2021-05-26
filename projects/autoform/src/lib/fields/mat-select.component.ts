@@ -9,10 +9,10 @@ import { BaseFormField } from './base-form-field';
   template: `
     <mat-form-field
       style="width: 100%"
-      [autoFormDecorator]="data.decorators"
+      [autoFormDecorator]="data?.decorators"
       autoFormElementID="formField"
-      [appearance]="data.appearance"
-      [hideRequiredMarker]="data.hideRequired"
+      [appearance]="data?.appearance"
+      [hideRequiredMarker]="data?.hideRequired"
       [floatLabel]="data.floatLabel"
     >
       <mat-label>

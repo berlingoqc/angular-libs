@@ -1,10 +1,9 @@
 <div style="width: 100%;" autoFormElementID="container">
-  <mat-select>
-    <mat-label>Union type</mat-label>
-    <mat-option *ngFor="let type of types">
-
-    </mat-option>
-  </mat-select>
+  <autoform-mat-select
+    [data]="{}"
+    [component]="data.select"
+    [abstractControl]="selectFormControl"
+  ></autoform-mat-select>
   <ng-template></ng-template>
   <!--
 <div

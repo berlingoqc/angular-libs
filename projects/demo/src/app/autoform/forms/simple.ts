@@ -11,5 +11,10 @@ export const simpleForm: AutoFormData = {
         style: 'mat-flat-button',
         color: 'primary',
       }
+    },
+    event: {
+      submit: (value) => {
+        console.log('VALUE', value);
+      }
     }
 };

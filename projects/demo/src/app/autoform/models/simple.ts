@@ -1,4 +1,4 @@
-import { FormObject, DateProperty } from "projects/autoform/src/public-api";
+import { FormObject, DateProperty, UnionProperty } from "projects/autoform/src/public-api";
 
 export const simpleObject: FormObject[] = [
     {
@@ -52,4 +52,85 @@ export const simpleObject: FormObject[] = [
             },
         ],
     },
+    {
+      type: 'object',
+      name: 'config',
+      properties: [
+        {
+          name: 'config',
+          type: 'union',
+          required: true,
+          types: {
+            'alarm': {
+              name: 'alarm',
+              type: 'object',
+              properties: [
+                {
+                  name: 'beginning',
+                  type: 'object',
+                  decorators: {
+                    style: {
+                      width: '100%',
+                      display: 'flex',
+                      'flex-direction': 'row'
+                    }
+                  },
+                  templates: {
+                    'header': 'Temps démarrage'
+                  },
+                  properties: [
+                    {
+                      name: 'hour',
+                      type: 'string'
+                    },
+                    {
+                      name: 'minute',
+                      type: 'string'
+                    }
+                  ]
+                },
+                {
+                  name: 'ending',
+                  type: 'object',
+                  decorators: {
+                    style: {
+                      display: 'flex',
+                      'flex-direction': 'row'
+                    }
+                  },
+                  templates: {
+                    'header': 'Temps fin'
+                  },
+                  properties: [
+                    {
+                      name: 'hour',
+                      required: true,
+                      type: 'string'
+                    },
+                    {
+                      name: 'minute',
+                      required: true,
+                      type: 'string'
+                    }
+                  ]
+                }
+              ]
+            },
+            'manual': {
+              name: 'alarm',
+              type: 'object',
+              properties: [
+                {
+                  name: 'started',
+                  type: 'bool',
+                  component: {
+                    name: 'checkbox'
+                  }
+                }
+              ]
+            }
+          }
+        } as UnionProperty
+      ]
+    }
 ];
