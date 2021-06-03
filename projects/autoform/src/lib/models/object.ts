@@ -1,4 +1,4 @@
-import { TemplateContent } from 'dist/common/public-api';
+import { TemplateContent } from '@berlingoqc/ngx-common';
 import { Container } from './container';
 import { IProperty, IPropertyType } from './properties';
 

@@ -50,6 +50,10 @@ export interface IProperty extends Validator {
     errors?: FieldErrors;
 
     configChange?: Observable<any>;
+
+
+    // default value for the formControl
+    value?: any;
 }
 
 export interface FieldErrors {

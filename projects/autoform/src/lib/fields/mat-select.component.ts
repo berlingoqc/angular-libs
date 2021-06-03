@@ -31,6 +31,7 @@ import { BaseFormField } from './base-form-field';
         *ngIf="!component.type || component.type == 'mat'"
         [formControl]="abstractControl"
         [required]="data.required"
+        [compareWith]="(component.compareWith) ? component.compareWith : defaultCompare"
       >
         <ng-container *ngIf="component.noneOption">
           <mat-option>
@@ -125,6 +126,8 @@ export class MyMatSelectComponent extends BaseFormField implements OnInit{
   @Input() options: any;
 
   resolvingSub: Subscription;
+
+  defaultCompare = (a , b) => (a === b);
 
   constructor(cdr: ChangeDetectorRef) {
     super(cdr);

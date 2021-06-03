@@ -34,6 +34,9 @@ export class SelectComponent implements PropertyComponent {
     // noneOption, si on affiche une options null
     noneOption?: TemplateContentData;
 
+    // compareFunction
+    compareWith?: (object1: any, object2: any) => boolean;
+
     // Les options du mat-select
     options: SelectOptionGroup | SelectOptionGroups;
 }

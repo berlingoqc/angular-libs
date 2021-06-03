@@ -1,5 +1,5 @@
-import { SelectComponent } from "dist/autoform/lib/models/component/select.component";
-import { FormProperty } from "dist/autoform/public-api";
+import { SelectComponent } from "../component/select.component";
+import { FormProperty } from "../object";
 import { IProperty, IPropertyType } from "./iproperty";
 
 export interface UnionProperty extends IProperty {

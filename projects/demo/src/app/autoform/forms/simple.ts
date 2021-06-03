@@ -1,4 +1,5 @@
 import { AutoFormData } from "projects/autoform/src/public-api";
+import { of } from "rxjs";
 
 export const simpleForm: AutoFormData = {
     items: [],
