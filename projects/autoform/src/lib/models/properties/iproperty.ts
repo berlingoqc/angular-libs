@@ -16,6 +16,7 @@ export type IPropertyType =
     | 'bool'
     | 'number'
     | 'blob'
+    | 'union'
     | 'object'
     | 'array';
 
@@ -49,6 +50,10 @@ export interface IProperty extends Validator {
     errors?: FieldErrors;
 
     configChange?: Observable<any>;
+
+
+    // default value for the formControl
+    value?: any;
 }
 
 export interface FieldErrors {

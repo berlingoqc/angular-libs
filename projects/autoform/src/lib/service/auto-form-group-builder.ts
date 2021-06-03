@@ -12,6 +12,7 @@ import {
     FormObject,
     FormProperty,
     IProperty,
+    UnionProperty,
 } from '../models';
 import { ComponentRegisterService } from './component-register';
 
@@ -29,6 +30,22 @@ export class AutoFormGroupBuilder {
     loopFormProperty(value: FormProperty): AbstractControl {
         if (value.type === 'object') {
             return new FormGroup(this.getObjectForm(value as FormObject));
+
+        } else if(value.type === 'union') {
+          // TEMPORARY FIX UNTIL I FOUND SOMETHING BETTER FOR UNION
+          /**
+           * ONLY WORK IF PROPERTIES ARE FORMGROUP
+           */
+          const tempForm = {};
+          Object.values((value as UnionProperty).types)
+            .flatMap(item => (item as FormObject).properties)
+            .forEach((item) => {
+              tempForm[item.name] = this.loopFormProperty(item);
+            });
+            return new FormGroup({
+              type: new FormControl(),
+              data: new FormGroup(tempForm),
+            });
         } else if (value.type === 'array') {
             const v = value as ArrayProperty;
             let validators = [];
@@ -61,7 +78,7 @@ export class AutoFormGroupBuilder {
                     }
                     if (handler.getFormControl) {
                       return handler.getFormControl({
-                        value: null,
+                        value: (value as IProperty).value,
                         disabled: (value as IProperty).disabled,
                       },
                         validators,
@@ -74,7 +91,7 @@ export class AutoFormGroupBuilder {
             }
             return new FormControl(
                 {
-                    value: '',
+                    value: (value as IProperty).value,
                     disabled: (value as IProperty).disabled,
                 },
                 validators,

@@ -58,7 +58,9 @@ export abstract class InjectorBaseFieldComponent<
   initialize() {
     this.templates.forEach((template, i) => {
       const p = this.getTemplateField(i);
-      this.initContextData(p, template, i);
+      if (p) {
+        this.initContextData(p, template, i);
+      }
     });
   }
 
@@ -75,6 +77,19 @@ export abstract class InjectorBaseFieldComponent<
     if (!field) {
       return;
     }
+    this.renderFieldInTemplate(field, ref, i, this.getAbstractControl(field, i));
+  }
+
+  renderFieldInTemplate(
+    field: IProperty | FormObject,
+    ref: ViewContainerRef,
+    i: number,
+    control: AbstractControl,
+  ) {
+    //if (this.componentRef) {
+    //  this.componentRef.destroy();
+    //  this.componentRef = null;
+    //}
     const t = this.componentRegister.getRegisterComponent(field.type);
     const factory = this.componentFactoryResolver.resolveComponentFactory(
       t.mainComponentType
@@ -82,13 +97,13 @@ export abstract class InjectorBaseFieldComponent<
     const component = ref.createComponent(factory, 0, this.injector);
     const instance = component.instance as BaseFieldComponent<any, any>;
     instance.data = field;
-    instance.abstractControl = this.getAbstractControl(field, i);
+    instance.abstractControl = control;
     const htmlElement = component.location.nativeElement as HTMLElement;
     htmlElement.classList.add('field');
 
-    const decoratorsDirective = new DecoratorsDirective(component.location);
-    decoratorsDirective.autoFormElementID = 'component';
-    decoratorsDirective.autoFormDecorator = field.decorators;
+    //const decoratorsDirective = new DecoratorsDirective(component.location);
+    //decoratorsDirective.autoFormElementID = 'component';
+    //decoratorsDirective.autoFormDecorator = field.decorators;
 
     component.changeDetectorRef.detectChanges();
 
@@ -98,7 +113,7 @@ export abstract class InjectorBaseFieldComponent<
   }
 
   ngOnDestroy() {
-    this.componentRef.destroy();
+    this.componentRef?.destroy();
     //this.componentFieldService.items[this.field.name].destroy();
     //delete this.componentFieldService.items[this.field.name];
   }

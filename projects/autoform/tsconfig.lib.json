@@ -3,11 +3,12 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "declarationMap": true,
-    "target": "es2015",
+    "target": "es2018",
     "declaration": true,
     "inlineSources": true,
     "types": [],
-    "lib": ["dom", "es2018"]
+    "module": "es2020",
+    "lib": ["dom", "es2020"]
   },
   "angularCompilerOptions": {
     "enableIvy": true,

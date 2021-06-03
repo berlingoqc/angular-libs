@@ -67,6 +67,9 @@ export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContain
               resolveData(this.formData.event.initialData)
                 .pipe(take(1))
                 .subscribe((data) => {
+                  console.log('INITIAL DATA', data);
+                  // Neeed to adjust the
+
                   this.formGroup.patchValue(data);
                 });
             }

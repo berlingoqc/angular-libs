@@ -1,0 +1,17 @@
+<div style="width: 100%;" autoFormElementID="container">
+  <autoform-mat-select
+    [data]="{}"
+    [component]="data.select"
+    [abstractControl]="abstractControl.controls.type"
+  ></autoform-mat-select>
+  <ng-template></ng-template>
+  <!--
+<div
+  *ngFor="let f of abstractControl; trackBy: trackBy; index as i">
+    <ng-template></ng-template>
+    <button mat-stroked-button *ngIf="canDelete(i)"  (click)="deleteIndex(i)">Supprimer</button>
+  </div>
+  <button mat-stroked-button *ngIf="canAdd" (click)="addItem()">Ajouter un item</button>
+-->
+
+</div>

@@ -1,3 +1,4 @@
+import { TemplateContent } from '@berlingoqc/ngx-common';
 import { Container } from './container';
 import { IProperty, IPropertyType } from './properties';
 
@@ -12,6 +13,9 @@ export class FormObject implements Container {
   decorators?: { [id: string]: any };
   // Ensemble des propriétés de l'object
   properties?: FormProperty[];
+
+  templates?: { [id: string]: TemplateContent };
+
 
   // Container
   container?: {
