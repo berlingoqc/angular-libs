@@ -20,7 +20,7 @@ export abstract class BaseFieldComponent<
   @Input()
   set data(t: T) {
     this.innerData = t;
-    if (this.data?.subtype) {
+    if (this.data?.subtype?.name) {
       const handler = this.componentRegister.getSubTypeHandler(
         this.data.subtype.name
       );
@@ -64,7 +64,7 @@ export class ComponentRegisterService {
   getSubTypeHandler(name: string): SubTypeHandler<any> {
     const d = this.subTypeHandlers[name];
     if (!d) {
-      throw 'Subtype not found';
+      throw `Subtype not found ${name}`;
     }
     return d;
   }
