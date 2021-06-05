@@ -36,7 +36,7 @@ import { AutocompleteSubTypeHandler } from './models/properties/subtype/autocomp
 import { AutoFormGroupBuilder } from './service/auto-form-group-builder';
 import { AutoFormExpansionPanelComponent } from './auto-form/auto-form-expansion-panel/auto-form-expansion-panel.component';
 import { AutoFormCardComponent } from './auto-form/auto-form-card/auto-form-card.component';
-import { AutoFormDialogComponent, AutoFormDialogPlaceholderComponent } from './auto-form/auto-form-dialog/auto-form-dialog.component';
+import { AutoFormDialogComponent, AutoFormDialogPlaceholderComponent, AutoFormDialogService } from './auto-form/auto-form-dialog/auto-form-dialog.component';
 import { AutoFormStepperComponent } from './auto-form/auto-form-stepper/auto-form-stepper.component';
 import { AutoFormTabsComponent } from './auto-form/auto-form-tabs/auto-form-tabs.component';
 import { MatCardModule } from '@angular/material/card';
@@ -144,6 +144,7 @@ import { UnionFieldComponent } from './fields/union-field/union-field.component'
         ComponentRegisterService,
         AutoFormGroupBuilder,
         ComponentFieldService,
+        AutoFormDialogService,
         {
             provide: AUTO_FORM_TYPE_REGISTER,
             useValue: {

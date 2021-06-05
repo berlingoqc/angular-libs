@@ -2,11 +2,14 @@ import {
     ChangeDetectionStrategy,
     Component,
     Inject,
+    Injectable,
     OnInit,
     Optional,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { resolveData } from '@berlingoqc/ngx-common';
+import { take } from 'rxjs/operators';
 import { AutoFormData } from '../../models';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import {
@@ -53,7 +56,21 @@ export class AutoFormDialogComponent implements OnInit {
       private dialogRef: MatDialogRef<any>,
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+            if (this.formData.event?.afterFormCreated) {
+              this.formData.event.afterFormCreated(this.formGroup);
+            }
+            if (this.formData.event?.initialData) {
+              resolveData(this.formData.event.initialData)
+                .pipe(take(1))
+                .subscribe((data) => {
+                  console.log('INITIAL DATA', data);
+                  // Neeed to adjust the
+
+                  this.formGroup.patchValue(data);
+                });
+            }
+    }
 
     submit() {
       this.dialogRef.close(this.formGroup.value);
@@ -98,4 +115,20 @@ export class AutoFormDialogPlaceholderComponent
             },
         });
     }
+}
+
+
+@Injectable()
+export class AutoFormDialogService {
+  constructor(private matDialog: MatDialog, private autoFormBuilder: AutoFormGroupBuilder) {}
+
+  open(formData: AutoFormData) {
+    return this.matDialog.open(AutoFormDialogComponent, {
+      ...formData.typeData,
+      data: {
+        formData: formData,
+        formGroup: this.autoFormBuilder.getFormGroup(formData),
+      }
+    })
+  }
 }
