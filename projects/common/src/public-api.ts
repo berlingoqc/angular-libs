@@ -1,6 +1,7 @@
 export * from './lib/buttons-row';
 export * from './lib/chip-autocomplete/module';
 export * from './lib/chip-autocomplete/chip-autocomplete';
+export * from './lib/mat-extra';
 
 export * from './lib/dynamic-style-provider/dynamic-style-provider.modules';
 export * from './lib/dynamic-style-provider/dynamic-style-register.service';
