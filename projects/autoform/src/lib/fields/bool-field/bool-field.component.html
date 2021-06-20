@@ -5,7 +5,9 @@
             [labelPosition]="data.component?.labelPosition"
             [formControl]="abstractControl"
         >
+          <ng-container *ngIf="!data.displayName; else text">
             {{ data.name }}
+          </ng-container>
         </mat-checkbox>
     </div>
 
@@ -26,3 +28,8 @@
         </mat-slide-toggle>
     </div>
 </div>
+
+
+<ng-template #text>
+  <template-content [content]="data.displayName"></template-content>
+</ng-template>
