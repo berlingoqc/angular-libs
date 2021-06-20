@@ -23,7 +23,9 @@ export class FormActionsBarComponent {
         submit: {title: 'Submit'},
       }
     }
-    this.mActions.submit.click = () => this.submit();
+    if (this.mActions.submit) {
+      this.mActions.submit.click = () => this.submit();
+    }
     if (this.mActions.reset)
       this.mActions.reset.click = () => this.reset();
     this.buttons = Object.values(this.mActions);
@@ -35,7 +37,6 @@ export class FormActionsBarComponent {
   buttons: Button[];
 
   submit() {
-    console.log('VALUE', this.component.formGroup.value);
     if (this.component.formGroup.valid) {
       if (this.component.formData.event) {
         this.component.formData.event
