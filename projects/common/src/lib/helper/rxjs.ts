@@ -6,21 +6,17 @@ import hash from 'object-hash';
 
 export interface CachingItem<T> {
   hash: string;
-  subject: BehaviorSubject<void>;
+  subject: BehaviorSubject<any>;
   obs: Observable<T>;
   context: any;
 }
 
 export class CachingRequest<T> {
-    subject: BehaviorSubject<void>;
-    obs: Observable<T>;
-    context: any;
 
     items: { [id: string]: CachingItem<T> };
 
     constructor() {
         this.items = {};
-        this.subject = new BehaviorSubject(null);
     }
 
     getObs(context: any, chain: Observable<T>) {
@@ -32,7 +28,7 @@ export class CachingRequest<T> {
         return obs.pipe(
             switchMap((x) => {
                 // Reset all for now but maybe abaible to target item in the future,
-                Object.values(this.items).forEach(item => item.subject.next());
+                Object.values(this.items).forEach(item => item.subject.next(x));
                 return of(x);
             }),
         );
@@ -40,7 +36,6 @@ export class CachingRequest<T> {
 
     private getCachingItem(context: any, chain: Observable<T>) {
       const contextHash = hash(context) as string;
-      console.log('HASH', contextHash, this.items);
       if (!this.items[contextHash]) {
             const subject = new BehaviorSubject(null);
             this.items[contextHash] = {
@@ -48,7 +43,10 @@ export class CachingRequest<T> {
               context,
               subject,
               obs: subject.pipe(
-                switchMap(() => chain),
+                switchMap((value) => {
+                  console.log('GOT VALUE ??', value);
+                  return chain
+                }),
                 shareReplay(1)
               )
             };

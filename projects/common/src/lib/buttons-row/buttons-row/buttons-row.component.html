@@ -3,8 +3,9 @@
         <button
             *ngSwitchDefault
             mat-stroked-button
+            [loading]="loading"
             [color]="button.color"
-            (click)="button.click(router, context)"
+            (click)="handleClick(button)"
         >
             <template-content
                 [content]="button.title"
@@ -13,9 +14,10 @@
         </button>
         <button
             *ngSwitchCase="'mat-flat-button'"
+            [loading]="loading"
             mat-flat-button
             [color]="button.color"
-            (click)="button.click(router, context)"
+            (click)="handleClick(button)"
         >
             <template-content
                 [content]="button.title"
@@ -24,9 +26,10 @@
         </button>
         <button
             *ngSwitchCase="'mat-button'"
+            [loading]="loading"
             mat-button
             [color]="button.color"
-            (click)="button.click(router, context)"
+            (click)="handleClick(button)"
         >
             <template-content
                 [content]="button.title"
@@ -35,17 +38,19 @@
         </button>
         <button
             *ngSwitchCase="'mat-icon-button'"
+            [loading]="loading"
             mat-icon-button
             [color]="button.color"
-            (click)="button.click(router, context)"
+            (click)="handleClick(button)"
         >
             <mat-icon>{{ button.title }}</mat-icon>
         </button>
         <button
             *ngSwitchCase="'mat-fab'"
+            [loading]="loading"
             mat-fab
             [color]="button.color"
-            (click)="button.click(router, context)"
+            (click)="handleClick(button)"
         >
             <template-content
                 [content]="button.title"
@@ -54,9 +59,10 @@
         </button>
         <button
             *ngSwitchCase="'mat-mini-fab'"
+            [loading]="loading"
             mat-mini-fab
             [color]="button.color"
-            (click)="button.click(router, context)"
+            (click)="handleClick(button)"
         >
             <template-content
                 [content]="button.title"

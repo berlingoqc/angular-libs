@@ -4,6 +4,7 @@ import { ButtonsRowComponent } from './buttons-row/buttons-row.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TemplateContentModule } from '../helper/template-content/template-content.module';
+import { LoadingButtonModule } from '../loading-button';
 
 @NgModule({
     declarations: [ButtonsRowComponent],
@@ -11,6 +12,7 @@ import { TemplateContentModule } from '../helper/template-content/template-conte
         CommonModule,
         MatButtonModule,
         MatIconModule,
+        LoadingButtonModule,
         TemplateContentModule,
     ],
     exports: [ButtonsRowComponent],

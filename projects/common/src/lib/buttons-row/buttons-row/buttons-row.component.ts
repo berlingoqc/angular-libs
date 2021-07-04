@@ -1,12 +1,14 @@
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { catchError, finalize, take } from 'rxjs/operators';
 import { TemplateContentData, TEMPLATE_CONTENT_CONTEXT, TEMPLATE_CONTENT_PARENT } from '../../helper/template-content/template-content-type';
 
 export interface Button {
     title: TemplateContentData;
     style?: string;
     color?: string;
-    click?: (router: Router, data: any) => void;
+    click?: (router: Router, data: any) => void | Observable<void>;
 }
 
 @Component({
@@ -16,6 +18,8 @@ export interface Button {
 })
 export class ButtonsRowComponent implements OnInit {
     @Input() buttons: Button[];
+
+    loading = false;
 
     constructor(
         @Optional()
@@ -28,4 +32,14 @@ export class ButtonsRowComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {}
+
+    public handleClick(button: Button) {
+      const ret = button.click(this.router, this.context);
+      if (ret) {
+        if (ret instanceof Observable) {
+          this.loading = true;
+          ret.pipe(take(1),finalize(() => (this.loading = false))).subscribe(() => this.loading = false, () => this.loading = false)
+        }
+      }
+    }
 }
