@@ -9,6 +9,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { resolveData } from '@berlingoqc/ngx-common';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AutoFormData } from '../../models';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
@@ -75,7 +76,11 @@ export class AutoFormDialogComponent implements OnInit {
     submit() {
       this.dialogRef.close(this.formGroup.value);
       if (this.formData.event) {
-        this.formData.event.submit(this.formGroup.value).subscribe(() => {});
+        const ret = this.formData.event.submit(this.formGroup.value)
+        if(ret && ret instanceof Observable) {
+          console.log(ret);
+          ret.subscribe(() => {});
+        }
       }
       console.log('RESETING');
       this.formGroup.reset({emitEvent: false});

@@ -39,9 +39,8 @@ export class FormActionsBarComponent {
   submit() {
     if (this.component.formGroup.valid) {
       if (this.component.formData.event) {
-        this.component.formData.event
-              .submit(this.component.formGroup.value)
-              .subscribe();
+        return this.component.formData.event
+              .submit(this.component.formGroup.value);
       }
     } else {
       this.component.formGroup.markAllAsTouched();
