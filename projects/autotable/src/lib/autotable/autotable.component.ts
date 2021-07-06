@@ -29,6 +29,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
+import { unsubscriber } from '@berlingoqc/ngx-common';
 
 class ExtraRow {
     aloneRowId: string[];
@@ -60,11 +61,15 @@ class ExtraRow {
     ],
     encapsulation: ViewEncapsulation.None,
 })
+@unsubscriber
 export class AutoTableComponent<T = any>
     implements OnInit,OnDestroy {
 
     private _columns: TableColumn[];
     private _client: LoopbackRestClient<T>;
+
+    subGet: Subscription;
+    subCount: Subscription;
 
     lbSource: CRUDDataSource<T>;
     dataSource = new MatTableDataSource<T>([]);
@@ -216,7 +221,8 @@ export class AutoTableComponent<T = any>
     }
 
     refreshData() {
-        this.source
+        this.subGet?.unsubscribe();
+        this.subGet = this.source
             .get({
                 offset: this.currentOffset * this.pageSize,
                 include: this.includes,
@@ -226,7 +232,6 @@ export class AutoTableComponent<T = any>
             })
             .subscribe((data) => {
                 this.dataSource.data = data;
-                // this.dataSource.connect().next(data);
             });
     }
 
@@ -240,7 +245,8 @@ export class AutoTableComponent<T = any>
 
     private refreshCount() {
         if (this.source.count) {
-            this.source
+            this.subCount?.unsubscribe();
+            this.subCount = this.source
                 .count(this.where)
                 .subscribe((count) => (this.length = count.count));
         }
