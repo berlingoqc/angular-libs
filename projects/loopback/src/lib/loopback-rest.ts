@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Type } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { Where, Count, Filter, AnyObject, Include } from './loopback-model';
 
 import { CachingRequest } from '@berlingoqc/ngx-common';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Constructor } from '@angular/cdk/table';
-import { take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 function isNumeric(num) {
     return !isNaN(num);
@@ -224,16 +224,51 @@ export function Resolving<D extends Constructor<CRUDDataSource<T>>, T>(type: D) 
     }
 }
 
+
+export type CachingStoreHandlerFunc = (oldValue: any, change: any) => any;
+
+/**
+ * Handler configuration for the Caching Decorator
+ *
+ * custom function for every state change to handle to change of the data
+ */
+export interface CachingStoreHandler {
+  delete?: CachingStoreHandlerFunc;
+  update?: CachingStoreHandlerFunc;
+  post?: CachingStoreHandlerFunc;
+}
+
+
+export interface CachingOptions {
+  handlers?: { [id: string]: CachingStoreHandler };
+}
+
+
+const getCachingRequest = (options: CachingOptions, operator: string) => {
+  return new CachingRequest({
+          stateChange: (oldValue: any[], change: any) => {
+            switch(change.operation) {
+              case 'delete':
+                return (options?.handlers?.[operator]?.delete) ? options.handlers?.[operator]?.delete(oldValue, change): null;
+              case 'update':
+                return (options?.handlers?.[operator]?.update) ? options.handlers?.[operator]?.update(oldValue, change): null;
+              default:
+                return change.data;
+            }
+          }
+        });
+}
+
 /**
  * Mixin to add Caching feature to your CRUDDataSource.
  * Using CachingRequest from @berlingoqc/ngx-common
  * @param type Constructor of a CRUDDataSource
  */
-export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
+export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D, options?: CachingOptions) {
     return class extends type {
-        requestGet = new CachingRequest();
-        requestFind = new CachingRequest();
-        requestCount = new CachingRequest();
+        requestGet = getCachingRequest(options, 'get');
+        requestFind = getCachingRequest(options, 'find');
+        requestCount = getCachingRequest(options, 'count');
 
         get = (filter?: Filter) => {
             return this.requestGet.getObs(filter, super.get(filter)) as any;
@@ -249,7 +284,11 @@ export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
 
         patch = super.patch
             ? (id: string, d: T) => {
-                  return super.patch(id, d);
+                  return this.requestFind.onModif(super.patch(id, d).pipe(map(() => ({
+                    operation: 'update',
+                    id,
+                    d,
+                  })))) as Observable<void>;
               }
             : undefined;
         post = super.post
@@ -258,11 +297,15 @@ export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
               }
             : undefined;
         updateById = (id: string, data: Partial<T>) => {
-            return this.requestFind.onModif(super.updateById(id, data)) as Observable<void>;
+            return this.requestFind.onModif(super.updateById(id, data).pipe(map(() => ({
+              operation: 'update',
+              id,
+              data
+            })))) as Observable<void>;
         };
         delete = super.delete
             ? (id: string) => {
-                  return this.requestFind.onModif(super.delete(id)) as Observable<void>;
+                  return this.requestCount.onModif(this.requestGet.onModif(super.delete(id).pipe(map(() => ({operation: 'delete', id})))));
               }
             : undefined;
         count = super.count
