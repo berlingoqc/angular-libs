@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 
 import hash from 'object-hash';
 
@@ -11,11 +11,24 @@ export interface CachingItem<T> {
   context: any;
 }
 
+
+export interface StateChange {
+  operation: string;
+  id?: any;
+  data?: any;
+}
+
+export interface CachingRequestOptions<T> {
+  stateChange?: (oldValue: T, change: StateChange) => T
+}
+
 export class CachingRequest<T> {
 
     items: { [id: string]: CachingItem<T> };
 
-    constructor() {
+    constructor(
+      public options: CachingRequestOptions<T> = {}
+    ) {
         this.items = {};
     }
 
@@ -38,14 +51,24 @@ export class CachingRequest<T> {
       const contextHash = hash(context) as string;
       if (!this.items[contextHash]) {
             const subject = new BehaviorSubject(null);
+            let lastValue: T;
             this.items[contextHash] = {
               hash: contextHash,
               context,
               subject,
               obs: subject.pipe(
                 switchMap((value) => {
-                  console.log('GOT VALUE ??', value);
+                  if (lastValue && value && this.options.stateChange) {
+                    const v = this.options.stateChange(lastValue, value);
+                    if (v) {
+                      return of(v);
+                    }
+                  }
                   return chain
+                }),
+                map((itemValue) => {
+                  lastValue = itemValue;
+                  return itemValue;
                 }),
                 shareReplay(1)
               )
