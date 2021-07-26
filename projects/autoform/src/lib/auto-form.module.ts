@@ -56,7 +56,7 @@ import { MyMatDate } from './fields/mat-date.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DateRangeSubTypeHandler } from './models';
 import { FormActionsBarComponent } from './helper/form-actions/form-actions-bar.component';
-import { ButtonsRowModule } from '@berlingoqc/ngx-common';
+import { ButtonsRowModule, LoadingButtonModule } from '@berlingoqc/ngx-common';
 import { UnionFieldComponent } from './fields/union-field/union-field.component';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
@@ -131,6 +131,7 @@ import { UnionFieldComponent } from './fields/union-field/union-field.component'
         DataResolverModule,
         TemplateContentModule,
         CommonPipeModule,
+        LoadingButtonModule,
     ],
     exports: [
         AutoFormComponent,

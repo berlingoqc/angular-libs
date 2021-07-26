@@ -38,13 +38,15 @@ import {
 
         <mat-dialog-actions align="end">
             <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button [disabled]="!formGroup.valid" (click)="submit()">
+            <button mat-button [loading]="loading" [disabled]="!formGroup.valid" (click)="submit()">
                 Confirm
             </button>
         </mat-dialog-actions>
     `,
 })
 export class AutoFormDialogComponent implements OnInit {
+    public loading = false;
+
     get formData(): AutoFormData {
         return this.data?.formData;
     }
@@ -65,25 +67,23 @@ export class AutoFormDialogComponent implements OnInit {
               resolveData(this.formData.event.initialData)
                 .pipe(take(1))
                 .subscribe((data) => {
-                  console.log('INITIAL DATA', data);
-                  // Neeed to adjust the
-
                   this.formGroup.patchValue(data);
                 });
             }
     }
 
     submit() {
-      this.dialogRef.close(this.formGroup.value);
       if (this.formData.event) {
         const ret = this.formData.event.submit(this.formGroup.value)
         if(ret && ret instanceof Observable) {
-          console.log(ret);
-          ret.subscribe(() => {});
+          this.loading = true;
+          ret.subscribe(() => {
+            this.dialogRef.close(this.formGroup.value);
+          }, (err) => {}, () => (this.loading = false));
+        } else {
+          this.dialogRef.close(this.formGroup.value);
         }
       }
-      console.log('RESETING');
-      this.formGroup.reset({emitEvent: false});
     }
 }
 
