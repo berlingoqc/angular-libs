@@ -1,7 +1,7 @@
 {
     "name": "@berlingoqc/ng-lib",
     "description": "Project for all of @berlingoqc librairies",
-    "version": "2.1.7",
+    "version": "2.1.8",
     "scripts": {
         "build:all": "ng build common && ng build loopback && ng build autoform && ng build autotable && ng build notification && ng build pwa",
         "build:all:prod": "ng build --prod common && ng build --prod loopback && ng build --prod autoform && ng build --prod autotable",

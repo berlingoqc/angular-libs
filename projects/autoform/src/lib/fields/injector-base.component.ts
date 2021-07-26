@@ -101,14 +101,17 @@ export abstract class InjectorBaseFieldComponent<
     const htmlElement = component.location.nativeElement as HTMLElement;
     htmlElement.classList.add('field');
 
-    //const decoratorsDirective = new DecoratorsDirective(component.location);
-    //decoratorsDirective.autoFormElementID = 'component';
-    //decoratorsDirective.autoFormDecorator = field.decorators;
+      console.log('APPLYING', field);
+    if (field.decorators) {
+      const decoratorsDirective = new DecoratorsDirective(component.location);
+      decoratorsDirective.autoFormElementID = 'component';
+      decoratorsDirective.autoFormDecorator = field.decorators;
+      console.log('APPLYING DECORATOR', decoratorsDirective);
+    }
 
     component.changeDetectorRef.detectChanges();
 
     this.componentRef = component;
-
     this.field = field;
   }
 
