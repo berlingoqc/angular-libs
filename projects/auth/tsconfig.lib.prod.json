@@ -7,6 +7,6 @@
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
-    "enableIvy": false
+    "enableIvy": true
   }
 }

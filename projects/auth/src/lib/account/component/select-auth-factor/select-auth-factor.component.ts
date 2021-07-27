@@ -31,7 +31,8 @@ export class SelectAuthFactorComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
     this.selectionList.selectionChange.subscribe(x => {
-      this.factorChange.emit(x.option._value.icon);
+      // TODO FIXE ME IF NEEDED
+      //this.factorChange.emit(x.option._value.icon);
       this.selectionList.deselectAll();
       x.option.selected = true;
     });

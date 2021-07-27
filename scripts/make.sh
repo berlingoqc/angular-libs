@@ -19,7 +19,7 @@ function version() {
 function build() {
   for p in ${packages[@]}; do
     echo "Building $p"
-    npx ng build --prod $p
+    npx ng build --configuration production $p && node ./scripts/ivyprepublish.js ./dist/${p}/package.json
   done
 }
 
