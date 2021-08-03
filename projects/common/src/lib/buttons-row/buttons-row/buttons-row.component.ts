@@ -8,6 +8,7 @@ export interface Button {
     title: TemplateContentData;
     style?: string;
     color?: string;
+    if?: (data: any) => boolean;
     click?: (router: Router, data: any) => void | Observable<void>;
 }
 
@@ -31,7 +32,10 @@ export class ButtonsRowComponent implements OnInit {
         public router: Router,
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+      // filter the buttons to resolve enabled or if
+      this.buttons = this.buttons.filter((x) => !x.if || x.if(this.context));
+    }
 
     public handleClick(button: Button) {
       const ret = button.click(this.router, this.context);
