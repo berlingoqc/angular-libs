@@ -1,6 +1,6 @@
 import { LayoutExtraModule, FormExtraModule } from '@berlingoqc/ngx-common';
 import { NgModule } from '@angular/core';
-import { AdminControlComponent, AdminUserEditComponent, UserManagingComponent } from './component';
+import { AdminControlComponent, AdminUserEditComponent } from './component';
 import { EmailModule } from '../email';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +20,7 @@ import { AdminPageModule } from '../common/admin-page.module';
 import { SSOModule } from '../sso';
 import { MatInputModule } from '@angular/material/input';
 import { InvitationModule } from '../invitation';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { InvitationModule } from '../invitation';
     MatSlideToggleModule,
     MatDatepickerModule,
     MatChipsModule,
+    MatButtonModule,
     MatAutocompleteModule,
     MatTableModule,
     MatPaginatorModule,
@@ -54,10 +56,8 @@ import { InvitationModule } from '../invitation';
   declarations: [
     AdminControlComponent,
     AdminUserEditComponent,
-    UserManagingComponent,
   ],
   exports: [
-    UserManagingComponent,
     AdminControlComponent,
   ],
   entryComponents: [

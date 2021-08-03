@@ -5,3 +5,4 @@ export * from './organisation-manager-dashboard/organisation-manager-dashboard.c
 export * from './organisation-table/organisation-table.component';
 export * from './organisation-card.component';
 export * from './select-organisation/select-organisation.component';
+export * from './organisation-dashboard/organisation-dashboard.component';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ValidAccountComponent, ValidInvitationComponent } from './component';
+import { CreateUserComponent, ForgotPasswordComponent, ValidAccountComponent, ValidInvitationComponent } from './component';
 
 @NgModule({
   imports: [
@@ -13,6 +13,14 @@ import { ValidAccountComponent, ValidInvitationComponent } from './component';
         path: 'validate/account',
         component: ValidAccountComponent,
       },
+      {
+        path: 'create',
+        component: CreateUserComponent,
+      },
+      {
+        path: 'forgot',
+        component: ForgotPasswordComponent,
+      }
     ]),
   ],
   exports: [RouterModule],

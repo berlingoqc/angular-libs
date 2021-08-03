@@ -1,13 +1,8 @@
 <div class="layout {{ config?.mainContainerClass }}">
-    <div class="img-div">
-        <img src="{{ config.img }}" />
-
-        <h3>{{ getTitle() }}</h3>
-    </div>
-    <div [ngSwitch]="mode">
+    <account-header text="Connectez-vous à votre compte"></account-header>
+    <div>
         <!-- FORMULAIRE LOGIN -->
         <form
-            *ngSwitchCase="'login'"
             class="form-container"
             [formGroup]="loginFormGroup"
             (ngSubmit)="login()"
@@ -51,7 +46,7 @@
                         <button
                             mat-stroked-button
                             class="primary"
-                            (click)="mode = 'fpwd'"
+                            [routerLink]="['/account/forgot']"
                         >
                             Mot de passe oublié
                         </button>
@@ -64,7 +59,7 @@
                                 ssoSettings.settings &&
                                 ssoSettings.settings.sso.publicCreation
                             "
-                            (click)="mode = 'new'"
+                            [routerLink]="['/account/create']"
                         >
                             Pas de compte ?
                         </button>
@@ -72,16 +67,5 @@
                 </div>
             </div>
         </form>
-        <!-- FORMULAIRE MOT DE PASSE OUBLIÉ -->
-
-        <div *ngSwitchCase="'fpwd'">
-            <alb-forgot-password
-                (exit)="onCancel('login')"
-            ></alb-forgot-password>
-        </div>
-
-        <div *ngSwitchCase="'new'">
-            <alb-create-user (cancel)="onCancel('login')"></alb-create-user>
-        </div>
     </div>
 </div>

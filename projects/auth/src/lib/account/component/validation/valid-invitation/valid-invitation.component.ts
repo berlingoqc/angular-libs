@@ -21,7 +21,7 @@ import { SSOSettingsService } from '../../../../sso';
 @Component({
     selector: 'alb-valid-invitation',
     templateUrl: './valid-invitation.component.html',
-    styleUrls: ['./valid-invitation.component.scss'],
+    styleUrls: ['./valid-invitation.component.scss', '../../../../common/shared.scss'],
 })
 export class ValidInvitationComponent implements OnInit {
     formGroup: FormGroup;
@@ -45,8 +45,8 @@ export class ValidInvitationComponent implements OnInit {
         public ssoSettings: SSOSettingsService,
         public passwordValidatorService: PasswordValidatorService,
     ) {
-        this.ssoSettings.settingsUpdate.asObservable().subscribe((s) => {
-            this.passwordConfig = s.password;
+
+            this.passwordConfig = this.ssoSettings.settings.password
             this.formGroup = new FormGroup({
                 otp: new FormControl(''),
                 email: new FormControl(''),
@@ -83,7 +83,6 @@ export class ValidInvitationComponent implements OnInit {
                 this.navigateService.navigate(['/']);
                 this.cancel.next();
             }
-        });
     }
 
     ngOnInit(): void {}

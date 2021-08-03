@@ -46,11 +46,16 @@
     </span>
   </div>
   <div class="button-row">
-    <button mat-stoked-button type="submit" dynStyle itemId="FIRST_BTN">
+    <div>
+
+    <button mat-stroked-button type="submit" class="accent">
       Modifier
     </button>
-    <button mat-stroked-button type="button" dynStyle itemId="SECOND_BTN" (click)="dialogRef.close()">
+    </div>
+    <div>
+    <button mat-stroked-button type="button" class="primary" (click)="dialogRef.close()">
       Annuler
     </button>
+    </div>
   </div>
 </form>

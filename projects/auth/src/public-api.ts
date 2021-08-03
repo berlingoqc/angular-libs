@@ -14,3 +14,4 @@ export * from './lib/sso';
 export * from './lib/organisation';
 export * from './lib/account';
 export * from './lib/invitation';
+export * from './lib/user-account';

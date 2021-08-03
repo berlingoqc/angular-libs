@@ -1,4 +1,3 @@
-<h1 mat-dialog-title style="text-align: center;">Votre compte</h1>
 <form class="form-container truc" [formGroup]="formGroup" (ngSubmit)="submit()">
   <div style="width: 100%;">
     <mat-form-field style="width: 100%;">
@@ -37,12 +36,18 @@
       {{ exceptionRequest }}
     </span>
   </div>
+  <div class="truc">
   <div class="button-row">
-    <button type="submit" class="primary">
+    <div>
+    <button mat-stroked-button type="submit" class="accent">
       Modifier
     </button>
-    <button *ngIf="dialogRef" type="button" class="accent" (click)="dialogRef.close()">
+    </div>
+    <div>
+    <button mat-stroked-button *ngIf="dialogRef" type="button" class="primary" (click)="dialogRef.close()">
       Annuler
     </button>
+    </div>
+  </div>
   </div>
 </form>

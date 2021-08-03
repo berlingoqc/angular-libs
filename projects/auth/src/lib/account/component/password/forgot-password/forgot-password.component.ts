@@ -13,15 +13,14 @@ import { PasswordValidatorService } from '@berlingoqc/ngx-common';
 import { AuthSettingConfig } from '../../../../auth/model/auth-setting-config';
 
 import { AuthService } from '../../../../auth/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'alb-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss'],
+  styleUrls: ['./forgot-password.component.scss',  '../../../../common/shared.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
-
-  @Output() exit = new EventEmitter();
 
   inputMode: string = 'password';
 
@@ -50,7 +49,8 @@ export class ForgotPasswordComponent implements OnInit {
     public config: AuthSettingConfig,
     private passwordService: PasswordValidatorService,
     private snapbar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
   ) {
     this.forgotPasswordFormGroup = new FormGroup({
       email: new FormControl('', this.passwordService.getEmailValidator()),
@@ -115,7 +115,7 @@ export class ForgotPasswordComponent implements OnInit {
         () => {
           this.currentSubscription.unsubscribe();
           this.currentSubscription = null;
-          this.exit.next();
+          this.router.navigate(['/auth']);
           this.snapbar.open('Mot de passe modifié!', 'fermer', {
             duration: 3000,
           });
@@ -133,6 +133,6 @@ export class ForgotPasswordComponent implements OnInit {
       this.currentSubscription.unsubscribe();
       this.currentSubscription = null;
     }
-    this.exit.next();
+    this.router.navigate(['/auth']);
   }
 }

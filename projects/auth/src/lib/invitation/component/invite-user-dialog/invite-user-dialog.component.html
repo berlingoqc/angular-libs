@@ -1,8 +1,8 @@
 <h3 mat-dialog-title>
   Inviter un usager <span *ngIf="settings && settings.orgId">à votre organisation</span>
 </h3>
-<div mat-dialog-content class="truc" style="height: 200px;">
-  <form class="form-container" *ngIf="!currentSubscription" [formGroup]="formGroup" (ngSubmit)="submit()">
+<div mat-dialog-content>
+  <form class="form-container truc" *ngIf="!currentSubscription" [formGroup]="formGroup" (ngSubmit)="submit()">
     <div style="width: 100%;">
       <mat-form-field style="width: 100%;">
         <mat-label>Courriel</mat-label>
@@ -18,8 +18,12 @@
       </span>
     </div>
     <div class="button-row">
-      <button type="submit" class="primary">Inviter</button>
-      <button type="button" class="accent" (click)="dialogRef.close()">Annuler</button>
+      <div>
+        <button mat-stroked-button type="submit" class="accent">Inviter</button>
+      </div>
+      <div>
+        <button mat-stroked-button type="button" class="primary" (click)="dialogRef.close()">Annuler</button>
+      </div>
     </div>
   </form>
   <div *ngIf="currentSubscription" style="width: 100%; display: flex; justify-content: center;">

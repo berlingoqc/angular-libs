@@ -7,13 +7,19 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs';
+import {
+  CRUDDataSource
+} from '@berlingoqc/ngx-loopback';
+import {
+  AutoTableComponent,
+  TableColumn,
+} from '@berlingoqc/ngx-autotable';
 import { Organisation, OrganisationInvitation } from '../../model';
 import { InvitationService } from '../../../auth/service/invitation.service';
-import { SubscriptionMessagePipe } from '@berlingoqc/ngx-common';
+import { SubscriptionMessagePipe, ButtonsRowComponent } from '@berlingoqc/ngx-common';
 import { dataSourceRemove } from '../../../auth/utils';
 import { TranslateService } from '@ngx-translate/core';
-import { AutoTableComponent, TableColumn } from '@berlingoqc/ngx-autotable';
-import { CRUDDataSource } from '@berlingoqc/ngx-loopback';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'alb-organisation-invitation-table',
@@ -28,33 +34,43 @@ export class OrganisationInvitationTableComponent
 
   columns: TableColumn[] = [
     {
-      content: {
-        type: 'func',
-        content: (invitation: OrganisationInvitation) => invitation.user.email,
-      },
-      id: 'u',
-      title: {
-        type: 'string',
-        content: 'Usagers'
-      }
-
+      content: (invitation: OrganisationInvitation) =>
+        invitation.user.email,
+      id: 'usagers',
+      title: 'Usagers',
     },
     {
-       content: {
-        type: 'func',
-        content: (e) => {
-          return this.translate.get(`organisation.invitation.${e.response}`);
-        },
+      content: (e) => {
+        return this.translate.get(`organisation.invitation.${e.response}`);
       },
-      id: 'u',
-      title: {
-        type: 'string',
-        content: 'États'
-      }
+      id: 'etat',
+      title: 'État',
     },
+    {
+      content: {
+        type: 'component',
+        content: ButtonsRowComponent,
+        extra: {
+          inputs: {
+            buttons: [
+              {
+                title: {
+                  type: 'icon',
+                  content: 'delete'
+                },
+                style: 'mat-mini-fab',
+                click: (router: Router, invitation: any) => this.delete(invitation),
+              }
+            ]
+          }
+        }
+      },
+      id: 'options',
+      title: 'Options'
+    }
   ];
 
-  lbSource: CRUDDataSource<OrganisationInvitation>;
+  lbSource: CRUDDataSource<any>;
 
   constructor(
     private InvitationService: InvitationService,

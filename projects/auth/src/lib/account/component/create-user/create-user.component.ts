@@ -14,19 +14,18 @@ import { AuthService, NewUserRequest, User } from '../../../auth';
 import { extraFieldToFormGroup } from '../../../user';
 import { SSOSettingsService } from '../../../sso';
 import { nointercept } from '../../../unauthorized/service/http-interceptor';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'alb-create-user',
     templateUrl: './create-user.component.html',
-    styleUrls: ['./create-user.component.scss'],
+    styleUrls: ['./create-user.component.scss',  '../../../common/shared.scss'],
 })
 export class CreateUserComponent implements OnInit {
     @ViewChild(AuthServiceErrorComponent)
     errorComponent: AuthServiceErrorComponent;
 
     exceptionRequest = '';
-
-    @Output() cancel = new EventEmitter<void>();
 
     formGroup: FormGroup;
 
@@ -35,6 +34,7 @@ export class CreateUserComponent implements OnInit {
         private passwordValidatorService: PasswordValidatorService,
         public ssoSettings: SSOSettingsService,
         public authService: AuthService,
+        private router: Router,
     ) {
         this.formGroup = new FormGroup({
             name: new FormGroup({
@@ -67,7 +67,7 @@ export class CreateUserComponent implements OnInit {
                 extraFields: this.formGroup.value.extraFields,
             })
                 .then((x) => {
-                    this.cancel.next();
+                    this.router.navigate(['/auth']);
                     this.notificationService.openNotification({
                         title: `Compte crée`,
                         body: `
@@ -87,6 +87,6 @@ export class CreateUserComponent implements OnInit {
     }
 
     onCancel() {
-        this.cancel.next();
+      this.router.navigate(['/auth']);
     }
 }

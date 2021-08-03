@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { CreateUserComponent } from './component/create-user/create-user.component';
 import { AuthDialogComponent } from './component/auth-dialog/auth-dialog.component';
-import { ForgotPasswordComponent, SelectAuthFactorComponent, ValidAccountComponent, AcceptAgrementComponent, ValidInvitationComponent } from './component';
+import { ForgotPasswordComponent, SelectAuthFactorComponent, ValidAccountComponent, AcceptAgrementComponent, ValidInvitationComponent, AccountHeaderComponent } from './component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +18,7 @@ import { UserModule } from '../user';
 import { AskConnectDirective, CatchRedirectionDirective, AskConnectComponent } from './directive';
 import { RoleGuard } from './guard';
 import { MatButtonModule } from "@angular/material/button";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { MatButtonModule } from "@angular/material/button";
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
+    RouterModule,
 
     ScrollingModule,
 
@@ -50,6 +52,7 @@ import { MatButtonModule } from "@angular/material/button";
     AcceptAgrementComponent,
     ValidInvitationComponent,
     ValidAccountComponent,
+    AccountHeaderComponent,
 
     AskConnectComponent,
     AskConnectDirective,
@@ -61,7 +64,7 @@ import { MatButtonModule } from "@angular/material/button";
     AskConnectDirective,
     CatchRedirectionDirective,
     AuthDialogComponent,
-
+    AccountHeaderComponent,
   ],
   providers: [
     RoleGuard,

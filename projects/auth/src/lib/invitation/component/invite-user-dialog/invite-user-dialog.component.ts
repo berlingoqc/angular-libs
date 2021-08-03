@@ -23,7 +23,7 @@ export interface InviteUserSettings {
 @Component({
   selector: 'alb-invite-user-dialog',
   templateUrl: './invite-user-dialog.component.html',
-  styleUrls: ['./invite-user-dialog.component.scss'],
+  styleUrls: ['./invite-user-dialog.component.scss', '../../../common/shared.scss'],
 })
 export class InviteUserDialogComponent implements OnInit {
   formGroup: FormGroup;
