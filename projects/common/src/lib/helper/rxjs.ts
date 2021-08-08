@@ -12,14 +12,14 @@ export interface CachingItem<T> {
 }
 
 
-export interface StateChange {
+export interface StateChange<T> {
   operation: string;
   id?: any;
-  data?: any;
+  data?: T;
 }
 
 export interface CachingRequestOptions<T> {
-  stateChange?: (oldValue: T, change: StateChange) => T
+  stateChange?: (oldValue: T, change: StateChange<T>) => T
 }
 
 export class CachingRequest<T> {
@@ -37,12 +37,12 @@ export class CachingRequest<T> {
         return item.obs;
     }
 
-    onModif(obs: Observable<T>) {
+    onModif(obs: Observable<StateChange<any>>): Observable<StateChange<any>> {
         return obs.pipe(
-            switchMap((x) => {
+            map((x) => {
                 // Reset all for now but maybe abaible to target item in the future,
                 Object.values(this.items).forEach(item => item.subject.next(x));
-                return of(x);
+                return x;
             }),
         );
     }
