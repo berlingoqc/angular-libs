@@ -3,7 +3,7 @@ import {
     AsyncValidatorFn,
     ValidatorFn,
 } from '@angular/forms';
-import { TemplateContentData } from '@berlingoqc/ngx-common';
+import { TemplateContent, TemplateContentData } from '@berlingoqc/ngx-common';
 import { Observable } from 'rxjs';
 import { PropertyComponent } from '../component';
 import { ISubType } from '../subtype';
@@ -33,6 +33,8 @@ export interface IProperty extends Validator {
     // decorators sont des valeurs supplémentaires qui
     // sont handle par des directive autour de la propriété
     decorators?: { [id: string]: any };
+
+    templates?: { [id: string]: TemplateContent };
 
     component?: PropertyComponent;
     // Le sous-type du type.

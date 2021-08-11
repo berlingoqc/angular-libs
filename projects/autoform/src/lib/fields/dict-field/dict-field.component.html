@@ -1,1 +1,77 @@
-<p>dict-field works!</p>
+<div class="heading">
+  <h3
+    [style.display]="(data.templates) ? 'box' : 'none'">
+      {{(data.templates) ? data.templates['header'] : ''}}
+  </h3>
+  <div>
+    <button mat-mini-fab class="primary" [disabled]="allPropertyFill" (click)="addProperty()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+</div>
+
+<div class="dict-object">
+  <div class="property" *ngFor="let prop of properties; index as i">
+    <ng-container
+      [ngTemplateOutlet]="field"
+      [ngTemplateOutletContext]="{form: prop, index: i}"
+    ></ng-container>
+  </div>
+</div>
+
+<ng-template #field let-form="form" let-index="index">
+  <ng-container
+    *ngTemplateOutlet="((mode === 'property') ? property : propertyType);context: {
+      form: form,
+      index: index
+    }"
+  ></ng-container>
+
+  <div>
+    :
+  </div>
+
+  <div *ngIf="abstractControl.controls[form.control.value?.type?.name] as d" class="value">
+    <ng-template
+      autoFormField
+      [field]="form.control.value.type"
+      [abstractControl]="d"
+    ></ng-template>
+  </div>
+</ng-template>
+
+<!-- property select (property name are defined with know type)-->
+<ng-template #property let-form="form" let-index="index">
+  <div class="property-mode">
+
+  <mat-form-field>
+    <mat-select [formControl]="form.control.controls.type">
+      <mat-option *ngFor="let prop of propertiesAvailable" [disabled]="prop.disabledOption == true" [value]="prop">
+        {{prop.name + ' - ' + prop.type}}
+      </mat-option>
+    </mat-select>
+    <button mat-icon-button matSuffix (click)="$event.stopPropagation(); removeProperty(index)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-form-field>
+  </div>
+</ng-template>
+
+<!-- property type select (property name not defined and choose type)-->
+<ng-template #propertyType let-form="form">
+  <div>
+    <mat-form-field>
+      <mat-label>Property name</mat-label>
+      <input matInput [formControl]="form.controls.property" />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label></mat-label>
+      <mat-select [formControl]="form.controls.type">
+        <mat-option></mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-template>

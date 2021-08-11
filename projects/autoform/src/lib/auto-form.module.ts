@@ -58,6 +58,7 @@ import { DateRangeSubTypeHandler } from './models';
 import { FormActionsBarComponent } from './helper/form-actions/form-actions-bar.component';
 import { ButtonsRowModule, LoadingButtonModule } from '@berlingoqc/ngx-common';
 import { UnionFieldComponent } from './fields/union-field/union-field.component';
+import { InjectFieldDirecitve } from './fields/injector-base.component';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -81,6 +82,8 @@ import { UnionFieldComponent } from './fields/union-field/union-field.component'
 
         MyMatInput,
         MyMatSelectComponent,
+
+        InjectFieldDirecitve,
 
         SliderControlComponent,
         MatErrorPipe,
@@ -226,6 +229,13 @@ export class AutoFormModule {
         });
 
         register.registerSubTypeHandler('date-range', new DateRangeSubTypeHandler())
+
+
+        register.registerComponent({
+          type: 'dic',
+          mainComponentType: DictFieldComponent,
+          typeComponentHandler: []
+        });
 
         register.registerComponent({
             type: 'bool',

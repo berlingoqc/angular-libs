@@ -15,12 +15,94 @@ import {
   Directive,
   OnDestroy,
   ComponentRef,
+  OnInit,
 } from '@angular/core';
 import { FormProperty, FormObject } from '../models/object';
 import { DecoratorsDirective } from '../directive/decorator-directive';
 import { IProperty } from '../models';
 import { ComponentFieldService } from './field.service';
 import { Observable } from 'rxjs';
+
+
+@Directive({
+  selector: '[autoFormField]'
+})
+export class InjectFieldDirecitve implements OnInit, OnDestroy {
+
+  private componentRef: ComponentRef<any>;
+  private mAbstractControl: AbstractControl;
+  private init = false;
+
+  @Input() field: IProperty | FormObject;
+
+  @Input() set abstractControl(ab: AbstractControl) {
+    this.mAbstractControl = ab;
+    if (this.init) {
+      this.renderFieldInTemplate(this.field, this.containerRef, this.mAbstractControl);
+    }
+  }
+  get abstractControl() {
+    return this.mAbstractControl;
+  }
+
+
+  constructor(
+    private containerRef: ViewContainerRef,
+    protected componentRegister: ComponentRegisterService,
+    protected componentFactoryResolver: ComponentFactoryResolver,
+    protected injector: Injector
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.renderFieldInTemplate(
+      this.field,
+      this.containerRef,
+      this.abstractControl,
+    )
+    this.init = true;
+  }
+
+  private renderFieldInTemplate(
+    field: IProperty | FormObject,
+    ref: ViewContainerRef,
+    control: AbstractControl,
+  ) {
+    if (this.componentRef) {
+      this.containerRef.clear();
+      this.componentRef.destroy();
+      this.componentRef = null;
+    }
+    const t = this.componentRegister.getRegisterComponent(field.type);
+    const factory = this.componentFactoryResolver.resolveComponentFactory(
+      t.mainComponentType
+    );
+    const component = ref.createComponent(factory, 0, this.injector);
+    const instance = component.instance as BaseFieldComponent<any, any>;
+    instance.data = field;
+    instance.abstractControl = control;
+    const htmlElement = component.location.nativeElement as HTMLElement;
+    htmlElement.classList.add('field');
+    if (field.decorators) {
+      const decoratorsDirective = new DecoratorsDirective(component.location);
+      decoratorsDirective.autoFormElementID = 'component';
+      decoratorsDirective.autoFormDecorator = field.decorators;
+    }
+
+    component.changeDetectorRef.detectChanges();
+
+    this.componentRef = component;
+    this.field = field;
+  }
+
+  ngOnDestroy() {
+    this.componentRef?.destroy();
+    //this.componentFieldService.items[this.field.name].destroy();
+    //delete this.componentFieldService.items[this.field.name];
+  }
+
+}
 
 @Directive()
 export abstract class InjectorBaseFieldComponent<

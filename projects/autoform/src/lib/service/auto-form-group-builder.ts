@@ -6,9 +6,11 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { DictFormGroup } from '../helper/form-group/dict-form-group';
 import {
     ArrayProperty,
     AutoFormData,
+    DictionnayProperty,
     FormObject,
     FormProperty,
     IProperty,
@@ -53,6 +55,8 @@ export class AutoFormGroupBuilder {
                 validators.push(Validators.required);
             }
             return new FormArray([], validators);
+        } else if (value.type === 'dic') {
+          return new DictFormGroup((value as DictionnayProperty), (value) => this.loopFormProperty(value));
         } else {
             const validators = [];
             const asyncValidators = [];
