@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, C
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { DictionnayProperty } from '../../models/properties/dict';
 import { InjectorBaseFieldComponent } from '../injector-base.component';
-import { FormProperty, IProperty } from '../../models';
+import { IProperty } from '../../models';
 import { ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import { Subscription } from 'rxjs';
@@ -73,11 +73,11 @@ export class DictFieldComponent
     }
   }
 
-  getTemplateField(i: number): FormProperty {
+  getTemplateField(i: number): IProperty {
     return null;
   }
 
-  getAbstractControl(property: FormProperty, i: number): AbstractControl {
+  getAbstractControl(property: IProperty, i: number): AbstractControl {
     return this.abstractControl.get(property.name);
   }
 

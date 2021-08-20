@@ -255,7 +255,6 @@ export class MultiPartMatInputComponent
   onContainerClick(): void {
     let isFocus = false;
     const items = Object.entries(this.partsFormGroup.controls);
-    console.log('CONTAINER CLICK', items);
     items.forEach(([k, v], i) => {
       if (v.valid) {
         this.focusMonitor.focusVia(this.inputs.toArray()[i], 'program');
@@ -273,7 +272,6 @@ export class MultiPartMatInputComponent
     const errors = Object.values(this.partsFormGroup.controls)
       .map((fc) => fc.errors)
       .reduce((previous, current) => Object.assign(previous ?? {}, current))
-    console.log('ERRORS', errors);
     this.autoFocusNext(control, index);
     this.onChange(this.value);
   }

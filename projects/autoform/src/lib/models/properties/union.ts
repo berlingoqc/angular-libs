@@ -1,8 +1,7 @@
 import { SelectComponent } from "../component/select.component";
-import { FormProperty } from "../object";
-import { IProperty, IPropertyType } from "./iproperty";
+import { IProperty } from "./iproperty";
 
 export interface UnionProperty extends IProperty {
   select?: SelectComponent;
-  types: { [id: string]: FormProperty};
+  types: { [id: string]: IProperty};
 }

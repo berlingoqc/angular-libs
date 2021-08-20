@@ -21,8 +21,9 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { InjectorBaseFieldComponent } from '../injector-base.component';
-import { FormProperty, FormObject } from '../../models/object';
+import { FormObject } from '../../models/object';
 import { ComponentRegisterService } from '../../service/component-register';
+import { IProperty } from '../../models';
 
 @Component({
   selector: 'autoform-object-field',
@@ -47,11 +48,11 @@ export class ObjectFieldComponent
     this.initialize();
   }
 
-  getTemplateField(i: number): FormProperty {
+  getTemplateField(i: number): IProperty {
     return this.data.properties[i];
   }
 
-  getAbstractControl(property: FormProperty, i: number): AbstractControl {
+  getAbstractControl(property: IProperty, i: number): AbstractControl {
     return this.abstractControl.get(property.name);
   }
 }

@@ -9,7 +9,6 @@ import { FieldErrors } from '../models';
 export class MatErrorPipe implements PipeTransform {
   transform(errors: FieldErrors, abstractControl: AbstractControl) {
     if (errors?.hours) {
-      //console.log('CACACACA', abstractControl);
     }
     if (!errors) {
       return [];

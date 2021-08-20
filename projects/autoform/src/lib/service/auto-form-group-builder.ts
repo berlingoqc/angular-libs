@@ -12,7 +12,6 @@ import {
     AutoFormData,
     DictionnayProperty,
     FormObject,
-    FormProperty,
     IProperty,
     UnionProperty,
 } from '../models';
@@ -29,7 +28,7 @@ export class AutoFormGroupBuilder {
         });
         return new FormGroup(controls);
     }
-    loopFormProperty(value: FormProperty): AbstractControl {
+    loopFormProperty(value: IProperty): AbstractControl {
         if (value.type === 'object') {
             return new FormGroup(this.getObjectForm(value as FormObject));
 

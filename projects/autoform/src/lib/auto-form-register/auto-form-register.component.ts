@@ -49,7 +49,6 @@ export class AutoFormRegisterComponent implements OnInit {
     this.model = data.model;
     this.forms = data.forms;
     // Recupere la definition du model
-    console.log('REGISTER', this.modelRegister.models);
     const model = this.modelRegister.models[this.model];
     if (!model) {
       throw new Error('Model not found with key ' + this.model);

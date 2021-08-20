@@ -9,9 +9,8 @@ import {
 
 import { FormArray, FormControl } from '@angular/forms';
 import { InjectorBaseFieldComponent } from '../injector-base.component';
-import { FormProperty } from '../../models/object';
 import { take } from 'rxjs/operators';
-import { ArrayProperty } from '../../models';
+import { ArrayProperty, IProperty } from '../../models';
 import { ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 
@@ -109,11 +108,11 @@ export class ArrayFieldComponent
 
   moveAfter() {}
 
-  getTemplateField(i: number): FormProperty {
+  getTemplateField(i: number): IProperty {
     return this.data.item;
   }
 
-  getAbstractControl(property: FormProperty, i: number) {
+  getAbstractControl(property: IProperty, i: number) {
     return this.abstractControl.controls[i];
   }
 }

@@ -1,11 +1,11 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { DictionnayProperty, FormProperty} from "../../models";
+import { DictionnayProperty, IProperty } from "../../models";
 
 export class DictFormGroup extends FormGroup {
 
   constructor(
     private dicProperty: DictionnayProperty,
-    private resolvePropertyControl: (value: FormProperty) => AbstractControl,
+    private resolvePropertyControl: (value: IProperty) => AbstractControl,
   ) {
     super({});
   }
@@ -26,10 +26,16 @@ export class DictFormGroup extends FormGroup {
         onlySelf?: boolean;
         emitEvent?: boolean;
     }): void {
-      for(const item of Object.entries(value)) {
-        if (!this.controls[item[0]]) {
-          this.addControl(item[0], this.resolvePropertyControl(
-            this.dicProperty.availableProperty.find(aProp => aProp.name === item[0])));
+      if (value) {
+        for(const item of Object.entries(value)) {
+          if (!this.controls[item[0]]) {
+            const iproperty = this.dicProperty.availableProperty.find(
+              aProp => aProp.name === item[0]
+            );
+            if (iproperty) {
+              this.addControl(item[0], this.resolvePropertyControl(iproperty));
+            }
+          }
         }
       }
       return super.patchValue(value, options);

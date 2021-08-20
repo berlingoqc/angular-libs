@@ -7,10 +7,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { InjectorBaseFieldComponent } from '../injector-base.component';
-import { FormObject, FormProperty } from '../../models/object';
-import { take } from 'rxjs/operators';
 import { ArrayProperty, UnionProperty, IProperty } from '../../models';
 import { ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
@@ -66,9 +64,6 @@ export class UnionFieldComponent
     const currentValue = this.abstractControl.value;
 
     if (!currentValue) {
-      //this.abstractControl.valueChanges.subscribe((value: any) => {
-      //  console.log('VALUE CAHNGE MY DUDUE', value);
-      //});
     } else {
       this.onModelSelected(currentValue.type, currentValue.data);
     }
@@ -76,7 +71,6 @@ export class UnionFieldComponent
   }
 
   onModelSelected(type: string,  value?: any) {
-    console.log('TYPE', type, this.data.types[type])
     this.templates.get(0).clear();
     const unionItemForm = this.builder.loopFormProperty(this.data.types[type]);
     this.abstractControl.removeControl('data');
@@ -84,15 +78,14 @@ export class UnionFieldComponent
     if (value) {
       this.abstractControl.controls.data.patchValue(value);
     }
-    console.log('FORM FOR NEW', unionItemForm);
     this.renderFieldInTemplate(this.data.types[type], this.templates.get(0), 0, unionItemForm);
   }
 
-  getAbstractControl(property: FormProperty, i: number) {
+  getAbstractControl(property: IProperty, i: number) {
     return this.abstractControl;
   }
 
-  getTemplateField(): FormProperty {
+  getTemplateField(): IProperty {
     return this.data;
   }
 }

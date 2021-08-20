@@ -17,7 +17,7 @@ import {
   ComponentRef,
   OnInit,
 } from '@angular/core';
-import { FormProperty, FormObject } from '../models/object';
+import { FormObject } from '../models/object';
 import { DecoratorsDirective } from '../directive/decorator-directive';
 import { IProperty } from '../models';
 import { ComponentFieldService } from './field.service';
@@ -33,7 +33,7 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
   private mAbstractControl: AbstractControl;
   private init = false;
 
-  @Input() field: IProperty | FormObject;
+  @Input() field: IProperty;
 
   @Input() set abstractControl(ab: AbstractControl) {
     this.mAbstractControl = ab;
@@ -135,7 +135,7 @@ export abstract class InjectorBaseFieldComponent<
     this.componentFieldService = this.injector.get(ComponentFieldService);
   }
 
-  abstract getTemplateField(i: number): FormProperty;
+  abstract getTemplateField(i: number): IProperty;
 
   initialize() {
     this.templates.forEach((template, i) => {
@@ -147,12 +147,12 @@ export abstract class InjectorBaseFieldComponent<
   }
 
   abstract getAbstractControl(
-    property: FormProperty,
+    property: IProperty,
     i: number
   ): AbstractControl;
 
   initContextData(
-    field: IProperty | FormObject,
+    field: IProperty,
     ref: ViewContainerRef,
     i: number
   ) {
@@ -163,7 +163,7 @@ export abstract class InjectorBaseFieldComponent<
   }
 
   renderFieldInTemplate(
-    field: IProperty | FormObject,
+    field: IProperty,
     ref: ViewContainerRef,
     i: number,
     control: AbstractControl,
@@ -182,13 +182,10 @@ export abstract class InjectorBaseFieldComponent<
     instance.abstractControl = control;
     const htmlElement = component.location.nativeElement as HTMLElement;
     htmlElement.classList.add('field');
-
-      console.log('APPLYING', field);
     if (field.decorators) {
       const decoratorsDirective = new DecoratorsDirective(component.location);
       decoratorsDirective.autoFormElementID = 'component';
       decoratorsDirective.autoFormDecorator = field.decorators;
-      console.log('APPLYING DECORATOR', decoratorsDirective);
     }
 
     component.changeDetectorRef.detectChanges();

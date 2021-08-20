@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AutoFormData } from '../models';
+import { AutoFormData, FormObject } from '../models';
 import { FormRegistry } from './form-registry';
 import { ModelRegistry } from './model-registry';
 
@@ -52,7 +52,7 @@ export class ModelsSelectComponent implements OnInit {
             } as any,
           }
         ]
-      }
+      } as FormObject
     ]
   }
 
