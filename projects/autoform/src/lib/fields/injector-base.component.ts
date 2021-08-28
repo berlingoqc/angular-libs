@@ -21,7 +21,7 @@ import { FormObject } from '../models/object';
 import { DecoratorsDirective } from '../directive/decorator-directive';
 import { IProperty } from '../models';
 import { ComponentFieldService } from './field.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 
 @Directive({
@@ -32,6 +32,8 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
   private componentRef: ComponentRef<any>;
   private mAbstractControl: AbstractControl;
   private init = false;
+
+  private subs: Subscription[] = [];
 
   @Input() field: IProperty;
 
@@ -94,10 +96,15 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
 
     this.componentRef = component;
     this.field = field;
+
+    if (this.field.valuesChanges) {
+      this.subs.push(control.valueChanges.subscribe((value) => this.field.valuesChanges(control, value)));
+    }
   }
 
   ngOnDestroy() {
     this.componentRef?.destroy();
+    this.subs.forEach((sub) => sub.unsubscribe());
     //this.componentFieldService.items[this.field.name].destroy();
     //delete this.componentFieldService.items[this.field.name];
   }
@@ -122,9 +129,11 @@ export abstract class InjectorBaseFieldComponent<
 
   componentFieldService: ComponentFieldService;
 
-  field: IProperty | FormObject;
+  field: IProperty;
 
   componentRef: ComponentRef<any>;
+
+  subs: Subscription[] = [];
 
   constructor(
     register: ComponentRegisterService,
@@ -192,6 +201,11 @@ export abstract class InjectorBaseFieldComponent<
 
     this.componentRef = component;
     this.field = field;
+
+    // create sub if needed
+    if (this.field.valuesChanges) {
+      this.subs.push(control.valueChanges.subscribe((value) => this.field.valuesChanges(control, value)));
+    }
   }
 
   ngOnDestroy() {

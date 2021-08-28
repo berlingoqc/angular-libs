@@ -1,6 +1,8 @@
 import {
+  AbstractControl,
     AbstractControlOptions,
     AsyncValidatorFn,
+    FormControl,
     ValidatorFn,
 } from '@angular/forms';
 import { TemplateContent, TemplateContentData } from '@berlingoqc/ngx-common';
@@ -51,8 +53,8 @@ export interface IProperty extends Validator {
     // Message a afficher pour les différentes clé d'erreurs
     errors?: FieldErrors;
 
-    configChange?: Observable<any>;
-
+    // callback call when formControl value change
+    valuesChanges?: (control: AbstractControl, value: any) => void;
 
     // default value for the formControl
     value?: any;
