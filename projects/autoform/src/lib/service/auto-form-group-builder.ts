@@ -17,6 +17,11 @@ import {
 } from '../models';
 import { ComponentRegisterService } from './component-register';
 
+/**
+ * AutoFormGroupBuilder
+ *
+ * the service to convert a AutoFormData to a AbstractControl
+ */
 @Injectable()
 export class AutoFormGroupBuilder {
     constructor(private componentRegister: ComponentRegisterService) {}

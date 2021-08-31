@@ -188,7 +188,7 @@ export class AutoFormModule {
         };
     }
 
-    constructor(private register: ComponentRegisterService) {
+    constructor(register: ComponentRegisterService) {
         register.registerComponent({
             type: 'string',
             mainComponentType: StringFieldComponent,
