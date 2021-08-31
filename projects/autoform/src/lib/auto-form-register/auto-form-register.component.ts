@@ -12,11 +12,9 @@ import { ModelRegistry } from './model-registry';
 })
 export class AutoFormRegisterComponent implements OnInit, OnDestroy {
     @ViewChild('vc', { read: ViewContainerRef }) vc: ViewContainerRef;
-    // Le nom du forms a loader
-    @Input() forms: string;
-    // Le noms du model a venir injecter dans le form, si aucune utilise lui
-    // par default
-    @Input() model: string;
+
+    forms: string;
+    model: string;
 
     @Input() autoFormEvent?: AutoFormEvent;
 
@@ -32,7 +30,11 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
         private resolver: ComponentFactoryResolver,
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+      if (this.forms && this.model) {
+        this.loadForm({form: this.forms, model: this.model});
+      }
+    }
 
     loadForm(data: any) {
         // Regarde si le nom de model et de forms sont fournis directement

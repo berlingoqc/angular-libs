@@ -1,5 +1,5 @@
 import { compilePipeFromMetadata } from '@angular/compiler';
-import { ChangeDetectorRef, Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
     AutoFormRegister,
@@ -22,6 +22,7 @@ import { AutoFormEvent } from 'projects/autoform/src/lib/models/event';
           <p>Exemple of the many use case of autoform</p>
         </div>
         <autoform-models-select
+          [value]="value"
           [callback]="callback"
         ></autoform-models-select>
 
@@ -37,12 +38,14 @@ import { AutoFormEvent } from 'projects/autoform/src/lib/models/event';
         margin: 10px;
       }
     `],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BaseComponent {
+export class BaseComponent implements AfterViewInit {
     url = "";
     @ViewChild(AutoFormRegisterComponent) autoForm: AutoFormRegisterComponent;
 
     snipets;
+    value;
 
     events: AutoFormEvent = {
       submit: (data) => {
@@ -53,9 +56,15 @@ export class BaseComponent {
     constructor(
       private formRegistry: FormRegistry,
       private modelsRegistry: ModelRegistry,
-    ) {}
+    ) {
+      const jsonValue = localStorage.getItem('demo-autoform');
+      if (jsonValue) {
+        this.value = JSON.parse(jsonValue);
+      }
+    }
 
     callback = (data) => {
+      localStorage.setItem('demo-autoform', JSON.stringify(data.object));
       return of(this.autoForm.loadForm({model: data.object.model, forms: data.object.form})).pipe(tap(() => {
         this.snipets = [
           {
@@ -68,6 +77,12 @@ export class BaseComponent {
           }
         ]
       }));
+    }
+
+    ngAfterViewInit(): void {
+      if (this.value) {
+        this.callback({object: this.value});
+      }
     }
 }
 
@@ -107,7 +122,7 @@ export class AutoFormRegisterWrapperModule {
         };
         formRegistery.forms['expensaion-panel'] = {
           data: expansionPanelForm,
-          path: "/demo/src/app/autoform/forms/expandanle-panel.ts",
+          path: "/demo/src/app/autoform/forms/expandable-panel.ts",
         };
     }
 }

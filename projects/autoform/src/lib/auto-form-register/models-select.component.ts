@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AutoFormData, FormObject } from '../models';
 import { FormRegistry } from './form-registry';
 import { ModelRegistry } from './model-registry';
@@ -13,6 +13,7 @@ import { ModelRegistry } from './model-registry';
 export class ModelsSelectComponent implements OnInit {
 
   @Input() callback: (data) => Observable<void>;
+  @Input() value: any;
 
   form: AutoFormData = {
     type: 'simple',
@@ -64,8 +65,7 @@ export class ModelsSelectComponent implements OnInit {
   ngOnInit() {
     this.form.event = {
       submit: this.callback,
-    }
-    //this.items = Object.keys(this.modelRegistery.models);
-    //this.forms = Object.keys(this.formRegistery.forms)
+      initialData: () => of({object: this.value}),
+    };
   }
 }
