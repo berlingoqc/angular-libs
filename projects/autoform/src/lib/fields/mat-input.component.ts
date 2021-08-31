@@ -98,7 +98,7 @@ import { BaseFormField } from './base-form-field';
         <template-content
           [content]="hint"
           [parent]="currentInput"
-          [content]="data"
+          [context]="data"
         ></template-content>
       </mat-hint>
       <mat-hint
@@ -108,7 +108,7 @@ import { BaseFormField } from './base-form-field';
         <template-content
           [content]="hint"
           [parent]="currentInput"
-          [content]="data"
+          [context]="data"
         ></template-content>
       </mat-hint>
 
@@ -130,7 +130,6 @@ import { BaseFormField } from './base-form-field';
     </mat-form-field>
   `,
   selector: 'my-mat-input',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyMatInput extends BaseFormField {
   // Si l'input est un textarea
@@ -143,8 +142,4 @@ export class MyMatInput extends BaseFormField {
   @Input() step?: number;
 
   @Input() autocomplete: AutocompleteSubType;
-
-  /*constructor(cdr: ChangeDetectorRef) {
-    super(cdr);
-  }*/
 }

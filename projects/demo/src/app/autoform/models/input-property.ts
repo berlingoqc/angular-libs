@@ -32,10 +32,7 @@ export const inputPropertyObject: FormObject[] = [
                     },
                 },
                 type: 'string',
-                hint: {
-                    content: 'Test bien simple',
-                    type: 'string',
-                },
+                hint: 'Test tres simple'
             } as InputProperty,
             {
                 name: 'telephoe',
@@ -105,7 +102,9 @@ export const inputPropertyObject: FormObject[] = [
                 hintAlign: 'end',
                 maxlength: 5,
                 hint: {
-                    content: (input) => input?.value.length + '/5',
+                    content: (property, input) => {
+                      return `${input?.value.length} / ${property.maxlength}`;
+                    },
                     type: 'func',
                 },
             } as InputProperty,
