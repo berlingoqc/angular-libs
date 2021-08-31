@@ -100,6 +100,9 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
     if (this.field.valuesChanges) {
       this.subs.push(control.valueChanges.subscribe((value) => this.field.valuesChanges(control, value)));
     }
+    if (this.field.initialize) {
+      this.field.initialize(control);
+    }
   }
 
   ngOnDestroy() {
@@ -206,6 +209,10 @@ export abstract class InjectorBaseFieldComponent<
     if (this.field.valuesChanges) {
       this.subs.push(control.valueChanges.subscribe((value) => this.field.valuesChanges(control, value)));
     }
+    if (this.field.initialize) {
+      this.field.initialize(control);
+    }
+
   }
 
   ngOnDestroy() {

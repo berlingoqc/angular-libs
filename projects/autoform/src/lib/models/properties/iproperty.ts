@@ -55,6 +55,7 @@ export interface IProperty extends Validator {
 
     // callback call when formControl value change
     valuesChanges?: (control: AbstractControl, value: any) => void;
+    initialize?: (control: AbstractControl) => void;
 
     // default value for the formControl
     value?: any;

@@ -44,14 +44,13 @@
 <!-- property select (property name are defined with know type)-->
 <ng-template #property let-form="form" let-index="index">
   <div class="property-mode">
-
   <mat-form-field>
     <mat-select [formControl]="form.control.controls.type">
       <mat-option *ngFor="let prop of propertiesAvailable" [disabled]="prop.disabledOption == true" [value]="prop">
         {{prop.name + ' - ' + prop.type}}
       </mat-option>
     </mat-select>
-    <button mat-icon-button matSuffix (click)="$event.stopPropagation(); removeProperty(index)">
+    <button *ngIf="!form.prop.required" mat-icon-button matSuffix (click)="$event.stopPropagation(); removeProperty(index)">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-form-field>

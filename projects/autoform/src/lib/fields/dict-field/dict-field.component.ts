@@ -57,6 +57,7 @@ export class DictFieldComponent
     }
     for (const entry of Object.entries(this.abstractControl.controls)) {
       const propertie = this.propertiesAvailable.find(prop => prop.name === entry[0]);
+      console.log('PRO', propertie);
       if (propertie) {
         this.addProperty(propertie);
       }
@@ -87,6 +88,10 @@ export class DictFieldComponent
       subChange: null,
       propertie: '',
       config: null,
+      prop: propertie,
+    }
+    if (propertie.required) {
+      //item.control.controls.type.disable({onlySelf: true, emitEvent: false});
     }
     this.properties.push(item);
     let lastProperties = propertie;
