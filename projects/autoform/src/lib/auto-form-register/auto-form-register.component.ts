@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, ComponentRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
 import { AutoFormComponent } from '../auto-form/auto-form.component';
 import { AutoFormData } from '../models';
+import { AutoFormEvent } from '../models/event';
 import { DEFAULT_AUTO_FORM } from '../models/model-context';
 import { FormRegistry } from './form-registry';
 import { ModelRegistry } from './model-registry';
@@ -16,6 +17,8 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
     // Le noms du model a venir injecter dans le form, si aucune utilise lui
     // par default
     @Input() model: string;
+
+    @Input() autoFormEvent?: AutoFormEvent;
 
     formData: AutoFormData;
     autoFormComponent: ComponentRef<AutoFormComponent>;
@@ -58,7 +61,7 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
             throw new Error('Form nout found with key ' + this.forms);
         }
         form.items = model.items;
-        this.formData = form;
+        this.formData = { ...form, event: this.autoFormEvent };
 
         if (this.autoFormComponent) {
           this.autoFormComponent.destroy();

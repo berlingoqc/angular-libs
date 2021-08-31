@@ -1,14 +1,12 @@
 import {
   Component,
   OnInit,
-  ComponentFactoryResolver,
-  Injector,
   AfterViewInit,
   ViewEncapsulation,
 } from '@angular/core';
 
 import { FormGroup } from '@angular/forms';
-import { UnionProperty, IProperty } from '../../models';
+import { IProperty, UnionProperty } from '../../models';
 import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import { unsubscriber } from '@berlingoqc/ngx-common';
@@ -32,7 +30,7 @@ export class UnionFieldComponent
 
   sub: Subscription;
 
-  subFirstSetValue: Subscription;
+  selectedProperty: IProperty;
 
   constructor(
     private builder: AutoFormGroupBuilder,
@@ -68,14 +66,15 @@ export class UnionFieldComponent
   }
 
   onModelSelected(type: string,  value?: any) {
-    /*this.templates.get(0).clear();
-    const unionItemForm = this.builder.loopFormProperty(this.data.types[type]);
+    if (!type) {
+      return;
+    }
+    this.selectedProperty = this.data.types[type];
+    const unionItemForm = this.builder.loopFormProperty(this.selectedProperty);
     this.abstractControl.removeControl('data');
     this.abstractControl.addControl('data', unionItemForm);
     if (value) {
       this.abstractControl.controls.data.patchValue(value);
     }
-    this.renderFieldInTemplate(this.data.types[type], this.templates.get(0), 0, unionItemForm);
-    */
   }
 }

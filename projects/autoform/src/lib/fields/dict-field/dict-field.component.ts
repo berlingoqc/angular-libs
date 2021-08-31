@@ -54,7 +54,6 @@ export class DictFieldComponent
     }
     for (const entry of Object.entries(this.abstractControl.controls)) {
       const propertie = this.propertiesAvailable.find(prop => prop.name === entry[0]);
-      console.log('PRO', propertie);
       if (propertie) {
         this.addProperty(propertie);
       }

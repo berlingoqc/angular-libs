@@ -17,12 +17,5 @@ import { BaseFieldComponent } from '../../service/component-register';
   encapsulation: ViewEncapsulation.None,
 })
 export class ObjectFieldComponent
-  extends BaseFieldComponent<FormObject, FormGroup>
-  implements OnInit, AfterViewInit {
-
-  ngOnInit(): void {
-    console.log('OBJECT FIELD', this.data, this.abstractControl);
-  }
-
-  ngAfterViewInit() {}
+  extends BaseFieldComponent<FormObject, FormGroup> {
 }

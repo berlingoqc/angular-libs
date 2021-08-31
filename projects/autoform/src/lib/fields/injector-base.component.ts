@@ -4,11 +4,7 @@ import {
   ComponentRegisterService,
 } from '../service/component-register';
 import {
-  ViewChildren,
-  TemplateRef,
   ViewContainerRef,
-  QueryList,
-  Type,
   ComponentFactoryResolver,
   Injector,
   Input,
@@ -20,8 +16,7 @@ import {
 import { FormObject } from '../models/object';
 import { DecoratorsDirective } from '../directive/decorator-directive';
 import { IProperty } from '../models';
-import { ComponentFieldService } from './field.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 
 @Directive({
@@ -108,8 +103,6 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.componentRef?.destroy();
     this.subs.forEach((sub) => sub.unsubscribe());
-    //this.componentFieldService.items[this.field.name].destroy();
-    //delete this.componentFieldService.items[this.field.name];
   }
 
 }

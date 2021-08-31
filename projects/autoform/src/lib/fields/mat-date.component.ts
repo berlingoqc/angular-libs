@@ -2,9 +2,6 @@ import { Component } from "@angular/core";
 import { DateProperty } from "../models/properties/date";
 import { BaseFormField } from "./base-form-field";
 
-
-
-
 @Component({
   selector: 'my-mat-date',
   template: `

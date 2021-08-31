@@ -4,8 +4,11 @@
     [component]="data.select"
     [abstractControl]="abstractControl.controls.type"
   ></autoform-mat-select>
-  <!--USE AUTOFORM FIELD with value selected from the select-->
   <ng-template
+    *ngIf="selectedProperty"
+    autoFormField
+    [field]="selectedProperty"
+    [abstractControl]="abstractControl.controls.data"
   ></ng-template>
 
 </div>

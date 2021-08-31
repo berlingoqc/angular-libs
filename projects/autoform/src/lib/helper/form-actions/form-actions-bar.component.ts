@@ -3,8 +3,6 @@ import { Button } from "@berlingoqc/ngx-common";
 import { BaseAutoFormComponent } from "../../auto-form/auto-form.base";
 import { FormActions } from "./form-actions";
 
-
-
 @Component({
   selector: 'autoform-actions-bar',
   template: `

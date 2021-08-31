@@ -12,6 +12,7 @@ import { simpleObject, inputPropertyObject, dateForm } from './models';
 import { simpleForm, expansionPanelForm } from './forms';
 import { CodeDemoModule } from '../code-demo/code-demo.module';
 import { map, tap } from 'rxjs/operators';
+import { AutoFormEvent } from 'projects/autoform/src/lib/models/event';
 
 @Component({
     template: `
@@ -27,7 +28,8 @@ import { map, tap } from 'rxjs/operators';
         <app-code-demo
           [snipets]="snipets"
         >
-          <lib-auto-form-register></lib-auto-form-register>
+          <lib-auto-form-register [autoFormEvent]="events">
+          </lib-auto-form-register>
         </app-code-demo>
     `,
     styles: [`
@@ -42,13 +44,16 @@ export class BaseComponent {
 
     snipets;
 
+    events: AutoFormEvent = {
+      submit: (data) => {
+        console.log('DATA', data);
+      }
+    }
+
     constructor(
       private formRegistry: FormRegistry,
       private modelsRegistry: ModelRegistry,
-      private cd: ChangeDetectorRef,
-    ) {
-
-    }
+    ) {}
 
     callback = (data) => {
       return of(this.autoForm.loadForm({model: data.object.model, forms: data.object.form})).pipe(tap(() => {
