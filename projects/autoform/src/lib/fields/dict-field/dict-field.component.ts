@@ -1,9 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Injector, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { DictionnayProperty } from '../../models/properties/dict';
-import { InjectorBaseFieldComponent } from '../injector-base.component';
 import { IProperty } from '../../models';
-import { ComponentRegisterService } from '../../service/component-register';
+import { ComponentRegisterService, BaseFieldComponent } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import { Subscription } from 'rxjs';
 
@@ -24,7 +23,7 @@ interface DictFieldInstance {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DictFieldComponent
-  extends InjectorBaseFieldComponent<DictionnayProperty, FormGroup>
+  extends BaseFieldComponent<DictionnayProperty, FormGroup>
    implements OnInit, AfterViewInit, OnDestroy {
 
     properties: DictFieldInstance[] = [];
@@ -40,11 +39,9 @@ export class DictFieldComponent
   constructor(
     private builder: AutoFormGroupBuilder,
     private cdRef: ChangeDetectorRef,
-    register: ComponentRegisterService,
-    componentFactoryResolver: ComponentFactoryResolver,
-    injector: Injector,
+    registryService: ComponentRegisterService,
   ) {
-    super(register, componentFactoryResolver, injector);
+    super(registryService);
   }
 
   ngOnInit(): void {

@@ -8,9 +8,8 @@ import {
 } from '@angular/core';
 
 import { FormGroup } from '@angular/forms';
-import { InjectorBaseFieldComponent } from '../injector-base.component';
-import { ArrayProperty, UnionProperty, IProperty } from '../../models';
-import { ComponentRegisterService } from '../../service/component-register';
+import { UnionProperty, IProperty } from '../../models';
+import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import { unsubscriber } from '@berlingoqc/ngx-common';
 import { Subscription } from 'rxjs';
@@ -28,7 +27,7 @@ export interface UnionData {
 })
 @unsubscriber
 export class UnionFieldComponent
-  extends InjectorBaseFieldComponent<UnionProperty, FormGroup>
+  extends BaseFieldComponent<UnionProperty, FormGroup>
   implements OnInit, AfterViewInit {
 
   sub: Subscription;
@@ -38,10 +37,8 @@ export class UnionFieldComponent
   constructor(
     private builder: AutoFormGroupBuilder,
     register: ComponentRegisterService,
-    componentFactoryResolver: ComponentFactoryResolver,
-    injector: Injector
   ) {
-    super(register, componentFactoryResolver, injector);
+    super(register);
   }
 
   ngOnInit(): void {
@@ -71,7 +68,7 @@ export class UnionFieldComponent
   }
 
   onModelSelected(type: string,  value?: any) {
-    this.templates.get(0).clear();
+    /*this.templates.get(0).clear();
     const unionItemForm = this.builder.loopFormProperty(this.data.types[type]);
     this.abstractControl.removeControl('data');
     this.abstractControl.addControl('data', unionItemForm);
@@ -79,13 +76,6 @@ export class UnionFieldComponent
       this.abstractControl.controls.data.patchValue(value);
     }
     this.renderFieldInTemplate(this.data.types[type], this.templates.get(0), 0, unionItemForm);
-  }
-
-  getAbstractControl(property: IProperty, i: number) {
-    return this.abstractControl;
-  }
-
-  getTemplateField(): IProperty {
-    return this.data;
+    */
   }
 }

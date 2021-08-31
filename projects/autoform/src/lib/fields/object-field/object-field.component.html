@@ -1,8 +1,15 @@
-<h3 [style.display]="(data.templates) ? 'box' : 'none'">{{(data.templates) ? data.templates['header'] : ''}}</h3>
+<h3 [style.display]="(data.templates) ? 'box' : 'none'">
+  {{(data.templates) ? data.templates['header'] : ''}}
+</h3>
 <div
-    [autoFormDecorator]="data.decorators"
-    autoFormElementID="container"
-    [formGroup]="abstractControl"
+  [autoFormDecorator]="data.decorators"
+  autoFormElementID="container"
+  [formGroup]="abstractControl"
 >
-    <ng-template #comp *ngFor="let f of data.properties"> </ng-template>
+  <ng-template
+    *ngFor="let prop of data.properties"
+    autoFormField
+    [field]="prop"
+    [abstractControl]="abstractControl.controls[prop.name]"
+  ></ng-template>
 </div>

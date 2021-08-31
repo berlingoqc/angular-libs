@@ -1,17 +1,13 @@
 import {
   Component,
   OnInit,
-  ComponentFactoryResolver,
-  Injector,
   AfterViewInit,
   ViewEncapsulation,
 } from '@angular/core';
 
-import { FormArray, FormControl } from '@angular/forms';
-import { InjectorBaseFieldComponent } from '../injector-base.component';
-import { take } from 'rxjs/operators';
-import { ArrayProperty, IProperty } from '../../models';
-import { ComponentRegisterService } from '../../service/component-register';
+import { FormArray } from '@angular/forms';
+import { ArrayProperty } from '../../models';
+import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 
 @Component({
@@ -21,7 +17,7 @@ import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
   encapsulation: ViewEncapsulation.None,
 })
 export class ArrayFieldComponent
-  extends InjectorBaseFieldComponent<ArrayProperty, FormArray>
+  extends BaseFieldComponent<ArrayProperty, FormArray>
   implements OnInit, AfterViewInit {
   i = 0;
   items: number[] = [];
@@ -45,10 +41,8 @@ export class ArrayFieldComponent
   constructor(
     private builder: AutoFormGroupBuilder,
     register: ComponentRegisterService,
-    componentFactoryResolver: ComponentFactoryResolver,
-    injector: Injector
   ) {
-    super(register, componentFactoryResolver, injector);
+    super(register);
   }
 
   ngOnInit(): void {
@@ -62,7 +56,7 @@ export class ArrayFieldComponent
   }
 
   ngAfterViewInit() {
-    if (this.initAfterInit) {
+    /*if (this.initAfterInit) {
       for (let i = 0; i < this.items.length; i++) {
         this.initContextData(
           this.data.item,
@@ -72,9 +66,11 @@ export class ArrayFieldComponent
       }
       this.initAfterInit = false;
     }
+    */
   }
 
   addItem() {
+    /*
     const l = this.addControl();
     this.templates.changes.pipe(take(1)).subscribe(() => {
       // LE +1 je comprnds pas
@@ -84,6 +80,7 @@ export class ArrayFieldComponent
         l
       );
     });
+    */
   }
 
   addControl() {
@@ -107,12 +104,4 @@ export class ArrayFieldComponent
   moveBefore() {}
 
   moveAfter() {}
-
-  getTemplateField(i: number): IProperty {
-    return this.data.item;
-  }
-
-  getAbstractControl(property: IProperty, i: number) {
-    return this.abstractControl.controls[i];
-  }
 }

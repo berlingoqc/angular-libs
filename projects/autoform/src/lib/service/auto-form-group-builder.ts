@@ -30,8 +30,8 @@ export class AutoFormGroupBuilder {
     }
     loopFormProperty(value: IProperty): AbstractControl {
         if (value.type === 'object') {
+          console.log('BUIDLING', value.name);
             return new FormGroup(this.getObjectForm(value as FormObject));
-
         } else if(value.type === 'union') {
           // TEMPORARY FIX UNTIL I FOUND SOMETHING BETTER FOR UNION
           /**
