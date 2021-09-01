@@ -1,4 +1,4 @@
-<div [ngSwitch]="data.component?.name">
+<div [ngClass]="{ 'error': abstractControl.touched && abstractControl.errors }" class="container" [ngSwitch]="data.component?.name">
     <div *ngSwitchCase="'checkbox'">
         <mat-checkbox
             [color]="data.color"
@@ -28,7 +28,6 @@
         </mat-slide-toggle>
     </div>
 </div>
-
 
 <ng-template #text>
   <template-content [content]="data.displayName"></template-content>
