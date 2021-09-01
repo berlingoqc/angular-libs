@@ -43,13 +43,14 @@ export class AutoFormGroupBuilder {
            * ONLY WORK IF PROPERTIES ARE FORMGROUP
            */
           const tempForm = {};
+
           Object.values((value as UnionProperty).types)
             .flatMap(item => (item as FormObject).properties)
             .forEach((item) => {
               tempForm[item.name] = this.loopFormProperty(item);
             });
             return new FormGroup({
-              type: new FormControl(),
+              type: new FormControl(undefined, (value.required) ? [Validators.required]: []),
               data: new FormGroup(tempForm),
             });
         } else if (value.type === 'array') {
