@@ -59,6 +59,7 @@ import { FormActionsBarComponent } from './helper/form-actions/form-actions-bar.
 import { ButtonsRowModule, LoadingButtonModule } from '@berlingoqc/ngx-common';
 import { UnionFieldComponent } from './fields/union-field/union-field.component';
 import { InjectFieldDirecitve } from './fields/injector-base.component';
+import { ControlRawDataPipe } from './pipe/raw-value.pipe';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -87,6 +88,7 @@ import { InjectFieldDirecitve } from './fields/injector-base.component';
 
         SliderControlComponent,
         MatErrorPipe,
+        ControlRawDataPipe,
         GetDecoratorDataPipe,
         DecoratorsDirective,
         FieldErrorComponent,

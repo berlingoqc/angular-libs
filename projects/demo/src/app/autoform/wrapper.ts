@@ -13,6 +13,8 @@ import { simpleForm, expansionPanelForm } from './forms';
 import { CodeDemoModule } from '../code-demo/code-demo.module';
 import { map, tap } from 'rxjs/operators';
 import { AutoFormEvent } from 'projects/autoform/src/lib/models/event';
+import { stepperForm } from './forms/stepper';
+import { dictObject } from './models/dict';
 
 @Component({
     template: `
@@ -114,15 +116,24 @@ export class AutoFormRegisterWrapperModule {
           items: dateForm,
           path: "/demo/src/app/autoform/models/date.ts",
         };
-
+        modelRegister.models.dict = {
+          items: dictObject,
+          path: "/demo/src/app/autoform/models/dict.ts"
+        };
 
         formRegistery.forms.simple = {
           data: simpleForm,
           path: "/demo/src/app/autoform/forms/simple.ts",
         };
+
         formRegistery.forms['expensaion-panel'] = {
           data: expansionPanelForm,
           path: "/demo/src/app/autoform/forms/expandable-panel.ts",
+        };
+
+        formRegistery.forms['stepper'] = {
+          data: stepperForm,
+          path: "/demo/src/app/autoform/forms/stepper.ts"
         };
     }
 }

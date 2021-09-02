@@ -28,17 +28,25 @@
     }"
   ></ng-container>
 
-  <div>
-    :
+  <div class="spacer">
+    <template-content
+      [content]="data.spacer"
+    ></template-content>
   </div>
 
-  <div *ngIf="abstractControl.controls[form.control.value?.type?.name] as d" class="value">
-    <ng-template
-      autoFormField
-      [field]="form.control.value.type"
-      [abstractControl]="d"
-    ></ng-template>
-  </div>
+  {{form.control | controlRawData | json}}
+  <ng-container *ngIf="(form.control.getRawValue()).type as property">
+    {{property}}
+    <ng-container *ngIf="abstractControl.controls[property.name] as control">
+      <div class="value">
+        <ng-template
+          autoFormField
+          [field]="property"
+          [abstractControl]="control"
+        ></ng-template>
+      </div>
+    </ng-container>
+  </ng-container>
 </ng-template>
 
 <!-- property select (property name are defined with know type)-->
@@ -50,7 +58,7 @@
         {{prop.name + ' - ' + prop.type}}
       </mat-option>
     </mat-select>
-    <button *ngIf="!form.prop.required" mat-icon-button matSuffix (click)="$event.stopPropagation(); removeProperty(index)">
+    <button *ngIf="!form.prop?.required" mat-icon-button matSuffix (click)="$event.stopPropagation(); removeProperty(index)">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-form-field>
