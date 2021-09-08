@@ -4,7 +4,9 @@
       {{(data.templates) ? data.templates['header'] : ''}}
   </h3>
   <div>
-    <button mat-mini-fab class="primary" [disabled]="allPropertyFill" (click)="addProperty()">
+    <button mat-mini-fab class="primary"
+      [disabled]="allPropertyFill ||  propertiesAvailable.length === properties.length"
+      (click)="addProperty()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -34,9 +36,7 @@
     ></template-content>
   </div>
 
-  {{form.control | controlRawData | json}}
   <ng-container *ngIf="(form.control.getRawValue()).type as property">
-    {{property}}
     <ng-container *ngIf="abstractControl.controls[property.name] as control">
       <div class="value">
         <ng-template

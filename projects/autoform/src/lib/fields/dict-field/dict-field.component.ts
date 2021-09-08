@@ -117,8 +117,7 @@ export class DictFieldComponent
           prop.disabledOption = true;
           lastProperties = prop;
           item.prop = lastProperties;
-        } else {
-          this.allPropertyFill = prop.disabledOption;
+          break;
         }
       }
       if (!this.propertiesAvailable.some(x => !x.disabledOption)) {
