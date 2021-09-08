@@ -29,13 +29,14 @@ export class AutoFormGroupBuilder {
     getFormGroup(formData: AutoFormData): FormGroup {
         const controls = {};
         formData.items.forEach((value) => {
-            controls[value.name] = new FormGroup(this.getObjectForm(value));
+          controls[value.name] = this.loopFormProperty(value);
         });
+        console.log('CONTROLS', controls);
         return new FormGroup(controls);
     }
     loopFormProperty(value: IProperty): AbstractControl {
         if (value.type === 'object') {
-            return new FormGroup(this.getObjectForm(value as FormObject));
+            return this.getObjectForm(value as FormObject);
         } else if(value.type === 'union') {
           // TEMPORARY FIX UNTIL I FOUND SOMETHING BETTER FOR UNION
           /**
@@ -108,11 +109,11 @@ export class AutoFormGroupBuilder {
         }
     }
 
-    getObjectForm(obj: FormObject): any {
+    getObjectForm(obj: FormObject): FormGroup {
         let ret = {};
         obj.properties.forEach((value) => {
             ret[value.name] = this.loopFormProperty(value);
         });
-        return ret;
+        return new FormGroup(ret);
     }
 }
