@@ -25,7 +25,8 @@ interface DictFieldInstance {
   selector: 'lib-dict-field',
   templateUrl: './dict-field.component.html',
   styleUrls: ['./dict-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // SHOULD PUT BACK BECAUSE IM USING getRawValue() in the template
+  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DictFieldComponent
   extends BaseFieldComponent<DictionnayProperty, FormGroup>
@@ -33,13 +34,10 @@ export class DictFieldComponent
 
     properties: DictFieldInstance[] = [];
 
-
     mode: string;
     propertiesAvailable: IPropertyItem[] = [];
 
-
     allPropertyFill = false;
-
 
   constructor(
     private builder: AutoFormGroupBuilder,
