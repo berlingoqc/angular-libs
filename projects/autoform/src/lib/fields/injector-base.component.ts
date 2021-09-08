@@ -33,7 +33,6 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
   private mField: IProperty;
   @Input() set field(field: IProperty) {
     this.mField = field;
-    console.log('FIELD', field);
   }
   get field() {
     return this.mField;
@@ -60,9 +59,7 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('SUB', this.field);
     if (!this.field) {
-      //console.error('FIELD NOT PRESENT');
       return;
     }
     this.renderFieldInTemplate(

@@ -2,29 +2,30 @@ import { IProperty, FormObject, DictionnayProperty } from 'projects/autoform/src
 
 
 export const dictObject: IProperty[] = [
-  {
-    name: 'object',
-    type: 'object',
-    properties: [
-      {
-        name: '',
-        type: 'dic',
-        availableProperty: [
-          {
-            name: 'number-children',
-            type: 'number'
-          },
-          {
-            name: 'location',
-            type: 'string',
-          },
-          {
-            name: 'mon-cul',
-            type: 'date',
-            required: true,
-          }
+    {
+        name: 'object',
+        type: 'object',
+        properties: [
+            {
+                name: '',
+                type: 'dic',
+                spacer: '&nbsp;',
+                availableProperty: [
+                    {
+                        name: 'number-children',
+                        type: 'number',
+                    },
+                    {
+                        name: 'location',
+                        type: 'string',
+                    },
+                    {
+                        name: 'mon-cul',
+                        type: 'date',
+                        required: true,
+                    },
+                ],
+            } as DictionnayProperty,
         ],
-      } as DictionnayProperty
-    ]
-  } as FormObject
+    } as FormObject,
 ];
