@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { ThemeService } from 'projects/common/src/public-api';
 
 @Component({
     selector: 'app-root',
@@ -57,8 +58,10 @@ export class AppComponent {
 
     constructor(
       private activatedRoute: ActivatedRoute,
+      private themeService: ThemeService,
       iconRegistry: MatIconRegistry, sanitizer: DomSanitizer
     ) {
+        this.themeService.restoreTheme();
         this.current = this.activatedRoute.snapshot.queryParams.model;
 
         iconRegistry.addSvgIcon('github', sanitizer.bypassSecurityTrustResourceUrl('/assets/github.svg'))

@@ -17,6 +17,7 @@ import { ThemeService } from "../theme.service";
         <mat-menu #menu="matMenu">
             <button
                 *ngFor="let option of options$ | async"
+                [disabled]="option.value === themeService.currentTheme"
                 mat-menu-item
                 (click)="changeTheme(option.value)"
             >
@@ -64,7 +65,7 @@ import { ThemeService } from "../theme.service";
 export class ThemePickerComponent {
     options$: Observable<Array<Option>>;
 
-    constructor(private readonly themeService: ThemeService) {
+    constructor(public readonly themeService: ThemeService) {
       this.options$ = this.themeService.getThemeOptions();
     }
 
