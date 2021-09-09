@@ -8,6 +8,11 @@
     <mat-expansion-panel-header>
       {{ item.name }}
     </mat-expansion-panel-header>
+    <ng-template
+      autoFormField
+      [field]="item"
+      [abstractControl]="formGroup.controls[item.name]"
+    ></ng-template>
     <autoform-object-field
       [data]="item"
       [abstractControl]="formGroup.controls[item.name]"
