@@ -20,6 +20,7 @@ export type IPropertyType =
     | 'blob'
     | 'union'
     | 'object'
+    | 'abstractobject'
     | 'array';
 
 // IProperty est l'interface de base pour les différents inputs
