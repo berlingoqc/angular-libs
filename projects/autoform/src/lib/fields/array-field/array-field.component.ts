@@ -19,22 +19,20 @@ import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 export class ArrayFieldComponent
   extends BaseFieldComponent<ArrayProperty, FormArray>
   implements OnInit, AfterViewInit {
-  i = 0;
-  items: number[] = [];
 
-  initAfterInit = false;
+  staticSize: boolean;
+  canAdd: boolean;
+  canDelete: boolean;
 
-  get canAdd(): boolean {
-    if (this.data.max && this.data.max < this.i) {
+  private getCanAdd(): boolean {
+    if (this.data.max && this.data.max <= this.abstractControl.controls.length) {
       return false;
     }
     return true;
   }
 
-  canDelete(index: number): boolean {
-    if (this.data.min && index > this.data.min) {
-      return false;
-    }
+  private getCanDelete(): boolean {
+    if (this.data.min >= this.abstractControl.controls.length) return false;
     return true;
   }
 
@@ -46,62 +44,33 @@ export class ArrayFieldComponent
   }
 
   ngOnInit(): void {
-    if (this.data.min > 0) {
-      const size = this.data.min;
-      for (let i = 0; i < size; i++) {
-        this.addControl();
-      }
-      this.initAfterInit = true;
-    }
+    this.staticSize = this.data.max && this.data.max === this.data.min;
+    this.setState();
   }
 
-  ngAfterViewInit() {
-    /*if (this.initAfterInit) {
-      for (let i = 0; i < this.items.length; i++) {
-        this.initContextData(
-          this.data.item,
-          this.templates.toArray()[i + 1],
-          i
-        );
-      }
-      this.initAfterInit = false;
-    }
-    */
-  }
-
-  addItem() {
-    /*
-    const l = this.addControl();
-    this.templates.changes.pipe(take(1)).subscribe(() => {
-      // LE +1 je comprnds pas
-      this.initContextData(
-        this.getTemplateField(l),
-        this.templates.toArray()[l + 1],
-        l
-      );
-    });
-    */
-  }
+  ngAfterViewInit() {}
 
   addControl() {
-    this.i += 1;
-    const l = this.items.push(this.i) - 1;
-    const abstractControl = this.builder.loopFormProperty(this.data.item);
+    const abstractControl = this.builder.loopFormProperty(this.data.elementType);
     this.abstractControl.controls.push(abstractControl);
-    return l;
+    this.setState();
   }
 
   trackBy(index: number, name: any): number {
     return name;
   }
 
-  deleteIndex(index: number) {
-    this.items.splice(index, 1);
+  removeControl(index: number) {
     this.abstractControl.controls.splice(index, 1);
-    this.i -= 1;
+    this.setState();
   }
 
   moveBefore() {}
 
   moveAfter() {}
+
+  private setState() {
+    this.canAdd = this.getCanAdd();
+    this.canDelete = this.getCanDelete();
+  }
 }

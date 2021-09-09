@@ -1,13 +1,29 @@
 <div style="width: 100%;" [autoFormDecorator]="data.decorators" autoFormElementID="container">
-<div
-  *ngFor="let f of abstractControl; trackBy: trackBy; index as i">
-    <ng-template></ng-template>
-    <button mat-stroked-button *ngIf="canDelete(i)"  (click)="deleteIndex(i)">Supprimer</button>
+
+  <div class="heading">
+  <h3
+    [style.display]="(data.templates) ? 'box' : 'none'">
+      {{(data.templates) ? data.templates['header'] : ''}}
+  </h3>
+  <div>
+
   </div>
-  <button mat-stroked-button *ngIf="canAdd" (click)="addItem()">Ajouter un item</button>
- <!-- <div>
-    <autoform-field-error text="Required" [control]="abstractControl" errorName="required">
-    </autoform-field-error>
-  </div>
-  -->
+
+  <button mat-icon-button *ngIf="!staticSize" [disabled]="!canAdd" (click)="addControl()">
+    <mat-icon>add</mat-icon>
+  </button>
+
 </div>
+
+  <div class="container-array">
+    <div class="item-array" *ngFor="let control of abstractControl.controls; index as i">
+      <div class="item-wrapper">
+        <ng-template autoFormField [field]="data.elementType" [abstractControl]="control"></ng-template>
+      </div>
+      <div class="">
+        <button mat-icon-button *ngIf="!staticSize" [disabled]="!canDelete" (click)="removeControl(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>

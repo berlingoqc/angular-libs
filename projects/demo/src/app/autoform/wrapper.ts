@@ -19,6 +19,7 @@ import { stepperForm } from './forms/stepper';
 import { dictObject } from './models/dict';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { arrayObject } from 'projects/demo/src/app/autoform/models/array';
 
 @Component({
     template: `
@@ -70,6 +71,7 @@ export class BaseComponent implements AfterViewInit {
       private formRegistry: FormRegistry,
       private modelsRegistry: ModelRegistry,
       public autoFormDialog: AutoFormDialogService,
+      private cdRef: ChangeDetectorRef,
     ) {
       const jsonValue = localStorage.getItem('demo-autoform');
       if (jsonValue) {
@@ -89,13 +91,14 @@ export class BaseComponent implements AfterViewInit {
             name: 'Form',
             path: this.formRegistry.forms[data.object.form].path,
           }
-        ]
+        ];
+        this.cdRef.detectChanges();
       }));
     }
 
     ngAfterViewInit(): void {
       if (this.value) {
-        this.callback({object: this.value});
+        this.callback({object: this.value}).subscribe(() => {});
       }
     }
 }
@@ -133,6 +136,10 @@ export class AutoFormRegisterWrapperModule {
         modelRegister.models.dict = {
           items: dictObject,
           path: "/demo/src/app/autoform/models/dict.ts"
+        };
+        modelRegister.models.array = {
+          items: arrayObject,
+          path: "/demo/src/app/autoform/models/array.ts",
         };
 
         formRegistery.forms.simple = {

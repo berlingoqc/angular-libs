@@ -1,6 +1,11 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { DictionnayProperty, IProperty } from "../../models";
 
+/**
+ * FormGroup for the Dictionnary Object of AutoForm
+ * it's purpose is to recreate the control
+ * when the data is patch
+ */
 export class DictFormGroup extends FormGroup {
 
   constructor(
@@ -9,7 +14,6 @@ export class DictFormGroup extends FormGroup {
   ) {
     super({});
   }
-
 
   setValue(value: {
         [key: string]: any;

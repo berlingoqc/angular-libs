@@ -6,6 +6,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { AutoFormArray } from 'projects/autoform/src/lib/helper/form-group/auto-form-array';
 import { DictFormGroup } from '../helper/form-group/dict-form-group';
 import {
     ArrayProperty,
@@ -21,6 +22,8 @@ import { ComponentRegisterService } from './component-register';
  * AutoFormGroupBuilder
  *
  * the service to convert a AutoFormData to a AbstractControl
+ *
+ * I NEED TO BE REWORK AND ORGANIZE , IM A MESSY SHIT
  */
 @Injectable()
 export class AutoFormGroupBuilder {
@@ -31,7 +34,6 @@ export class AutoFormGroupBuilder {
         formData.items.forEach((value) => {
           controls[value.name] = this.loopFormProperty(value);
         });
-        console.log('CONTROLS', controls);
         return new FormGroup(controls);
     }
     loopFormProperty(value: IProperty): AbstractControl {
@@ -55,11 +57,23 @@ export class AutoFormGroupBuilder {
             });
         } else if (value.type === 'array') {
             const v = value as ArrayProperty;
-            let validators = [];
+            const validators = [];
+            const controls = [];
             if (v.required) {
                 validators.push(Validators.required);
             }
-            return new FormArray([], validators);
+            if (v.max) {
+                validators.push(Validators.maxLength(v.max));
+            }
+            if (v.min) {
+                validators.push(Validators.minLength(v.min));
+                for(let i = 0; i < v.min; i++) {
+                  controls.push(this.loopFormProperty(v.elementType));
+                }
+            }
+            return new AutoFormArray(
+              v.elementType, (value) => this.loopFormProperty(value), controls, validators
+            );
         } else if (value.type === 'dic') {
           return new DictFormGroup((value as DictionnayProperty), (value) => this.loopFormProperty(value));
         } else {
