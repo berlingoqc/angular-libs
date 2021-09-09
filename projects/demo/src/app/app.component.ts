@@ -23,15 +23,16 @@ import { ThemeService } from 'projects/common/src/public-api';
                     <a mat-list-item routerLink="/autoform">
                         <mat-icon>assignment</mat-icon>
                         <span class="nav-caption"
-                            >@berlingoqc/ngx-autoform</span
+                            >@berlingoqc/ngx-autoform demo</span
                         >
                     </a>
-                    <a mat-list-item routerLink="/autotable">
-                        <mat-icon>table_view</mat-icon
-                        ><span class="nav-caption"
-                            >@berlingoqc/ngx-autotable</span
+                    <a mat-list-item href="/assets/documentation-autoform/index.html">
+                        <mat-icon>assignment</mat-icon>
+                        <span class="nav-caption"
+                            >@berlingoqc/ngx-autoform documentation</span
                         >
                     </a>
+
                     <a mat-list-item href="https://github.com/berlingoqc/angular-libs">
                         <mat-icon svgIcon="github"></mat-icon>
                         <span class="nav-caption">@berlingoqc/angular-libs</span>

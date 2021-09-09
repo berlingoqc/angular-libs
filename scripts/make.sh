@@ -30,10 +30,14 @@ function publish() {
   done
 }
 
+function build_doc() {
+  (cd ./projects/$1/ && ../../node_modules/.bin/compodoc -p ./tsconfig.lib.json && mv documentation ../../dist/demo/assets/documentation-$1)
+}
 
 case "$1" in
   "build") build ;;
   "build-release") version && build;;
+  "build-site") npm run build:demo && build_doc 'autoform' && build_doc 'common';;
   "publish") publish;;
   *) echo >&2 "Invalid option: $@"; exit 1;;
 esac
