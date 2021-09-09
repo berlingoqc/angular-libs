@@ -2,6 +2,8 @@ import { compilePipeFromMetadata } from '@angular/compiler';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
+  AutoFormData,
+  AutoFormDialogService,
     AutoFormRegister,
     AutoFormRegisterComponent,
     FormRegistry,
@@ -15,6 +17,8 @@ import { map, tap } from 'rxjs/operators';
 import { AutoFormEvent } from 'projects/autoform/src/lib/models/event';
 import { stepperForm } from './forms/stepper';
 import { dictObject } from './models/dict';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     template: `
@@ -28,10 +32,15 @@ import { dictObject } from './models/dict';
           [callback]="callback"
         ></autoform-models-select>
 
+        <div *ngIf="formData">
+          <button mat-stroked-button color="primary" (click)="autoFormDialog.open(formData)">Open as dialog</button>
+        </div>
+
+
         <app-code-demo
           [snipets]="snipets"
         >
-          <lib-auto-form-register [autoFormEvent]="events">
+          <lib-auto-form-register (formDataApply)="(formData = $event)" [autoFormEvent]="events">
           </lib-auto-form-register>
         </app-code-demo>
     `,
@@ -49,6 +58,8 @@ export class BaseComponent implements AfterViewInit {
     snipets;
     value;
 
+    formData: AutoFormData;
+
     events: AutoFormEvent = {
       submit: (data) => {
         console.log('DATA', data);
@@ -58,6 +69,7 @@ export class BaseComponent implements AfterViewInit {
     constructor(
       private formRegistry: FormRegistry,
       private modelsRegistry: ModelRegistry,
+      public autoFormDialog: AutoFormDialogService,
     ) {
       const jsonValue = localStorage.getItem('demo-autoform');
       if (jsonValue) {
@@ -91,6 +103,8 @@ export class BaseComponent implements AfterViewInit {
 @NgModule({
     declarations: [BaseComponent],
     imports: [
+        CommonModule,
+        MatButtonModule,
         AutoFormRegister,
         CodeDemoModule,
         RouterModule.forChild([

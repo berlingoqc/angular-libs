@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ComponentRef, Inject, Input, OnDestroy, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { AutoFormComponent } from '../auto-form/auto-form.component';
 import { AutoFormData } from '../models';
 import { AutoFormEvent } from '../models/event';
@@ -17,6 +17,7 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
     model: string;
 
     @Input() autoFormEvent?: AutoFormEvent;
+    @Output() formDataApply = new EventEmitter<AutoFormData>();
 
     formData: AutoFormData;
     autoFormComponent: ComponentRef<AutoFormComponent>;
@@ -73,6 +74,8 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
         this.autoFormComponent = this.vc.createComponent(factory);
         this.autoFormComponent.instance.formData = this.formData;
         this.autoFormComponent.changeDetectorRef.markForCheck();
+
+        this.formDataApply.next(this.formData);
     }
 
     ngOnDestroy(): void {
