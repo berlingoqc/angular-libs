@@ -7,8 +7,10 @@ import { ActivatedRoute } from '@angular/router';
     selector: 'app-root',
     template: `
         <!--The content below is only a placeholder and can be replaced.-->
-        <mat-toolbar style="text-align:center" class="content">
+        <mat-toolbar style="text-align:center; display: flex" class="content">
             <h1>@berlingoqc/ngx-* live demo</h1>
+            <span style="flex-grow: 2"></span>
+            <color-picker></color-picker>
         </mat-toolbar>
         <mat-drawer-container style="min-height: 100%">
             <mat-drawer mode="side" opened class="drawer">
