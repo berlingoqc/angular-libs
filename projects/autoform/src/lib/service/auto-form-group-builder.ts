@@ -48,7 +48,7 @@ export class AutoFormGroupBuilder {
               (value as FormAbstractObject).properties.reduce((result, property) => {
                 result[property.name] = this.loopFormProperty(property);
                 return result;
-              }, {}),
+              }, { [(value as FormAbstractObject).typeKey]: new FormControl((value as FormAbstractObject).abstractClassName)} as any),
             );
         } else if(value.type === 'union') {
           // TEMPORARY FIX UNTIL I FOUND SOMETHING BETTER FOR UNION

@@ -10,6 +10,7 @@ export const abstractClassForm: IProperty[] = [
         name: 'plane',
         type: 'abstractobject',
         required: true,
+        typeKey: 'type',
         abstractClassName: 'Plane',
         properties: [
           {

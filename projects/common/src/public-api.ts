@@ -65,3 +65,5 @@ export * from './lib/select-control';
 export * from './lib/loading-button';
 
 export * from './lib/theme';
+
+export * from './lib/rxjs';

@@ -11,7 +11,7 @@
     <autoform-mat-select
       [data]="dataSelect"
       [component]="dataSelect.select"
-      [abstractControl]="dataSelectControl"
+      [abstractControl]="abstractControl.controls[data.typeKey]"
     ></autoform-mat-select>
 
   </div>

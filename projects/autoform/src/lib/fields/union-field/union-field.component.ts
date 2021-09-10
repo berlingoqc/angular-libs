@@ -9,13 +9,14 @@ import { FormGroup } from '@angular/forms';
 import { IProperty, UnionProperty } from '../../models';
 import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
-import { unsubscriber } from '@berlingoqc/ngx-common';
-import { Subscription } from 'rxjs';
+import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
 
 export interface UnionData {
   type: number;
   [id: string]: any;
 }
+
+export class BFC extends BaseFieldComponent<UnionProperty, FormGroup> {}
 
 @Component({
   selector: 'autoform-array-field',
@@ -23,12 +24,9 @@ export interface UnionData {
   styleUrls: ['./union-field.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-@unsubscriber
 export class UnionFieldComponent
-  extends BaseFieldComponent<UnionProperty, FormGroup>
+  extends OnDestroyMixin(BFC)
   implements OnInit, AfterViewInit {
-
-  sub: Subscription;
 
   selectedProperty: IProperty;
 
@@ -51,7 +49,8 @@ export class UnionFieldComponent
     };
 
 
-    this.sub = this.abstractControl.controls.type.valueChanges
+    this.abstractControl.controls.type.valueChanges
+      .pipe(untilComponentDestroyed(this))
       .subscribe((value) => this.onModelSelected(value));
   }
 

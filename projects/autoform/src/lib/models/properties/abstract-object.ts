@@ -7,7 +7,7 @@ import { IProperty } from './iproperty';
  */
 export interface FormAbstractObject extends IProperty {
     // default 'type'
-    typeKey?: string;
+    typeKey: string;
 
 
     abstractClassName: string;

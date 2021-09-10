@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { resolveData, unsubscriber } from '@berlingoqc/ngx-common';
-import { Subject, Subscription } from 'rxjs';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { resolveData } from '@berlingoqc/ngx-common';
+import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
 import { SelectComponent } from '../models/component/select.component';
 import { BaseFormField } from './base-form-field';
 
@@ -118,14 +118,14 @@ import { BaseFormField } from './base-form-field';
       }}</mat-error>-->
     </mat-form-field>
   `,
+  inputs: [
+    'type', 'preffix', 'suffix', 'hint', 'hintAlign', 'data', 'abstractControl'
+  ]
 })
-@unsubscriber
-export class MyMatSelectComponent extends BaseFormField implements OnInit{
+export class MyMatSelectComponent extends OnDestroyMixin(BaseFormField) implements OnInit{
   @Input() component: SelectComponent;
 
   @Input() options: any;
-
-  resolvingSub: Subscription;
 
   defaultCompare = (a , b) => (a === b);
 
@@ -134,7 +134,9 @@ export class MyMatSelectComponent extends BaseFormField implements OnInit{
   }
 
   ngOnInit() {
-    this.resolvingSub = resolveData((this.component.options.options as any).value).subscribe((data) => {
+    resolveData((this.component.options.options as any).value)
+      .pipe(untilComponentDestroyed(this))
+      .subscribe((data) => {
       this.options = data;
     });
   }

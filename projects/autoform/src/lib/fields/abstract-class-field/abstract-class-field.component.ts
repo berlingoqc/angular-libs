@@ -1,25 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
 import { AbstractFormGroup } from '../../helper/form-group/abstract-form-group';
 import { FormAbstractObject } from '../../models/properties/abstract-object';
 import { BaseFieldComponent } from '../../service/component-register';
+
+export class BFC extends BaseFieldComponent<FormAbstractObject, AbstractFormGroup> {}
 
 @Component({
     selector: 'abstract-class-form-field',
     templateUrl: './abstract-class-field.component.html',
 })
 export class AbstractClassFieldComponent
-    extends BaseFieldComponent<FormAbstractObject, AbstractFormGroup>
+    extends OnDestroyMixin(BFC)
     implements OnInit
 {
-    dataSelectControl: FormControl;
     dataSelect; // SelectOptions
 
-    sub: Subscription;
-
     ngOnInit(): void {
-        this.dataSelectControl = new FormControl(this.data.abstractClassName)
         this.dataSelect = {
             appearance: 'outline',
             displayName: 'Class',
@@ -38,8 +35,10 @@ export class AbstractClassFieldComponent
                 },
             },
         };
-        this.sub = this.dataSelectControl.valueChanges.subscribe((value) => {
-          this.abstractControl.selectChildType(value);
-        });
+        this.abstractControl.controls[this.data.typeKey].valueChanges
+          .pipe(untilComponentDestroyed(this))
+          .subscribe((value) => {
+            this.abstractControl.selectChildType(value);
+          });
     }
 }
