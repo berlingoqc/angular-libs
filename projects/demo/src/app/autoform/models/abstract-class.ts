@@ -28,7 +28,8 @@ export const abstractClassForm: IProperty[] = [
             properties: [
               {
                 name: 'wingSpan',
-                type: 'number'
+                type: 'number',
+                required: true,
               }
             ],
           },
@@ -38,7 +39,8 @@ export const abstractClassForm: IProperty[] = [
             properties: [
               {
                 name: 'odometer',
-                type: 'number'
+                type: 'number',
+                required: true,
               }
             ],
           }

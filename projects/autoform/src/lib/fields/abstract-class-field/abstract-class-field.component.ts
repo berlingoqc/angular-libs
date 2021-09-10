@@ -21,6 +21,8 @@ export class AbstractClassFieldComponent
     ngOnInit(): void {
         this.dataSelectControl = new FormControl(this.data.abstractClassName)
         this.dataSelect = {
+            appearance: 'outline',
+            displayName: 'Class',
             select: {
                 name: 'select',
                 type: 'mat',
