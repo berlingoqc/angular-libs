@@ -125,7 +125,7 @@ import { BaseFormField } from './base-form-field';
 export class MyMatSelectComponent extends OnDestroyMixin(BaseFormField) implements OnInit{
   @Input() component: SelectComponent;
 
-  @Input() options: any;
+  options: any;
 
   defaultCompare = (a , b) => (a === b);
 
@@ -134,7 +134,7 @@ export class MyMatSelectComponent extends OnDestroyMixin(BaseFormField) implemen
   }
 
   ngOnInit() {
-    resolveData((this.component.options.options as any).value)
+    resolveData(this.component.options.value)
       .pipe(untilComponentDestroyed(this))
       .subscribe((data) => {
       this.options = data;

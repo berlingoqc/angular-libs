@@ -15,6 +15,41 @@ export class AutoFormArray extends FormArray {
     super(controls, validatorOrOpts, asyncValidator);
   }
 
+
+  setValue(
+    value: any[],
+    options?: {onlySelf?:boolean, emitEvent?: boolean}
+  ): void {
+    if (value) {
+      for(let i = 0; i < value.length; i++) {
+        if (!this.controls[i])  {
+          const control = this.resolvePropertyControl(this.arrayType);
+          // maybe optional
+          control.setValue(value[i]);
+          this.controls.push(control);
+        }
+      }
+    }
+    return super.patchValue(value, options);
+  }
+
+  reset(
+    value: any[],
+    options?: {onlySelf?:boolean, emitEvent?: boolean}
+  ): void {
+    if (value) {
+      for(let i = 0; i < value.length; i++) {
+        if (!this.controls[i])  {
+          const control = this.resolvePropertyControl(this.arrayType);
+          // maybe optional
+          control.setValue(value[i]);
+          this.controls.push(control);
+        }
+      }
+    }
+    return super.patchValue(value, options);
+  }
+
   patchValue(
     value: any[],
     options?: {onlySelf?:boolean, emitEvent?: boolean}

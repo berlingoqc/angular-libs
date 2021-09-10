@@ -2,10 +2,69 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { FormAbstractObject } from 'projects/autoform/src/lib/models/properties/abstract-object';
 import { FormObject, IProperty } from '../../models';
 
+
+function selectChildType(
+  type: string, selectedSubType: FormObject, abstractObjectProperty: FormAbstractObject,
+  control: FormGroup,resolvePropertyControl: (value: IProperty) => AbstractControl
+): [FormObject, IProperty[], string] {
+        if (selectedSubType) {
+            selectedSubType.properties.forEach((prop) =>
+                control.removeControl(prop.name),
+            );
+        }
+
+        if (!type || type === abstractObjectProperty.abstractClassName) {
+            return [
+              undefined,
+              [...abstractObjectProperty.properties],
+              abstractObjectProperty.abstractClassName
+            ];
+        } else {
+            const child = abstractObjectProperty.childs.find(
+                (child) => child.name === type,
+            );
+            // also need to delete all property that are no longer there
+            for (const property of child.properties) {
+                control.addControl(
+                    property.name,
+                    resolvePropertyControl(property),
+                );
+            }
+            return [child,
+            [
+                ...abstractObjectProperty.properties,
+                ...child.properties,
+            ], child.name];
+        }
+    }
+
 export class AbstractFormGroup extends FormGroup {
     selectedSubType: FormObject;
 
     properties: IProperty[] = [];
+
+
+    selectChildType = (type) => {
+      const [child, properties, typeSelected] = selectChildType(
+      type,
+      this.selectedSubType,
+      this.abstractObjectProperty,
+      this,
+      this.resolvePropertyControl,
+    );
+    this.selectedSubType = child;
+    this.properties = properties;
+    return typeSelected;
+    }
+
+    onControlValueModify(value?: any) {
+      const keyType = this.abstractObjectProperty.typeKey || 'type';
+      if (!value) {
+        value = {};
+      }
+      value[keyType] =  this.selectChildType(value[keyType]);
+      return value;
+    }
 
     constructor(
         private abstractObjectProperty: FormAbstractObject,
@@ -16,33 +75,28 @@ export class AbstractFormGroup extends FormGroup {
         this.properties = [...this.abstractObjectProperty.properties];
     }
 
-    selectChildType(type: string): void {
-        if (this.selectedSubType) {
-            this.selectedSubType.properties.forEach((prop) =>
-                this.removeControl(prop.name),
-            );
-        }
+    reset(
+        value?: any,
+        options?: {
+            onlySelf?: boolean;
+            emitEvent;
+        },
+    ) {
+      value = this.onControlValueModify(value);
+      return super.reset(value, options);
+    }
 
-        if (type === this.abstractObjectProperty.abstractClassName) {
-            this.selectChildType = undefined;
-            this.properties = [...this.abstractObjectProperty.properties];
-        } else {
-            const child = this.abstractObjectProperty.childs.find(
-                (child) => child.name === type,
-            );
-            // also need to delete all property that are no longer there
-            for (const property of child.properties) {
-                this.addControl(
-                    property.name,
-                    this.resolvePropertyControl(property),
-                );
-            }
-            this.selectedSubType = child;
-            this.properties = [
-                ...this.abstractObjectProperty.properties,
-                ...this.selectedSubType.properties,
-            ];
-        }
+    setValue(
+        value: {
+            [key: string]: any;
+        },
+        options?: {
+            onlySelf?: boolean;
+            emitEvent?: boolean;
+        },
+    ): void {
+        value = this.onControlValueModify(value);
+        return super.patchValue(value, options);
     }
 
     patchValue(
@@ -54,11 +108,7 @@ export class AbstractFormGroup extends FormGroup {
             emitEvent?: boolean;
         },
     ): void {
-        if (value) {
-            // find type key
-            const type = value[this.abstractObjectProperty.typeKey || 'type'];
-            if (type) this.selectChildType(type);
-        }
+        value = this.onControlValueModify(value);
         return super.patchValue(value, options);
     }
 }

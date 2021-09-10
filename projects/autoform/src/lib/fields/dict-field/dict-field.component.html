@@ -5,8 +5,8 @@
   </h3>
   <div>
     <button mat-mini-fab class="primary"
-      [disabled]="allPropertyFill ||  propertiesAvailable.length === properties.length"
-      (click)="addProperty()">
+      [disabled]="abstractControl.allPropertyFill ||  abstractControl. propertiesAvailable.length === abstractControl.properties.length"
+      (click)="abstractControl.addProperty()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -14,18 +14,18 @@
 </div>
 
 <div class="dict-object">
-  <div class="property" *ngFor="let prop of properties; index as i">
+  <div class="property" *ngFor="let prop of abstractControl.properties; index as i">
     <ng-container
       [ngTemplateOutlet]="field"
-      [ngTemplateOutletContext]="{form: prop, index: i}"
+      [ngTemplateOutletContext]="{prop: prop, index: i}"
     ></ng-container>
   </div>
 </div>
 
-<ng-template #field let-form="form" let-index="index">
+<ng-template #field let-prop="prop" let-index="index">
   <ng-container
-    *ngTemplateOutlet="((mode === 'property') ? property : propertyType);context: {
-      form: form,
+    *ngTemplateOutlet="((abstractControl.mode === 'property') ? property : propertyType);context: {
+      prop: prop,
       index: index
     }"
   ></ng-container>
@@ -35,8 +35,7 @@
       [content]="data.spacer"
     ></template-content>
   </div>
-
-  <ng-container *ngIf="(form.control.getRawValue()).type as property">
+  <ng-container *ngIf="(prop.control.getRawValue()).type as property">
     <ng-container *ngIf="abstractControl.controls[property.name] as control">
       <div class="value">
         <ng-template
@@ -50,20 +49,22 @@
 </ng-template>
 
 <!-- property select (property name are defined with know type)-->
-<ng-template #property let-form="form" let-index="index">
+<ng-template #property let-prop="prop" let-index="index">
   <div class="property-mode">
   <mat-form-field>
-    <mat-select [formControl]="form.control.controls.type">
-      <mat-option *ngFor="let prop of propertiesAvailable" [disabled]="prop.disabledOption == true" [value]="prop">
-        {{prop.name + ' - ' + prop.type}}
+    <mat-select [formControl]="prop.control.controls.type">
+      <mat-option *ngFor="let propA of abstractControl.propertiesAvailable" [disabled]="propA.disabledOption == true" [value]="propA">
+        {{propA.name + ' - ' + propA.type}}
       </mat-option>
     </mat-select>
-    <button *ngIf="!form.prop?.required" mat-icon-button matSuffix (click)="$event.stopPropagation(); removeProperty(index)">
+    <button *ngIf="!prop.prop?.required" mat-icon-button matSuffix (click)="$event.stopPropagation(); abstractControl.removeProperty(index)">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-form-field>
   </div>
 </ng-template>
+
+
 
 <!-- property type select (property name not defined and choose type)-->
 <ng-template #propertyType let-form="form">

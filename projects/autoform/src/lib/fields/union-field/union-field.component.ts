@@ -40,14 +40,11 @@ export class UnionFieldComponent
   ngOnInit(): void {
     if (!this.data.select) {
       this.data.select = { name: 'select', type: 'mat', options: {
-      }, };
+        displayContent: (e) => e,
+        displayTitle: (e) => e,
+        value: Object.keys(this.data.types)
+      },};
     }
-    this.data.select.options.displayContent = (e) => e,
-    this.data.select.options.displayTitle = (e) => e,
-    this.data.select.options.options = {
-      value: Object.keys(this.data.types),
-    };
-
 
     this.abstractControl.controls.type.valueChanges
       .pipe(untilComponentDestroyed(this))

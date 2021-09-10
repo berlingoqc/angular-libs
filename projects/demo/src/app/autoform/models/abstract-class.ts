@@ -1,6 +1,4 @@
 import {
-    DateProperty,
-    DateRangeSubType,
     FormAbstractObject,
     IProperty,
 } from 'projects/autoform/src/public-api';
@@ -48,3 +46,10 @@ export const abstractClassForm: IProperty[] = [
         ],
     } as FormAbstractObject,
 ];
+
+export const abstractClassDefaultValue = {
+  plane: {
+    type: 'planner',
+    serialNumber: 'X1D:142',
+  }
+};

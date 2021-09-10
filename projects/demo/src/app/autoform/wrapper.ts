@@ -16,11 +16,12 @@ import { CodeDemoModule } from '../code-demo/code-demo.module';
 import { map, tap } from 'rxjs/operators';
 import { AutoFormEvent } from 'projects/autoform/src/lib/models/event';
 import { stepperForm } from './forms/stepper';
-import { dictObject } from './models/dict';
+import { defaultValueDict, dictObject } from './models/dict';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { arrayObject } from 'projects/demo/src/app/autoform/models/array';
-import { abstractClassForm } from './models/abstract-class';
+import { abstractClassDefaultValue, abstractClassForm } from './models/abstract-class';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     template: `
@@ -34,15 +35,13 @@ import { abstractClassForm } from './models/abstract-class';
           [callback]="callback"
         ></autoform-models-select>
 
-        <div *ngIf="formData">
-          <button mat-stroked-button color="primary" (click)="autoFormDialog.open(formData)">Open as dialog</button>
-        </div>
-
-
         <app-code-demo
           [snipets]="snipets"
         >
-          <lib-auto-form-register (formDataApply)="(formData = $event)" [autoFormEvent]="events">
+          <lib-auto-form-register
+            (formDataApply)="(formData = $event)"
+            (formGroupApply)="(formGroup = $event)"
+            [autoFormEvent]="events">
           </lib-auto-form-register>
         </app-code-demo>
     `,
@@ -61,6 +60,9 @@ export class BaseComponent implements AfterViewInit {
     value;
 
     formData: AutoFormData;
+    formGroup: FormGroup;
+
+    modelSelected: any;
 
     events: AutoFormEvent = {
       submit: (data) => {
@@ -82,7 +84,47 @@ export class BaseComponent implements AfterViewInit {
 
     callback = (data) => {
       localStorage.setItem('demo-autoform', JSON.stringify(data.object));
-      return of(this.autoForm.loadForm({model: data.object.model, forms: data.object.form})).pipe(tap(() => {
+      this.modelSelected = this.modelsRegistry.models[data.object.model];
+      return of(this.autoForm.loadForm({
+        model: data.object.model,
+        forms: data.object.form},
+        this.modelSelected.default,
+        {
+          actionsButtons: {
+            container: {
+              class: ['button-row']
+            },
+            submit: {
+              title: 'Submit',
+              style: 'mat-flat-button',
+              color: 'primary'
+            },
+            reset: {
+              title: 'Reset',
+              style: 'mat-flat-button',
+              color: 'accent'
+            },
+            extra: [
+              {
+               title: 'setValue(default)',
+               if: () => this.modelSelected?.default !== undefined,
+               click: () => this.formGroup.setValue(this.modelSelected.default),
+              },
+              {
+               title: 'patchValue(default)',
+               if: () => this.modelSelected?.default !== undefined,
+               click: () => this.formGroup.patchValue(this.modelSelected.default),
+              },
+              {
+                title: 'Open as dialog',
+                click: () => {
+                  this.autoFormDialog.open(this.formData);
+                }
+              }
+            ]
+          }
+        }
+      )).pipe(tap(() => {
         this.snipets = [
           {
             name: 'Model',
@@ -136,7 +178,8 @@ export class AutoFormRegisterWrapperModule {
         };
         modelRegister.models.dict = {
           items: dictObject,
-          path: "/demo/src/app/autoform/models/dict.ts"
+          path: "/demo/src/app/autoform/models/dict.ts",
+          default: defaultValueDict,
         };
         modelRegister.models.array = {
           items: arrayObject,
@@ -144,7 +187,8 @@ export class AutoFormRegisterWrapperModule {
         };
         modelRegister.models.abstractClass = {
           items: abstractClassForm,
-          path: "/demo/src/app/autoform/models/abstract-class.ts"
+          path: "/demo/src/app/autoform/models/abstract-class.ts",
+          default: abstractClassDefaultValue,
         };
 
         formRegistery.forms.simple = {

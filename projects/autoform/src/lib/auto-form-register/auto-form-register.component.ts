@@ -1,4 +1,6 @@
 import { Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { of } from 'rxjs';
 import { AutoFormComponent } from '../auto-form/auto-form.component';
 import { AutoFormData } from '../models';
 import { AutoFormEvent } from '../models/event';
@@ -18,6 +20,7 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
 
     @Input() autoFormEvent?: AutoFormEvent;
     @Output() formDataApply = new EventEmitter<AutoFormData>();
+    @Output() formGroupApply = new EventEmitter<FormGroup>();
 
     formData: AutoFormData;
     autoFormComponent: ComponentRef<AutoFormComponent>;
@@ -37,7 +40,7 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
       }
     }
 
-    loadForm(data: any) {
+    loadForm(data: any, defaultData?: any, defaultFormData?: Partial<AutoFormData>) {
         // Regarde si le nom de model et de forms sont fournis directement
         this.formData = null;
 
@@ -64,7 +67,14 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
             throw new Error('Form nout found with key ' + this.forms);
         }
         form.items = model.items;
-        this.formData = { ...form, event: this.autoFormEvent };
+        this.formData = { ...form, event: this.autoFormEvent, ...(defaultFormData || {}) };
+
+        if (defaultData) {
+          this.formData.event.initialData = () => of(defaultData);
+        }
+
+        this.formData.event.afterFormCreated = (form) => this.formGroupApply.next(form);
+
 
         if (this.autoFormComponent) {
           this.autoFormComponent.destroy();

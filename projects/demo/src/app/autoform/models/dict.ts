@@ -1,31 +1,35 @@
-import { IProperty, FormObject, DictionnayProperty } from 'projects/autoform/src/public-api';
-
+import {
+    IProperty,
+    FormObject,
+    DictionnayProperty,
+} from 'projects/autoform/src/public-api';
 
 export const dictObject: IProperty[] = [
     {
-        name: 'object',
-        type: 'object',
-        properties: [
+        name: 'freeform',
+        type: 'dic',
+        spacer: '  ',
+        availableProperty: [
             {
-                name: '',
-                type: 'dic',
-                spacer: '&nbsp;',
-                availableProperty: [
-                    {
-                        name: 'number-children',
-                        type: 'number',
-                    },
-                    {
-                        name: 'location',
-                        type: 'string',
-                    },
-                    {
-                        name: 'mon-cul',
-                        type: 'date',
-                        required: true,
-                    },
-                ],
-            } as DictionnayProperty,
+                name: 'number-children',
+                type: 'number',
+            },
+            {
+                name: 'location',
+                type: 'string',
+            },
+            {
+                name: 'mon-cul',
+                type: 'date',
+                required: true,
+            },
         ],
-    } as FormObject,
+    } as DictionnayProperty,
 ];
+
+export const defaultValueDict: any = {
+  freeform: {
+    'mon-cul': new Date(),
+    'number-children': 0
+  }
+};

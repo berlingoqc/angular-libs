@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Validators } from "@angular/forms";
-import { FormObject, InputProperty } from "projects/autoform/src/public-api";
+import { FormObject, InputProperty, SelectComponent } from "projects/autoform/src/public-api";
 import { of } from "rxjs";
 
 @Component({
@@ -149,11 +149,9 @@ export const inputPropertyObject: FormObject[] = [
                         content: '--',
                     },
                     options: {
-                      options: {
-                        value: ['option1', 'option2']
-                      }
+                      value: ['option1', 'option2']
                     }
-                } as any,
+                } as SelectComponent,
             },
             {
                 name: 'multi-choice string',

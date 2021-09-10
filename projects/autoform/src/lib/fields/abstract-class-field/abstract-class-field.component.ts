@@ -26,15 +26,14 @@ export class AbstractClassFieldComponent
                 options: {
                     displayContent: (e) => e,
                     displayTitle: (e) => e,
-                    options: {
-                        value: [
-                            this.data.abstractClassName,
-                            ...this.data.childs.map((child) => child.name),
-                        ],
-                    },
+                    value: [
+                      this.data.abstractClassName,
+                      ...this.data.childs.map((child) => child.name),
+                    ],
                 },
             },
         };
+
         this.abstractControl.controls[this.data.typeKey].valueChanges
           .pipe(untilComponentDestroyed(this))
           .subscribe((value) => {
