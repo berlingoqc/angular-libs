@@ -20,6 +20,7 @@ import { dictObject } from './models/dict';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { arrayObject } from 'projects/demo/src/app/autoform/models/array';
+import { abstractClassForm } from './models/abstract-class';
 
 @Component({
     template: `
@@ -140,6 +141,10 @@ export class AutoFormRegisterWrapperModule {
         modelRegister.models.array = {
           items: arrayObject,
           path: "/demo/src/app/autoform/models/array.ts",
+        };
+        modelRegister.models.abstractClass = {
+          items: abstractClassForm,
+          path: "/demo/src/app/autoform/models/abstract-class.ts"
         };
 
         formRegistery.forms.simple = {

@@ -7,6 +7,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { AutoFormArray } from 'projects/autoform/src/lib/helper/form-group/auto-form-array';
+import { AbstractFormGroup } from '../helper/form-group/abstract-form-group';
 import { DictFormGroup } from '../helper/form-group/dict-form-group';
 import {
     ArrayProperty,
@@ -16,6 +17,7 @@ import {
     IProperty,
     UnionProperty,
 } from '../models';
+import { FormAbstractObject } from '../models/properties/abstract-object';
 import { ComponentRegisterService } from './component-register';
 
 /**
@@ -39,6 +41,15 @@ export class AutoFormGroupBuilder {
     loopFormProperty(value: IProperty): AbstractControl {
         if (value.type === 'object') {
             return this.getObjectForm(value as FormObject);
+        } else if(value.type === 'abstractobject') {
+            return new AbstractFormGroup(
+              value as FormAbstractObject,
+              (value) => this.loopFormProperty(value),
+              (value as FormAbstractObject).properties.reduce((result, property) => {
+                result[property.name] = this.loopFormProperty(property);
+                return result;
+              }, {}),
+            );
         } else if(value.type === 'union') {
           // TEMPORARY FIX UNTIL I FOUND SOMETHING BETTER FOR UNION
           /**

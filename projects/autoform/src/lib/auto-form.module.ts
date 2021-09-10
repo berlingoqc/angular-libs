@@ -60,6 +60,7 @@ import { ButtonsRowModule, LoadingButtonModule } from '@berlingoqc/ngx-common';
 import { UnionFieldComponent } from './fields/union-field/union-field.component';
 import { InjectFieldDirecitve } from './fields/injector-base.component';
 import { ControlRawDataPipe } from './pipe/raw-value.pipe';
+import { AbstractClassFieldComponent } from './fields/abstract-class-field/abstract-class-field.component';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -78,6 +79,7 @@ import { ControlRawDataPipe } from './pipe/raw-value.pipe';
         ObjectFieldComponent,
         ArrayFieldComponent,
         UnionFieldComponent,
+        AbstractClassFieldComponent,
 
         MultiPartMatInputComponent,
 
@@ -143,6 +145,7 @@ import { ControlRawDataPipe } from './pipe/raw-value.pipe';
         ObjectFieldComponent,
         StringFieldComponent,
         NumberFieldComponent,
+        AbstractClassFieldComponent,
         MultiPartMatInputComponent,
         ReactiveFormsModule,
     ],
@@ -222,6 +225,12 @@ export class AutoFormModule {
           type: 'array',
           mainComponentType: ArrayFieldComponent,
           typeComponentHandler: []
+        });
+
+        register.registerComponent({
+          type: 'abstractobject',
+          mainComponentType: AbstractClassFieldComponent,
+          typeComponentHandler: [],
         });
 
         register.registerComponent({
