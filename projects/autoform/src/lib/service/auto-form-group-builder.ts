@@ -83,7 +83,7 @@ export class AutoFormGroupBuilder {
                 }
             }
             return new AutoFormArray(
-              v.elementType, (value) => this.loopFormProperty(value), controls, validators
+              v, (value) => this.loopFormProperty(value), controls, validators
             );
         } else if (value.type === 'dic') {
           return new DictFormGroup((value as DictionnayProperty), (value) => this.loopFormProperty(value));

@@ -67,3 +67,23 @@ export const arrayObject: IProperty[] = [
     } as ArrayProperty,
 
 ];
+
+export const arrayDefault: any = {
+  tasks: [
+    {
+      name: 'Test',
+      description: 'Test name'
+    },
+    {
+      name: 'Test 222',
+      description: 'Test name 2222'
+    }
+  ],
+  food: [
+    {
+      name: 'test',
+      description: 'testtesttest',
+      category: [ new Date(), new Date()],
+    }
+  ],
+};

@@ -19,7 +19,7 @@ import { stepperForm } from './forms/stepper';
 import { defaultValueDict, dictObject } from './models/dict';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { arrayObject } from 'projects/demo/src/app/autoform/models/array';
+import { arrayDefault, arrayObject } from 'projects/demo/src/app/autoform/models/array';
 import { abstractClassDefaultValue, abstractClassForm } from './models/abstract-class';
 import { FormGroup } from '@angular/forms';
 
@@ -109,12 +109,12 @@ export class BaseComponent implements AfterViewInit {
                title: 'setValue(default)',
                if: () => this.modelSelected?.default !== undefined,
                click: () => this.formGroup.setValue(this.modelSelected.default),
-              },
+              } as any,
               {
                title: 'patchValue(default)',
                if: () => this.modelSelected?.default !== undefined,
                click: () => this.formGroup.patchValue(this.modelSelected.default),
-              },
+              } as any,
               {
                 title: 'Open as dialog',
                 click: () => {
@@ -184,6 +184,7 @@ export class AutoFormRegisterWrapperModule {
         modelRegister.models.array = {
           items: arrayObject,
           path: "/demo/src/app/autoform/models/array.ts",
+          default: arrayDefault,
         };
         modelRegister.models.abstractClass = {
           items: abstractClassForm,

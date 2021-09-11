@@ -9,7 +9,11 @@
 
   </div>
 
-  <button mat-icon-button *ngIf="!staticSize" [disabled]="!canAdd" (click)="addControl()">
+  <button mat-icon-button
+    *ngIf="!abstractControl.staticSize"
+    [disabled]="!abstractControl.canAdd"
+    (click)="abstractControl.addControl()"
+  >
     <mat-icon>add</mat-icon>
   </button>
 
@@ -21,7 +25,11 @@
         <ng-template autoFormField [field]="data.elementType" [abstractControl]="control"></ng-template>
       </div>
       <div class="">
-        <button mat-icon-button *ngIf="!staticSize" [disabled]="!canDelete" (click)="removeControl(i)">
+        <button mat-icon-button
+          *ngIf="!abstractControl.staticSize"
+          [disabled]="!abstractControl.canDelete"
+          (click)="abstractControl.removeControl(i)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </div>
