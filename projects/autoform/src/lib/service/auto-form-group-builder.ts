@@ -70,16 +70,16 @@ export class AutoFormGroupBuilder {
             const v = value as ArrayProperty;
             const validators = [];
             const controls = [];
-            if (v.required) {
+            /*if (v.required) {
                 validators.push(Validators.required);
-            }
-            if (v.max) {
+            }*/
+            /*if (v.max) {
                 validators.push(Validators.maxLength(v.max));
             }
             if (v.min) {
                 validators.push(Validators.minLength(v.min));
-
             }
+            */
             return new AutoFormArray(
               v, (value) => this.loopFormProperty(value), controls, validators
             );
