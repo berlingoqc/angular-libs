@@ -1,6 +1,5 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { FormAbstractObject } from 'projects/autoform/src/lib/models/properties/abstract-object';
-import { FormObject, IProperty } from '../../models';
+import { FormAbstractObject, FormObject, IProperty } from '../../models';
 
 
 function selectChildType(
@@ -8,7 +7,7 @@ function selectChildType(
   control: FormGroup,resolvePropertyControl: (value: IProperty) => AbstractControl
 ): [FormObject, IProperty[], string] {
         if (selectedSubType) {
-            selectedSubType.properties.forEach((prop) =>
+            selectedSubType.properties?.forEach((prop) =>
                 control.removeControl(prop.name),
             );
         }

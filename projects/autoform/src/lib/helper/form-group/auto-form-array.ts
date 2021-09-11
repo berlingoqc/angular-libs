@@ -1,5 +1,5 @@
 import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn } from "@angular/forms";
-import { ArrayProperty, IProperty } from "projects/autoform/src/lib/models";
+import { ArrayProperty, IProperty } from "../../models";
 
 
 

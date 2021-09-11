@@ -22,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { arrayDefault, arrayObject } from 'projects/demo/src/app/autoform/models/array';
 import { abstractClassDefaultValue, abstractClassForm } from './models/abstract-class';
 import { FormGroup } from '@angular/forms';
+import { BuilderComponent } from 'projects/demo/src/app/autoform/builder.component';
 
 @Component({
     template: `
@@ -158,6 +159,10 @@ export class BaseComponent implements AfterViewInit {
                 path: '',
                 component: BaseComponent,
             },
+            {
+              path: 'builder',
+              component: BuilderComponent,
+            }
         ]),
     ],
     exports: [],

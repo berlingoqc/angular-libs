@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SelectComponent } from 'projects/autoform/src/public-api';
 import { Observable, of } from 'rxjs';
 import { AutoFormData, FormObject } from '../models';
 import { FormRegistry } from './form-registry';
@@ -34,7 +33,7 @@ export class ModelsSelectComponent implements OnInit {
                 displayContent: (e) => e,
                 value: Object.keys(this.formRegistery.forms),
               }
-            } as SelectComponent,
+            } as any,
           },
           {
             name: 'model',
@@ -47,7 +46,7 @@ export class ModelsSelectComponent implements OnInit {
                 displayContent: (e) => e,
                 value: Object.keys(this.modelRegistery.models),
               }
-            } as SelectComponent,
+            } as any,
           }
         ]
       } as FormObject

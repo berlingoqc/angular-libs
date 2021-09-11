@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { DictFormGroup } from '../../helper/form-group/dict-form-group';
 import { DictionnayProperty } from '../../models/properties/dict';
 import { ComponentRegisterService, BaseFieldComponent } from '../../service/component-register';
-import { DictFormGroup } from 'projects/autoform/src/lib/helper/form-group/dict-form-group';
 
 
 /**

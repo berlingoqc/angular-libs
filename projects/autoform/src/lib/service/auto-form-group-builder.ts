@@ -6,7 +6,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
-import { AutoFormArray } from 'projects/autoform/src/lib/helper/form-group/auto-form-array';
+import { AutoFormArray } from '../helper/form-group/auto-form-array';
 import { AbstractFormGroup } from '../helper/form-group/abstract-form-group';
 import { DictFormGroup } from '../helper/form-group/dict-form-group';
 import {
@@ -33,7 +33,7 @@ export class AutoFormGroupBuilder {
 
     getFormGroup(formData: AutoFormData): FormGroup {
         const controls = {};
-        formData.items.forEach((value) => {
+        formData.items?.forEach((value) => {
           controls[value.name] = this.loopFormProperty(value);
         });
         return new FormGroup(controls);
@@ -134,7 +134,7 @@ export class AutoFormGroupBuilder {
 
     getObjectForm(obj: FormObject): FormGroup {
         let ret = {};
-        obj.properties.forEach((value) => {
+        obj.properties?.forEach((value) => {
             ret[value.name] = this.loopFormProperty(value);
         });
         return new FormGroup(ret);

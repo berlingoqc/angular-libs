@@ -111,7 +111,7 @@ export class InjectFieldDirecitve implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.componentRef?.destroy();
-    this.subs.forEach((sub) => sub.unsubscribe());
+    this.subs?.forEach((sub) => sub.unsubscribe());
   }
 
 }

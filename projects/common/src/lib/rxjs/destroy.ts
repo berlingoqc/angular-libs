@@ -3,23 +3,22 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { Constructor } from '@angular/material/core/common-behaviors/constructor';
 
-const ON_DESTROY_SUBJECT_KEY = Symbol('ON_DESTROY_SUBJECT_KEY');
-
 export type ComponentWithOnDestroyObservable = {
   observeOnDestroy(): Observable<void>;
+  destroySubject: ReplaySubject<void>;
 };
 
 
 export function OnDestroyMixin<T extends Constructor<any>>(base: T) {
   return class extends base implements OnDestroy, ComponentWithOnDestroyObservable {
-    [ON_DESTROY_SUBJECT_KEY] =  new ReplaySubject<void>();
+    public destroySubject =  new ReplaySubject<void>();
 
     observeOnDestroy(): Observable<void> {
-      return this[ON_DESTROY_SUBJECT_KEY].asObservable();
+      return this.destroySubject.asObservable();
     }
 
     ngOnDestroy(): void {
-      this[ON_DESTROY_SUBJECT_KEY].next();
+      this.destroySubject.next();
     }
   }
 }
@@ -27,7 +26,7 @@ export function OnDestroyMixin<T extends Constructor<any>>(base: T) {
 export function componentDestroyed(
   target: ComponentWithOnDestroyObservable
 ): Observable<void> {
-  const onDestroySubject = (target as any)[ON_DESTROY_SUBJECT_KEY];
+  const onDestroySubject = target.destroySubject;
   if (onDestroySubject === undefined) {
     const proto = Object.getPrototypeOf(target);
     const compInfo =

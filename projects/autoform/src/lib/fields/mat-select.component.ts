@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { resolveData } from '@berlingoqc/ngx-common';
-import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
+import { resolveData, OnDestroyMixin, untilComponentDestroyed } from '@berlingoqc/ngx-common';
 import { SelectComponent } from '../models/component/select.component';
 import { BaseFormField } from './base-form-field';
 

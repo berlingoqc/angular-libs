@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
+import { OnDestroyMixin, untilComponentDestroyed } from '@berlingoqc/ngx-common';
 import { AbstractFormGroup } from '../../helper/form-group/abstract-form-group';
 import { FormAbstractObject } from '../../models/properties/abstract-object';
 import { BaseFieldComponent } from '../../service/component-register';

@@ -1,7 +1,6 @@
 export * from './lib/buttons-row';
 export * from './lib/chip-autocomplete/module';
 export * from './lib/chip-autocomplete/chip-autocomplete';
-export * from './lib/mat-extra';
 
 export * from './lib/dynamic-style-provider/dynamic-style-provider.modules';
 export * from './lib/dynamic-style-provider/dynamic-style-register.service';
@@ -59,6 +58,8 @@ export * from './lib/helper/data-decorator/handlers/style.handler';
 
 export * from './lib/helper/rxjs';
 export * from './lib/helper/unsubscriber';
+
+export * from './lib/mat-extra';
 
 export * from './lib/select-control';
 

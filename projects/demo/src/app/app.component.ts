@@ -26,6 +26,12 @@ import { ThemeService } from 'projects/common/src/public-api';
                             >@berlingoqc/ngx-autoform demo</span
                         >
                     </a>
+                    <a mat-list-item routerLink="/autoform/builder">
+                        <mat-icon>assignment</mat-icon>
+                        <span class="nav-caption"
+                            >@berlingoqc/ngx-autoform builder</span
+                        >
+                    </a>
                     <a mat-list-item href="/assets/documentation-autoform/index.html">
                         <mat-icon>assignment</mat-icon>
                         <span class="nav-caption"

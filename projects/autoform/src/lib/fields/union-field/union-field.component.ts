@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { IProperty, UnionProperty } from '../../models';
 import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
-import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
+import { OnDestroyMixin, untilComponentDestroyed } from '@berlingoqc/ngx-common';
 
 export interface UnionData {
   type: number;

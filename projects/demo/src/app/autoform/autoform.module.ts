@@ -6,9 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AutoFormModule, FormSaverModule } from '@berlingoqc/ngx-autoform';
 import { MatIconModule } from '@angular/material/icon';
 import { FancyLabel } from './models';
+import { BuilderComponent } from './builder.component';
 
 @NgModule({
-    declarations: [FancyLabel],
+    declarations: [FancyLabel, BuilderComponent],
     imports: [
         CommonModule,
         MatFormFieldModule,
