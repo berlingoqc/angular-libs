@@ -78,9 +78,7 @@ export class AutoFormGroupBuilder {
             }
             if (v.min) {
                 validators.push(Validators.minLength(v.min));
-                for(let i = 0; i < v.min; i++) {
-                  controls.push(this.loopFormProperty(v.elementType));
-                }
+
             }
             return new AutoFormArray(
               v, (value) => this.loopFormProperty(value), controls, validators

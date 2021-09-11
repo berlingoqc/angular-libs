@@ -51,7 +51,7 @@ export class AutoFormArray extends FormArray {
         options?: { onlySelf?: boolean; emitEvent?: boolean },
     ): void {
         this.onControlValueChange(value);
-        return super.patchValue(value, options);
+        return super.setValue(value, options);
     }
 
     reset(
@@ -59,7 +59,7 @@ export class AutoFormArray extends FormArray {
         options?: { onlySelf?: boolean; emitEvent?: boolean },
     ): void {
         this.onControlValueChange(value);
-        return super.patchValue(value, options);
+        return super.reset(value, options);
     }
 
     patchValue(
@@ -82,14 +82,32 @@ export class AutoFormArray extends FormArray {
                     this.controls.push(control);
                 }
             }
+            if (!patch && value.length < this.controls.length) {
+              for (let i = value.length; i < this.controls.length; i++) {
+                this.removeAt(i);
+              }
+            }
+        } else {
+          this.addMinControl();
         }
-        if (!patch && value.length < this.controls.length) {
-          // delete this other element
-        }
+        this.setState()
     }
 
     private setState() {
         this.canAdd = this.getCanAdd();
         this.canDelete = this.getCanDelete();
+    }
+
+    private addMinControl() {
+      const diffControl = (this.array.min ?? 0) - this.controls.length;
+      if (diffControl > 0) {
+        for(let i = 0; i < this.array.min; i++) {
+          this.controls.push(this.resolvePropertyControl(this.array.elementType));
+        }
+      } else if (diffControl < 0) {
+        for(let i = 0; i < diffControl * -1; i++) {
+          this.removeAt(i);
+        }
+      }
     }
 }
