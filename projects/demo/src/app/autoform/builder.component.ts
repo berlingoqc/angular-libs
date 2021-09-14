@@ -11,5 +11,5 @@ import { autoFormFormData } from "projects/demo/src/app/autoform/models/auto-for
   template: `<autoform-form [formData]="data"></autoform-form>`
 })
 export class BuilderComponent {
-  data: AutoFormData = autoFormFormData;
+  data: AutoFormData = autoFormFormData();
 }

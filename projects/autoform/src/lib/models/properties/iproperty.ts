@@ -46,6 +46,7 @@ export interface IProperty extends Validator {
     // angular material color when applicable
     color?: string;
 
+
     // Section des validators qui sont ajoutés manuellement.
     // Sinon des valeurs ici peuvent être aussi fournis via les sous
     // types qui inject des validators
