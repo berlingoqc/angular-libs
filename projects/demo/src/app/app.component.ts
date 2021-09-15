@@ -10,11 +10,14 @@ import { ThemeService } from 'projects/common/src/public-api';
         <!--The content below is only a placeholder and can be replaced.-->
         <mat-toolbar style="text-align:center; display: flex" class="content">
             <h1>@berlingoqc/ngx-* live demo</h1>
+            <button (click)="(sideBarOpen = !sideBarOpen)">
+              Hide
+            </button>
             <span style="flex-grow: 2"></span>
             <color-picker></color-picker>
         </mat-toolbar>
         <mat-drawer-container style="min-height: 100%">
-            <mat-drawer mode="side" opened class="drawer">
+            <mat-drawer mode="side" [opened]="sideBarOpen" class="drawer">
                 <mat-nav-list>
                     <a mat-list-item routerLink="/">
                         <mat-icon>home</mat-icon>
@@ -57,11 +60,14 @@ import { ThemeService } from 'projects/common/src/public-api';
             }
         `,
     ],
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
     title = 'demo';
 
     current = '';
+
+    sideBarOpen = true;
 
     constructor(
       private activatedRoute: ActivatedRoute,

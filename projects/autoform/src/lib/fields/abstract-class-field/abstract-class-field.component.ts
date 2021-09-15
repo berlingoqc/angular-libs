@@ -38,6 +38,7 @@ export class AbstractClassFieldComponent
           .pipe(untilComponentDestroyed(this))
           .subscribe((value) => {
             this.abstractControl.selectChildType(value);
+            console.log('RETT', this.abstractControl.properties);
           });
     }
 }

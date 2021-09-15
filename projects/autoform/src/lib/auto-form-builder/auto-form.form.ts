@@ -5,6 +5,7 @@ import {
     DictionnayProperty,
     FormAbstractObject,
     FormObject,
+    IProperty,
 } from 'projects/autoform/src/lib/models';
 import { SelectComponent } from 'projects/autoform/src/public-api';
 import { of } from 'rxjs';
@@ -19,14 +20,14 @@ const optionsTypeForm = [
     'tabs',
 ];
 
-const getPropertyFormGroupType = (name) => ({
+const getPropertyFormGroupType = (name, properties: IProperty[]) => ({
     name,
     type: 'object',
     properties: [
         {
             name: 'typeData',
             type: 'object',
-            properties: [],
+            properties: properties
         },
     ],
 });
@@ -35,6 +36,10 @@ const getButtonsObject = (name) =>
     ({
         name,
         type: 'object',
+        optional: true,
+        templates: {
+          header: name,
+        },
         properties: [
             {
                 name: 'title',
@@ -77,23 +82,49 @@ const getButtonsObject = (name) =>
     } as FormObject);
 
 export const autoFormFormData: () => AutoFormData = () => {
-  const d = new FormGroup(null);
     return {
         type: 'simple',
+        templates: {
+          header: 'AutoForm Builder'
+        },
         items: [
             {
                 name: 'object',
                 type: 'abstractobject',
                 abstractClassName: 'simple',
                 typeKey: 'type',
+                templates: {
+                  header: 'AutoFormData'
+                },
                 childs: [
-                    getPropertyFormGroupType('expension-panel'),
-                    getPropertyFormGroupType('stepper'),
+                    getPropertyFormGroupType('expension-panel', []),
+                    getPropertyFormGroupType('stepper', [
+                      {
+                        name: 'direction',
+                        type: 'string',
+                        component: {
+                          name: 'select',
+                          type: 'mat',
+                          options: {
+                            displayContent: (e) => e,
+                            displayTitle: (e) => e,
+                            value: of(['vertical', 'horizontal']),
+                          }
+                        } as SelectComponent,
+                      },
+                      {
+                        name: 'linear',
+                        type: 'bool'
+                      }
+                    ]),
                 ],
                 properties: [
                     {
                         name: 'items',
                         type: 'array',
+                        templates: {
+                          header: 'Properties'
+                        },
                         elementType: {
                             type: 'abstractobject',
                             abstractClassName: 'IProperty',
@@ -102,6 +133,7 @@ export const autoFormFormData: () => AutoFormData = () => {
                                 {
                                     name: 'name',
                                     type: 'string',
+                                    required: true,
                                 },
                                 {
                                     // template-content
@@ -196,6 +228,9 @@ export const autoFormFormData: () => AutoFormData = () => {
                     {
                         name: 'actionsButtons',
                         type: 'object',
+                        templates: {
+                          header: 'Actions Buttons'
+                        },
                         properties: [
                             getButtonsObject('submit'),
                             getButtonsObject('reset'),
@@ -204,5 +239,12 @@ export const autoFormFormData: () => AutoFormData = () => {
                 ],
             } as FormAbstractObject,
         ],
+
+        event: {
+          submit: (form) => {
+            console.log('FORM', form);
+            return of();
+          }
+        }
     };
 };

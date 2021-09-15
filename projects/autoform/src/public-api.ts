@@ -16,3 +16,4 @@ export * from './lib/fields';
 
 export * from './lib/helper';
 export * from './lib/auto-form-register';
+export * from './lib/auto-form-builder';

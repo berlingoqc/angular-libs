@@ -37,12 +37,13 @@ export class AutoFormArray extends FormArray {
         const abstractControl = this.resolvePropertyControl(
             this.array.elementType,
         );
-        this.controls.push(abstractControl);
+        const index = this.controls.length - 1;
+        this.insert(index, abstractControl);
         this.setState();
     }
 
     removeControl(index: number) {
-        this.controls.splice(index, 1);
+        this.removeAt(index);
         this.setState();
     }
 
@@ -79,6 +80,7 @@ export class AutoFormArray extends FormArray {
                     );
                     // maybe optional
                     control.setValue(value[i]);
+                    const index = this.controls.length - 1;
                     this.controls.push(control);
                 }
             }

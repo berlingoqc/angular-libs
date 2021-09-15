@@ -1,31 +1,21 @@
-import { AbstractControl, FormGroup } from "@angular/forms";
-import { IProperty } from "dist/autoform/public-api";
-import { FormObject } from "../../models";
+import { Constructor } from "@angular/material/core/common-behaviors/constructor";
+import { Observable } from "rxjs";
+import { map, switchMap, tap } from "rxjs/operators";
+import { AutoFormGroup } from "./auto-form-group";
 
-export class OptionalFormGroup extends FormGroup {
 
-    constructor(
-        private formObject: FormObject,
-        private resolvePropertyControl: (value: IProperty) => AbstractControl,
-        controls: { [id: string]: AbstractControl },
-    ) {
-        super(controls);
+export interface IOptionalFormGroupMixin extends AutoFormGroup {}
+
+export const OptionalFormGroupMixin = <T extends Constructor<AutoFormGroup>> (base: T) => {
+  return class extends base {
+    getActionObservable(): Observable<void> {
+      return super.getActionObservable().pipe(
+        tap(() =>
+          (this.formObject.optional) ? this.disable(): null),
+        switchMap(() => this.valueChanges.pipe(map((value) => {
+          if (value) this.enable();
+        })))
+      );
     }
-
-    patchValue(data, options) {
-      return super.setValue(data, options);
-    }
-
-
-    resetValue(data, options) {
-      // if null remove all controls
-      return super.setValue(data, options);
-    }
-
-
-
-    setValue(data, options) {
-      return super.setValue(data, options);
-    }
-
+  }
 }

@@ -19,6 +19,8 @@ import {
 } from '../models';
 import { FormAbstractObject } from '../models/properties/abstract-object';
 import { ComponentRegisterService } from './component-register';
+import { AutoFormGroup } from '../helper/form-group/auto-form-group';
+import { OptionalFormGroupMixin } from '../helper/form-group/optional-form-group';
 
 /**
  * AutoFormGroupBuilder
@@ -81,7 +83,7 @@ export class AutoFormGroupBuilder {
             }
             */
             return new AutoFormArray(
-              v, (value) => this.loopFormProperty(value), controls, validators
+              v, (value) => this.loopFormProperty(value), controls
             );
         } else if (value.type === 'dic') {
           return new DictFormGroup((value as DictionnayProperty), (value) => this.loopFormProperty(value));
@@ -137,6 +139,10 @@ export class AutoFormGroupBuilder {
         obj.properties?.forEach((value) => {
             ret[value.name] = this.loopFormProperty(value);
         });
-        return new FormGroup(ret);
+        let fgClass = AutoFormGroup;
+        if (obj.optional) {
+          fgClass = OptionalFormGroupMixin(fgClass)
+        }
+        return new fgClass(obj, ret);
     }
 }

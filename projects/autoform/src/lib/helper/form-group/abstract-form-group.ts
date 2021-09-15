@@ -31,8 +31,8 @@ function selectChildType(
             }
             return [child,
             [
-                ...abstractObjectProperty.properties,
                 ...child.properties,
+                ...abstractObjectProperty.properties,
             ], child.name];
         }
     }

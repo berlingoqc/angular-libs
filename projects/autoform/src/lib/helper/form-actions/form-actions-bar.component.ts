@@ -47,6 +47,7 @@ export class FormActionsBarComponent {
   submit() {
     if (this.component.formGroup.valid) {
       if (this.component.formData.event) {
+        console.log('DAD', this.component.formGroup.getRawValue());
         return this.component.formData.event
               .submit(this.component.formGroup.value);
       }

@@ -19,8 +19,11 @@
 
 </div>
 
+  {{abstractControl.value | json}}
+
   <div class="container-array">
     <div class="item-array" *ngFor="let control of abstractControl.controls; index as i">
+      {{control.value | json}}
       <div class="item-wrapper">
         <ng-template autoFormField [field]="data.elementType" [abstractControl]="control"></ng-template>
       </div>
