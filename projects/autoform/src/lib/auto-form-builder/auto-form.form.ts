@@ -1,24 +1,9 @@
-import { FormGroup } from '@angular/forms';
-import {
-    ArrayProperty,
-    AutoFormData,
-    DictionnayProperty,
-    FormAbstractObject,
-    FormObject,
-    IProperty,
-} from 'projects/autoform/src/lib/models';
-import { SelectComponent } from 'projects/autoform/src/public-api';
+;
 import { of } from 'rxjs';
 
-const optionsTypeForm = [
-    'simple',
-    'bottom-sheet',
-    'card',
-    'dialog',
-    'expansion-panel',
-    'stepper',
-    'tabs',
-];
+import { IProperty, FormObject, FormAbstractObject,
+  AutoFormData, DictionnayProperty, ArrayProperty } from '../models';
+import { SelectComponent } from '../models/component/select.component';
 
 const getPropertyFormGroupType = (name, properties: IProperty[]) => ({
     name,
@@ -31,6 +16,22 @@ const getPropertyFormGroupType = (name, properties: IProperty[]) => ({
         },
     ],
 });
+
+const getChildComponentProperties = (name): IProperty[] => {
+  return [
+  {
+    name: 'component',
+    type: 'abstractobject',
+    typeKey: 'name',
+    abstractClassName: undefined,
+    templates: {
+      header: 'Component'
+    },
+    properties: [],
+    childs: [],
+  } as FormAbstractObject,
+  ]
+}
 
 const getButtonsObject = (name) =>
     ({
@@ -127,7 +128,6 @@ export const autoFormFormData: () => AutoFormData = () => {
                         },
                         elementType: {
                             type: 'abstractobject',
-                            abstractClassName: 'IProperty',
                             typeKey: 'type',
                             properties: [
                                 {
@@ -142,85 +142,89 @@ export const autoFormFormData: () => AutoFormData = () => {
                                 },
                                 {
                                     name: 'required',
-                                    type: 'bool'
+                                    type: 'bool',
+                                    component: {
+                                      name: 'checkbox'
+                                    }
                                 },
                                 {
                                     name: 'disabled',
-                                    type: 'bool'
+                                    type: 'bool',
+                                    component: {
+                                      name: 'checkbox'
+                                    }
                                 },
                                 {
                                     name: 'errors',
                                     type: 'dic',
+                                    templates: {
+                                      header: 'Errors'
+                                    },
                                     availableProperty: [],
                                 } as DictionnayProperty,
                                 {
                                     name: 'decorators',
                                     type: 'dic',
+                                    templates: {
+                                      header: 'Decorators'
+                                    },
                                     availableProperty: [],
                                 } as DictionnayProperty,
                                 {
                                     name: 'templates',
                                     type: 'dic',
+                                    templates: {
+                                      header: 'Templates'
+                                    },
                                     availableProperty: [],
                                 } as DictionnayProperty,
-                                {
-                                    name: 'component',
-                                    type: 'abstractobject',
-                                    properties: [],
-                                    childs: [],
-                                } as FormAbstractObject,
-                                {
-                                    name: 'subtype',
-                                    type: 'abstractobject',
-                                    properties: [],
-                                    childs: [],
-                                } as FormAbstractObject,
+
                             ],
                             childs: [
                                 {
                                     name: 'date',
                                     type: 'date',
-                                    properties: [],
+                                    properties: getChildComponentProperties('date'),
                                 },
                                 {
                                     name: 'dic',
                                     type: 'dic',
-                                    properties: [],
+                                    properties: getChildComponentProperties('dic'),
                                 },
                                 {
                                     name: 'string',
                                     type: 'string',
-                                    properties: [],
+                                    properties: getChildComponentProperties('string'),
                                 },
                                 {
                                     name: 'bool',
                                     type: 'bool',
-                                    properties: [],
+                                    properties: getChildComponentProperties('bool'),
                                 },
                                 {
                                     name: 'number',
                                     type: 'number',
-                                    properties: [],
+                                    properties: getChildComponentProperties('number'),
                                 },
                                 {
                                     name: 'union',
                                     type: 'union',
-                                    properties: [],
+                                    properties: getChildComponentProperties('union'),
                                 },
                                 {
                                     name: 'object',
                                     type: 'object',
-                                    properties: [],
+                                    properties: getChildComponentProperties('object'),
                                 },
                                 {
                                     name: 'abstractobject',
                                     type: 'abstractobject',
-                                    properties: [],
+                                    properties: getChildComponentProperties('abstractobject'),
                                 },
                                 {
                                     name: 'array',
                                     type: 'array',
-                                    properties: [],
+                                    properties: getChildComponentProperties('array'),
                                 },
                             ],
                         } as FormAbstractObject,

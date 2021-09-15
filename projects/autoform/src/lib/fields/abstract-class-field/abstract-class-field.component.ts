@@ -20,6 +20,7 @@ export class AbstractClassFieldComponent
         this.dataSelect = {
             appearance: 'outline',
             displayName: 'Class',
+            required: true,
             select: {
                 name: 'select',
                 type: 'mat',
@@ -29,7 +30,7 @@ export class AbstractClassFieldComponent
                     value: [
                       this.data.abstractClassName,
                       ...this.data.childs.map((child) => child.name),
-                    ],
+                    ].filter(x => x),
                 },
             },
         };
