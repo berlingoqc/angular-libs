@@ -48,7 +48,7 @@ import { ThemeService } from 'projects/common/src/public-api';
                     </a>
                 </mat-nav-list>
             </mat-drawer>
-            <mat-drawer-content style="padding: 10px">
+            <mat-drawer-content style="height: 100%; padding: 10px">
                 <router-outlet></router-outlet>
             </mat-drawer-content>
         </mat-drawer-container>

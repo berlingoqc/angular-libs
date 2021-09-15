@@ -1,9 +1,6 @@
 import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn } from "@angular/forms";
 import { ArrayProperty, IProperty } from "../../models";
 
-
-
-
 export class AutoFormArray extends FormArray {
     staticSize: boolean;
     canAdd: boolean;
@@ -37,8 +34,7 @@ export class AutoFormArray extends FormArray {
         const abstractControl = this.resolvePropertyControl(
             this.array.elementType,
         );
-        const index = this.controls.length - 1;
-        this.insert(index, abstractControl);
+        this.pushControl(abstractControl);
         this.setState();
     }
 
@@ -80,8 +76,7 @@ export class AutoFormArray extends FormArray {
                     );
                     // maybe optional
                     control.setValue(value[i]);
-                    const index = this.controls.length - 1;
-                    this.controls.push(control);
+                    this.pushControl(control);
                 }
             }
             if (!patch && value.length < this.controls.length) {
@@ -104,12 +99,17 @@ export class AutoFormArray extends FormArray {
       const diffControl = (this.array.min ?? 0) - this.controls.length;
       if (diffControl > 0) {
         for(let i = 0; i < this.array.min; i++) {
-          this.controls.push(this.resolvePropertyControl(this.array.elementType));
+          this.pushControl(this.resolvePropertyControl(this.array.elementType));
         }
       } else if (diffControl < 0) {
         for(let i = 0; i < diffControl * -1; i++) {
           this.removeAt(i);
         }
       }
+    }
+
+    private pushControl(abstractControl: AbstractControl) {
+      const index = this.controls.length - 1;
+      this.insert(index, abstractControl);
     }
 }

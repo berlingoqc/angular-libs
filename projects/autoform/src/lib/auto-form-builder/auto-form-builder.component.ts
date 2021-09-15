@@ -9,7 +9,7 @@ import { autoFormFormData } from "./auto-form.form";
 @Component({
   selector: 'autoform-builder',
   templateUrl: './auto-form-builder.component.html',
-  styleUrls: ['./auto-form-builder.component.html'],
+  styleUrls: ['./auto-form-builder.component.scss'],
 })
 export class AutoFormBuilderComponent implements OnInit, OnDestroy {
     @ViewChild('vc', { read: ViewContainerRef }) vc: ViewContainerRef;
@@ -32,9 +32,19 @@ export class AutoFormBuilderComponent implements OnInit, OnDestroy {
     ngOnInit() {
       this.data.event.afterFormCreated = (form) => {
         this.formGroup = form;
+
+        /*this.formGroup.valueChanges.subscribe((value) => {
+          if (!this.vc || !this.formGroup.valid) return;
+          if (this.ref) this.ref.destroy();
+          const factory = this.resolver.resolveComponentFactory(
+            AutoFormComponent
+          );
+          this.ref = this.vc.createComponent(factory);
+          this.ref.instance.formData = value.object;
+          this.ref.changeDetectorRef.markForCheck();
+        });*/
       };
       this.data.event.submit = (value) => {
-        console.log('VALE', value, this.formGroup);
         if (this.ref) this.ref.destroy();
         const factory = this.resolver.resolveComponentFactory(
           AutoFormComponent

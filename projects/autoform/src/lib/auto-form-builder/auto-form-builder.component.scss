@@ -1,0 +1,23 @@
+
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  .builder {
+    width: 50%;
+    height: 100%;
+
+    padding-right: 5px;
+
+    border-right: 1px solid ;
+  }
+
+  .output {
+    width: 50%;
+    height: 100%;
+
+    padding-left: 5px;
+  }
+}
