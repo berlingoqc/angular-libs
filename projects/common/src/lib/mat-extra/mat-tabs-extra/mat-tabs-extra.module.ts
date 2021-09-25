@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTabsRouterDirective } from './mat-tabs-router.directive';
+import { MatTabsRouterSavedDirective } from './mat-tabs-router.directive';
 
 
 
 @NgModule({
-  declarations: [MatTabsRouterDirective],
+  declarations: [MatTabsRouterSavedDirective],
   imports: [
     CommonModule
   ],
-  exports: [MatTabsRouterDirective],
+  exports: [MatTabsRouterSavedDirective],
 })
 export class MatTabsExtraModule { }

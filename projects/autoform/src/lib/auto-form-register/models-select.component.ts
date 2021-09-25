@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AutoFormData } from '../models';
+import { Observable, of } from 'rxjs';
+import { AutoFormData, FormObject } from '../models';
 import { FormRegistry } from './form-registry';
 import { ModelRegistry } from './model-registry';
 
@@ -13,6 +13,7 @@ import { ModelRegistry } from './model-registry';
 export class ModelsSelectComponent implements OnInit {
 
   @Input() callback: (data) => Observable<void>;
+  @Input() value: any;
 
   form: AutoFormData = {
     type: 'simple',
@@ -30,9 +31,7 @@ export class ModelsSelectComponent implements OnInit {
               options: {
                 displayTitle: 'Form available',
                 displayContent: (e) => e,
-                options: {
-                  value: Object.keys(this.formRegistery.forms),
-                }
+                value: Object.keys(this.formRegistery.forms),
               }
             } as any,
           },
@@ -45,14 +44,12 @@ export class ModelsSelectComponent implements OnInit {
               options: {
                 displayTitle: 'Model available',
                 displayContent: (e) => e,
-                options: {
-                  value: Object.keys(this.modelRegistery.models),
-                }
+                value: Object.keys(this.modelRegistery.models),
               }
             } as any,
           }
         ]
-      }
+      } as FormObject
     ]
   }
 
@@ -64,8 +61,7 @@ export class ModelsSelectComponent implements OnInit {
   ngOnInit() {
     this.form.event = {
       submit: this.callback,
-    }
-    //this.items = Object.keys(this.modelRegistery.models);
-    //this.forms = Object.keys(this.formRegistery.forms)
+      initialData: () => of({object: this.value}),
+    };
   }
 }

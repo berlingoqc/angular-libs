@@ -28,11 +28,12 @@ import {
         </h2>
         <mat-dialog-content>
             <ng-container *ngIf="formData">
-                <autoform-object-field
-                    *ngFor="let item of data.formData.items"
-                    [data]="item"
-                    [abstractControl]="data.formGroup.controls[item.name]"
-                ></autoform-object-field>
+                <ng-template
+                  *ngFor="let item of data.formData.items"
+                  autoFormField
+                  [field]="item"
+                  [abstractControl]="data.formGroup.controls[item.name]"
+                ></ng-template>
             </ng-container>
         </mat-dialog-content>
 

@@ -1,28 +1,21 @@
-# Autoform : Génération de formalaire automatique avec Angular Material
+# Autoform : Autonatic generation of Form with Reactive Form and Angular Material
 
 Objectif:
 
-- Générer des formulaires complexes et flexible seulement avec une config
-- Permettre de styler et subdiviser le contenue
-- Permettre de venir ajouter des nouveaux handlers pour les différents types
-- Gestion de la validation et possibilité de venir entrer des validators customs
+- Generate complexe form with flexibility and without html only by json or typescript depending of the needs
+- Allowed to style and subdivise the content
+- Allowed extendability by adding new type and subtype.
+- Allowed to create custom type with custom validation.
 
-## Structure
+## Structure of the project
 
 ### Container
 
-Classe de base pour les éléments qui représente un container pour venir y attacher
-des styles et des classes au éléments.
-
-Classe qui hérite de Container:
-
-- FormObject
-- AutoFormData
+Base classe for all elements property to allowed to attachs style to the property.
 
 ### AutoFormData
 
-Interface root pour un AutoForm. Contient les objects de bases qui formes
-le formulaire.
+Structure to declare an autoform.
 
 ### FormObject
 

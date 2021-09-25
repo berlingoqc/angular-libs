@@ -5,4 +5,5 @@ export * from './multi-input-mat-input';
 export * from './select.component';
 export * from './slidder-number';
 export * from './text-area';
+export * from './select.component';
 //export * from './mat-radio';

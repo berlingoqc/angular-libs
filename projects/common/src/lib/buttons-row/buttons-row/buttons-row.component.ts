@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { Component, Inject, Input, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, finalize, take } from 'rxjs/operators';
@@ -16,6 +16,7 @@ export interface Button {
     selector: 'app-buttons-row',
     templateUrl: './buttons-row.component.html',
     styleUrls: ['./buttons-row.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class ButtonsRowComponent implements OnInit {
     @Input() buttons: Button[];

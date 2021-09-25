@@ -30,6 +30,7 @@ import {
     trigger,
 } from '@angular/animations';
 import { unsubscriber } from '@berlingoqc/ngx-common';
+import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
 
 class ExtraRow {
     aloneRowId: string[];
@@ -61,13 +62,14 @@ class ExtraRow {
     ],
     encapsulation: ViewEncapsulation.None,
 })
-@unsubscriber
 export class AutoTableComponent<T = any>
+    extends OnDestroyMixin(Object)
     implements OnInit,OnDestroy {
 
     private _columns: TableColumn[];
     private _client: LoopbackRestClient<T>;
 
+    sub: Subscription;
     subGet: Subscription;
     subCount: Subscription;
 
@@ -155,8 +157,6 @@ export class AutoTableComponent<T = any>
 
     expandedElement: T | null;
 
-    sub: Subscription;
-
     footerExtraRow: ExtraRow = { aloneRow: [], aloneRowId: [] };
     headerExtraRow: ExtraRow = { aloneRow: [], aloneRowId: [] };
 
@@ -182,7 +182,7 @@ export class AutoTableComponent<T = any>
         if (this.sub) {
             this.sub.unsubscribe();
         }
-        this.sub = ee.asObservable().subscribe(() => {
+        this.sub = ee.asObservable().pipe(untilComponentDestroyed(this)).subscribe(() => {
             this.refreshData();
             this.refreshCount();
         });
@@ -196,15 +196,12 @@ export class AutoTableComponent<T = any>
         }
     }
 
-    constructor(private detectorRef: ChangeDetectorRef) {}
+    constructor(private detectorRef: ChangeDetectorRef) {
+      super();
+    }
 
     ngOnInit() {}
 
-    ngOnDestroy() {
-        if (this.sub) {
-            this.sub.unsubscribe();
-        }
-    }
 
     onSortChange(sort: Sort) {
         this.orderBy = [
@@ -230,6 +227,7 @@ export class AutoTableComponent<T = any>
                 where: this.where,
                 order: this.orderBy,
             })
+            .pipe(untilComponentDestroyed(this))
             .subscribe((data) => {
                 this.dataSource.data = data;
             });
@@ -248,6 +246,7 @@ export class AutoTableComponent<T = any>
             this.subCount?.unsubscribe();
             this.subCount = this.source
                 .count(this.where)
+                .pipe(untilComponentDestroyed(this))
                 .subscribe((count) => (this.length = count.count));
         }
     }

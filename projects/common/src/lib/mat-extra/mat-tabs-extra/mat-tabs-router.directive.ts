@@ -1,9 +1,9 @@
 import { Directive, OnDestroy, OnInit } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OnDestroyMixin, untilComponentDestroyed } from '../../rxjs';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { unsubscriber } from '../../helper/unsubscriber';
 
 /**
  * TODO , add implementation with many provider
@@ -14,8 +14,7 @@ import { unsubscriber } from '../../helper/unsubscriber';
 @Directive({
   selector: '[matTabsRouting]'
 })
-@unsubscriber
-export class MatTabsRouterDirective implements OnInit {
+export class MatTabsRouterSavedDirective extends OnDestroyMixin(Object) implements OnInit {
 
   queryParamTab = 'selectedTabItem';
 
@@ -26,12 +25,15 @@ export class MatTabsRouterDirective implements OnInit {
     private matTabGroup: MatTabGroup,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) {
+    super();
+  }
 
 
   ngOnInit(): void {
-    this.subRoute = this.activatedRoute.queryParams
+    this.activatedRoute.queryParams
       .pipe(
+        untilComponentDestroyed(this),
         map(queryParams => queryParams[this.queryParamTab]),
         filter(item => item),
       )

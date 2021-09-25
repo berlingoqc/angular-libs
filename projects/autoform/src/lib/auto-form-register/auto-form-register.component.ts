@@ -1,81 +1,94 @@
-import { Component, Inject, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { AutoFormComponent } from '../auto-form/auto-form.component';
 import { AutoFormData } from '../models';
+import { AutoFormEvent } from '../models/event';
 import { DEFAULT_AUTO_FORM } from '../models/model-context';
-import { AutoFormGroupBuilder } from '../service/auto-form-group-builder';
-import { ComponentRegisterService } from '../service/component-register';
 import { FormRegistry } from './form-registry';
 import { ModelRegistry } from './model-registry';
 
 @Component({
-  selector: 'lib-auto-form-register',
-  template: ` <autoform-form *ngIf="formData" [formData]="formData"></autoform-form> `,
+    selector: 'lib-auto-form-register',
+    template: `<ng-template #vc></ng-template>`,
 })
-export class AutoFormRegisterComponent implements OnInit {
-  @ViewChild(AutoFormComponent) autoFormComponent: AutoFormComponent;
-  // Le nom du forms a loader
-  @Input() forms: string;
-  // Le noms du model a venir injecter dans le form, si aucune utilise lui
-  // par default
-  @Input() model: string;
+export class AutoFormRegisterComponent implements OnInit, OnDestroy {
+    @ViewChild('vc', { read: ViewContainerRef }) vc: ViewContainerRef;
 
-  formGroup: FormGroup;
-  formData: AutoFormData;
+    forms: string;
+    model: string;
 
-  constructor(
-    @Optional()
-    @Inject(DEFAULT_AUTO_FORM)
-    private defaultAutoForm: AutoFormData,
-    private modelRegister: ModelRegistry,
-    private formRegister: FormRegistry,
-    private builder: AutoFormGroupBuilder,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    @Input() autoFormEvent?: AutoFormEvent;
+    @Output() formDataApply = new EventEmitter<AutoFormData>();
+    @Output() formGroupApply = new EventEmitter<FormGroup>();
 
-  ngOnInit(): void {}
+    formData: AutoFormData;
+    autoFormComponent: ComponentRef<AutoFormComponent>;
 
-  loadForm(data: any) {
-    // Regarde si le nom de model et de forms sont fournis directement
-    this.formData = null;
-    this.formGroup = null;
+    constructor(
+        @Optional()
+        @Inject(DEFAULT_AUTO_FORM)
+        private defaultAutoForm: AutoFormData,
+        private modelRegister: ModelRegistry,
+        private formRegister: FormRegistry,
+        private resolver: ComponentFactoryResolver,
+    ) {}
 
-    if (!data.model || !data.forms) {
-      return;
+    ngOnInit(): void {
+      if (this.forms && this.model) {
+        this.loadForm({form: this.forms, model: this.model});
+      }
     }
 
-    this.model = data.model;
-    this.forms = data.forms;
-    // Recupere la definition du model
-    console.log('REGISTER', this.modelRegister.models);
-    const model = this.modelRegister.models[this.model];
-    if (!model) {
-      throw new Error('Model not found with key ' + this.model);
-    }
-    let form: AutoFormData;
-    // Si on n'a juste un model , utilise le AutoFormData par default
-    if (this.forms) {
-      form = this.formRegister.forms[this.forms].data;
-    } else {
-      form = this.defaultAutoForm;
-    }
-    // Si on n'a pas throw une belle erreur
-    if (!form) {
-      throw new Error('Form nout found with key ' + this.forms);
-    }
-    form.items = model.items;
-    this.formData = form;
-    this.formGroup = this.builder.getFormGroup(this.formData);
-  }
+    loadForm(data: any, defaultData?: any, defaultFormData?: Partial<AutoFormData>) {
+        // Regarde si le nom de model et de forms sont fournis directement
+        this.formData = null;
 
-  submit() {
-    if (this.formGroup.valid) {
-    } else {
-      this.formGroup.markAllAsTouched();
-    }
-  }
+        if (!data.model || !data.forms) {
+            return;
+        }
 
-  clearAll() {}
+        this.model = data.model;
+        this.forms = data.forms;
+        // Recupere la definition du model
+        const model = this.modelRegister.models[this.model];
+        if (!model) {
+            throw new Error('Model not found with key ' + this.model);
+        }
+        let form: AutoFormData;
+        // Si on n'a juste un model , utilise le AutoFormData par default
+        if (this.forms) {
+            form = this.formRegister.forms[this.forms].data;
+        } else {
+            form = this.defaultAutoForm;
+        }
+        // Si on n'a pas throw une belle erreur
+        if (!form) {
+            throw new Error('Form nout found with key ' + this.forms);
+        }
+        form.items = model.items;
+        this.formData = { ...form, event: this.autoFormEvent, ...(defaultFormData || {}) };
+
+        if (defaultData) {
+          this.formData.event.initialData = () => of(defaultData);
+        }
+
+        this.formData.event.afterFormCreated = (form) => this.formGroupApply.next(form);
+
+
+        if (this.autoFormComponent) {
+          this.autoFormComponent.destroy();
+        }
+
+        const factory = this.resolver.resolveComponentFactory(AutoFormComponent);
+        this.autoFormComponent = this.vc.createComponent(factory);
+        this.autoFormComponent.instance.formData = this.formData;
+        this.autoFormComponent.changeDetectorRef.markForCheck();
+
+        this.formDataApply.next(this.formData);
+    }
+
+    ngOnDestroy(): void {
+      this.autoFormComponent?.destroy();
+    }
 }

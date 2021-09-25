@@ -58,6 +58,9 @@ import { DateRangeSubTypeHandler } from './models';
 import { FormActionsBarComponent } from './helper/form-actions/form-actions-bar.component';
 import { ButtonsRowModule, LoadingButtonModule } from '@berlingoqc/ngx-common';
 import { UnionFieldComponent } from './fields/union-field/union-field.component';
+import { InjectFieldDirecitve } from './fields/injector-base.component';
+import { ControlRawDataPipe } from './pipe/raw-value.pipe';
+import { AbstractClassFieldComponent } from './fields/abstract-class-field/abstract-class-field.component';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -76,14 +79,18 @@ import { UnionFieldComponent } from './fields/union-field/union-field.component'
         ObjectFieldComponent,
         ArrayFieldComponent,
         UnionFieldComponent,
+        AbstractClassFieldComponent,
 
         MultiPartMatInputComponent,
 
         MyMatInput,
         MyMatSelectComponent,
 
+        InjectFieldDirecitve,
+
         SliderControlComponent,
         MatErrorPipe,
+        ControlRawDataPipe,
         GetDecoratorDataPipe,
         DecoratorsDirective,
         FieldErrorComponent,
@@ -138,6 +145,7 @@ import { UnionFieldComponent } from './fields/union-field/union-field.component'
         ObjectFieldComponent,
         StringFieldComponent,
         NumberFieldComponent,
+        AbstractClassFieldComponent,
         MultiPartMatInputComponent,
         ReactiveFormsModule,
     ],
@@ -185,7 +193,7 @@ export class AutoFormModule {
         };
     }
 
-    constructor(private register: ComponentRegisterService) {
+    constructor(register: ComponentRegisterService) {
         register.registerComponent({
             type: 'string',
             mainComponentType: StringFieldComponent,
@@ -220,12 +228,25 @@ export class AutoFormModule {
         });
 
         register.registerComponent({
+          type: 'abstractobject',
+          mainComponentType: AbstractClassFieldComponent,
+          typeComponentHandler: [],
+        });
+
+        register.registerComponent({
             type: 'date',
             mainComponentType: DateFieldComponent,
             typeComponentHandler: []
         });
 
         register.registerSubTypeHandler('date-range', new DateRangeSubTypeHandler())
+
+
+        register.registerComponent({
+          type: 'dic',
+          mainComponentType: DictFieldComponent,
+          typeComponentHandler: []
+        });
 
         register.registerComponent({
             type: 'bool',

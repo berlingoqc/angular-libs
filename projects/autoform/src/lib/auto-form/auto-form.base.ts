@@ -36,7 +36,6 @@ export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContain
     @Input()
     set formData(formData: AutoFormData) {
         this.pFormData = formData;
-
         this.formGroup = this.autoFormBuilder.getFormGroup(this.pFormData);
     }
     get formData(): AutoFormData {
@@ -59,20 +58,23 @@ export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContain
         this.exposition['this'] = this;
         if (formData) {
             this.formData = formData;
-            if (this.formData.event?.afterFormCreated) {
-              this.formData.event.afterFormCreated(this.formGroup);
-            }
             if (formInitialData) this.formGroup.setValue(formInitialData);
-            if (this.formData.event?.initialData) {
+            this.initialize();
+       }
+    }
+
+    private initialize() {
+      if (this.formData.event?.afterFormCreated) {
+        this.formData.event.afterFormCreated(this.formGroup);
+      }
+      if (this.formData.event?.initialData) {
               resolveData(this.formData.event.initialData)
                 .pipe(take(1))
                 .subscribe((data) => {
-                  console.log('INITIAL DATA', data);
                   // Neeed to adjust the
-
                   this.formGroup.patchValue(data);
                 });
             }
-        }
+
     }
 }

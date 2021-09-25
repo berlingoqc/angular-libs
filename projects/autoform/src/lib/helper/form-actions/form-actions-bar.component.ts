@@ -1,17 +1,21 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, ViewEncapsulation } from "@angular/core";
 import { Button } from "@berlingoqc/ngx-common";
 import { BaseAutoFormComponent } from "../../auto-form/auto-form.base";
 import { FormActions } from "./form-actions";
 
-
-
 @Component({
   selector: 'autoform-actions-bar',
   template: `
+  <div
+  [autoFormDecorator]="mActions"
+  autoFormElementID="container"
+  >
     <app-buttons-row
       [buttons]="buttons"
     ></app-buttons-row>
+  </div>
   `,
+  encapsulation: ViewEncapsulation.None,
 })
 export class FormActionsBarComponent {
 
@@ -28,11 +32,15 @@ export class FormActionsBarComponent {
     }
     if (this.mActions.reset)
       this.mActions.reset.click = () => this.reset();
-    this.buttons = Object.values(this.mActions);
+    this.buttons = [
+      this.mActions.submit,
+      this.mActions.reset,
+      this.mActions.cancel,
+      ...this.mActions.extra || []
+    ].filter((item) => item);
   }
 
   @Input() component: BaseAutoFormComponent;
-
 
   buttons: Button[];
 

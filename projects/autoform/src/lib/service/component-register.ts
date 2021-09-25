@@ -8,6 +8,13 @@ import { AbstractControl } from '@angular/forms';
 import { IPropertyComponentHandler, SubTypeHandler } from '../models';
 import { IProperty, IPropertyType } from '../models/properties/iproperty';
 
+
+/**
+ * BaseFieldComponent, base class for all of property component.
+ *
+ * there is no logic but it contains the @Input that are shared
+ * by all property component.
+ */
 @Directive()
 export abstract class BaseFieldComponent<
   T extends IProperty,
@@ -47,6 +54,13 @@ export abstract class BaseFieldComponent<
   }
 }
 
+
+/**
+ * ComponentRegisterService
+ *
+ * This service is a root service that contains the mapping
+ * for the component property and the available subtype and subcomponent.
+ */
 @Injectable({
   providedIn: 'root',
 })

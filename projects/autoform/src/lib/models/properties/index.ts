@@ -7,3 +7,5 @@ export * from './bool';
 export * from './date';
 export * from './union';
 export * from './subtype';
+export * from './dict';
+export * from './abstract-object';

@@ -30,5 +30,6 @@
   "prettier.printWidth": 120,
   "prettier.bracketSpacing": true,
   "prettier.singleQuote": true,
-  "window.zoomLevel": 0
+  "window.zoomLevel": -1,
+  "jira-plugin.workingProject": ""
 }

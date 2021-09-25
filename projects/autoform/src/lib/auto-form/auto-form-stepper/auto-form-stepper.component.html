@@ -43,10 +43,8 @@
   let-stepper="stepper"
   let-control="control"
 >
-  <autoform-object-field
-    [data]="item"
-    [abstractControl]="formGroup.controls[item.name]"
-  ></autoform-object-field>
+  <ng-template autoFormField [field]="item" [abstractControl]="formGroup.controls[item.name]">
+  </ng-template>
   <autoform-step-controls
     [controls]="
       contolType

@@ -9,4 +9,5 @@ export interface FormActions extends Container {
   submit?: Button;
   cancel?: Button;
   reset?: Button;
+  extra?: Button[];
 }

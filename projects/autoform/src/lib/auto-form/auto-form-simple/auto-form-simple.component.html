@@ -1,8 +1,9 @@
 <ng-container *ngIf="formData">
-  <autoform-object-field
-    *ngFor="let item of formData.items"
-    [data]="item"
-    [abstractControl]="formGroup.controls[item.name]"
-  ></autoform-object-field>
+  <ng-template
+    *ngFor="let field of formData.items"
+    autoFormField
+    [field]="field"
+    [abstractControl]="formGroup.controls[field.name]">
+  </ng-template>
   <autoform-actions-bar [actions]="formData.actionsButtons" [component]="this"></autoform-actions-bar>
 </ng-container>

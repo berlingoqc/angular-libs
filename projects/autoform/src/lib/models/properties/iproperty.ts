@@ -1,9 +1,11 @@
 import {
+  AbstractControl,
     AbstractControlOptions,
     AsyncValidatorFn,
+    FormControl,
     ValidatorFn,
 } from '@angular/forms';
-import { TemplateContentData } from '@berlingoqc/ngx-common';
+import { TemplateContent, TemplateContentData } from '@berlingoqc/ngx-common';
 import { Observable } from 'rxjs';
 import { PropertyComponent } from '../component';
 import { ISubType } from '../subtype';
@@ -18,6 +20,7 @@ export type IPropertyType =
     | 'blob'
     | 'union'
     | 'object'
+    | 'abstractobject'
     | 'array';
 
 // IProperty est l'interface de base pour les différents inputs
@@ -34,12 +37,15 @@ export interface IProperty extends Validator {
     // sont handle par des directive autour de la propriété
     decorators?: { [id: string]: any };
 
+    templates?: { [id: string]: TemplateContent };
+
     component?: PropertyComponent;
     // Le sous-type du type.
     subtype?: ISubType;
 
     // angular material color when applicable
     color?: string;
+
 
     // Section des validators qui sont ajoutés manuellement.
     // Sinon des valeurs ici peuvent être aussi fournis via les sous
@@ -49,8 +55,9 @@ export interface IProperty extends Validator {
     // Message a afficher pour les différentes clé d'erreurs
     errors?: FieldErrors;
 
-    configChange?: Observable<any>;
-
+    // callback call when formControl value change
+    valuesChanges?: (control: AbstractControl, value: any) => void;
+    initialize?: (control: AbstractControl) => void;
 
     // default value for the formControl
     value?: any;

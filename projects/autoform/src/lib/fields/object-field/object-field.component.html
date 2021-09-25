@@ -1,8 +1,29 @@
-<h3 [style.display]="(data.templates) ? 'box' : 'none'">{{(data.templates) ? data.templates['header'] : ''}}</h3>
+<h3 [style.display]="(data.templates) ? 'box' : 'none'">
+  {{(data.templates) ? data.templates['header'] : ''}}
+</h3>
+
+
+<div *ngIf="data?.optional">
+  <button mat-stroked-button *ngIf="abstractControl.disabled"
+    (click)="abstractControl.enable()">
+    Enabled
+  </button>
+  <button mat-stroked-button *ngIf="abstractControl.enabled"
+  (click)="abstractControl.disable()">
+    Remove
+  </button>
+</div>
+
 <div
-    [autoFormDecorator]="data.decorators"
-    autoFormElementID="container"
-    [formGroup]="abstractControl"
+  *ngIf="!data?.optional || !abstractControl.disabled"
+  [autoFormDecorator]="data.decorators"
+  autoFormElementID="container"
+  [formGroup]="abstractControl"
 >
-    <ng-template #comp *ngFor="let f of data.properties"> </ng-template>
+  <ng-template
+    *ngFor="let prop of data.properties"
+    autoFormField
+    [field]="prop"
+    [abstractControl]="abstractControl.controls[prop.name]"
+  ></ng-template>
 </div>

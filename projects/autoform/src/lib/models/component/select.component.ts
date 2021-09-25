@@ -1,19 +1,11 @@
 import { DataResolver, TemplateContentData } from '@berlingoqc/ngx-common';
 import { PropertyComponent } from '../component';
 
-// Une option a selectionner dans la mat-select
-export interface SelectOption {
-    value: DataResolver<any[]>;
-}
 
 export class SelectOptionGroup {
     displayTitle: TemplateContentData;
     displayContent: TemplateContentData;
-    options: SelectOption;
-}
-
-export interface SelectOptionGroups {
-    [id: string]: SelectOptionGroup;
+    value: DataResolver<any[]>;
 }
 
 export class SelectComponent implements PropertyComponent {
@@ -38,5 +30,5 @@ export class SelectComponent implements PropertyComponent {
     compareWith?: (object1: any, object2: any) => boolean;
 
     // Les options du mat-select
-    options: SelectOptionGroup | SelectOptionGroups;
+    options: SelectOptionGroup;
 }
