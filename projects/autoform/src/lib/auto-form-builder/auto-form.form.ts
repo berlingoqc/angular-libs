@@ -17,20 +17,23 @@ const getPropertyFormGroupType = (name, properties: IProperty[]) => ({
     ],
 });
 
-const getChildComponentProperties = (name): IProperty[] => {
+const getChildComponentProperties = ({name, components, properties}: {
+  name: string, components?: IProperty[], properties?: IProperty[]
+}): IProperty[] => {
   return [
-  {
-    name: 'component',
-    type: 'abstractobject',
-    typeKey: 'name',
-    abstractClassName: undefined,
-    templates: {
-      header: 'Component'
-    },
-    properties: [],
-    childs: [],
-  } as FormAbstractObject,
-  ]
+    components ? {
+      name: 'component',
+      type: 'abstractobject',
+      typeKey: 'name',
+      abstractClassName: '',
+      templates: {
+        header: 'Component ' + name,
+      },
+      properties: [],
+      childs: components,
+    } as FormAbstractObject : null,
+    ...(properties || [])
+  ].filter(x => x)
 }
 
 const getButtonsObject = (name) =>
@@ -184,47 +187,123 @@ export const autoFormFormData: () => AutoFormData = () => {
                                 {
                                     name: 'date',
                                     type: 'date',
-                                    properties: getChildComponentProperties('date'),
+                                    properties: getChildComponentProperties({
+                                      name: 'date'
+                                    }),
                                 },
                                 {
                                     name: 'dic',
                                     type: 'dic',
-                                    properties: getChildComponentProperties('dic'),
+                                    properties: getChildComponentProperties({
+                                      name: 'dic'
+                                    }),
                                 },
                                 {
                                     name: 'string',
                                     type: 'string',
-                                    properties: getChildComponentProperties('string'),
+                                    properties: getChildComponentProperties({
+                                      name: 'string',
+                                      components: [],
+                                      properties: [
+                                        { // temp
+                                          name: 'displayName',
+                                          type: 'string'
+                                        },
+                                        {
+                                          name: 'hint',
+                                          type: 'string'
+                                        },
+                                        {
+                                          name: 'placeholder',
+                                          type: 'string',
+                                        },
+                                        { // tem
+                                          name: 'preffix',
+                                          type: 'string',
+                                        },
+                                        {
+                                          name: 'suffix',
+                                          type: 'string'
+                                        },
+                                        {
+                                          name: 'maxLength',
+                                          type: 'number',
+                                        },
+                                        {
+                                          name: 'appearance',
+                                          type: 'string',
+                                          component: {
+                                            name: 'select',
+                                            options: {
+                                              displayContent: (e) => e,
+                                              displayTitle: (e) => e,
+                                              value: of(['legacy', 'standard', 'fill', 'outline'])
+                                            }
+                                          } as SelectComponent
+                                        },
+                                        {
+                                          name: 'hideRequired',
+                                          type: 'bool',
+                                          component: {
+                                            name: 'checkbox'
+                                          }
+                                        },
+                                        {
+                                          name: 'floatLabel',
+                                          type: 'string',
+                                          component: {
+                                            name: 'select',
+                                            options: {
+                                              displayContent: (e) => e,
+                                              displayTitle: (e) => e,
+                                              value: of(['always', 'never', 'auto'])
+                                            }
+                                          } as SelectComponent,
+                                        }
+                                      ]
+                                    }),
                                 },
                                 {
                                     name: 'bool',
                                     type: 'bool',
-                                    properties: getChildComponentProperties('bool'),
+                                    properties: getChildComponentProperties({
+                                      name: 'bool'
+                                    }),
                                 },
                                 {
                                     name: 'number',
                                     type: 'number',
-                                    properties: getChildComponentProperties('number'),
+                                    properties: getChildComponentProperties({
+                                      name: 'number'
+                                    }),
                                 },
                                 {
                                     name: 'union',
                                     type: 'union',
-                                    properties: getChildComponentProperties('union'),
+                                    properties: getChildComponentProperties({
+                                      name: 'union'
+                                    }),
                                 },
                                 {
                                     name: 'object',
                                     type: 'object',
-                                    properties: getChildComponentProperties('object'),
+                                    properties: getChildComponentProperties({
+                                      name: 'object'
+                                    }),
                                 },
                                 {
                                     name: 'abstractobject',
                                     type: 'abstractobject',
-                                    properties: getChildComponentProperties('abstractobject'),
+                                    properties: getChildComponentProperties({
+                                      name: 'abstractobject'
+                                    }),
                                 },
                                 {
                                     name: 'array',
                                     type: 'array',
-                                    properties: getChildComponentProperties('array'),
+                                    properties: getChildComponentProperties({
+                                      name: 'array'
+                                    }),
                                 },
                             ],
                         } as FormAbstractObject,
