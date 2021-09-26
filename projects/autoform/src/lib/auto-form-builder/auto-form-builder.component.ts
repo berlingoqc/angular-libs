@@ -1,7 +1,7 @@
 import { Component, ComponentFactoryResolver, ComponentRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { AutoFormData } from "dist/autoform/public-api";
 import { AutoFormComponent } from "../auto-form/auto-form.component";
+import { AutoFormData } from "../models";
 import { autoFormFormData } from "./auto-form.form";
 
 
