@@ -1,13 +1,16 @@
-<div>
+<div class="layout">
+  <account-header text="Création de compte"></account-header>
   <form class="form-container" [formGroup]="formGroup" (ngSubmit)="create()">
     <div style="width: 100%;">
       <div [formGroup]="formGroup.controls.name">
+        <!--
         <mat-form-field style="width: 100%;">
           <input matInput name="nfirst" type="text" formControlName="firstName" placeholder="Prénom" />
         </mat-form-field>
         <mat-form-field style="width: 100%;">
           <input matInput name="nfirst" type="text" formControlName="lastName" placeholder="Nom de famille" />
         </mat-form-field>
+        -->
       </div>
       <mat-form-field style="width: 100%;">
         <input matInput name="nemail" type="email" formControlName="email" placeholder="Email" />
@@ -21,10 +24,15 @@
       [passwordControl]="$any(formGroup.controls.password).controls.password"></alb-auth-service-error>
     <div class="truc">
       <div class="button-row">
-        <button mat-stroked-button dynStyle itemId="FIRST_BTN" type="submit">Créer</button>
-        <button mat-stroked-button dynStyle itemId="SECOND_BTN" type="button" (click)="onCancel()">
+        <div>
+          <button mat-stroked-button class="accent" type="submit">Créer</button>
+        </div>
+        <div>
+        <button mat-stroked-button class="primary" type="button" (click)="onCancel()">
           Annuler
         </button>
+
+        </div>
       </div>
     </div>
   </form>

@@ -2,6 +2,7 @@ import {
   ValidatorFn,
   AbstractControlOptions,
   AsyncValidatorFn,
+  AbstractControl,
 } from '@angular/forms';
 import { BaseFieldComponent } from '../service/component-register';
 import { FieldErrors } from './properties';
@@ -21,11 +22,19 @@ export interface SubTypeHandler<T extends ISubType> {
   // Appeler avant OnInit pour faire des initializiation
   // sur le FieldComponent pour qu'il se configure pour
   // le subType
-  handle(data: T, component: BaseFieldComponent<any, any>);
+  handle?: (data: T, component: BaseFieldComponent<any, any>) => any;
+
   // Appelé lors de la création du form pour venir
   // obtenir la liste des validators a retourner
-  getValidators(data: T): [ValidatorFn[], AsyncValidatorFn[]];
+  getValidators?: (data: T) => [ValidatorFn[], AsyncValidatorFn[]];
+
+  // Custom AbstractControl , utiliser pour override
+  // le type de formControl pour ce champs
+  getFormControl?: (formState: any,validators: ValidatorFn[], asyncValidators: AsyncValidatorFn[]) => AbstractControl;
+
+
+
   // Appellé lors de la génération pour obtenir la liste
   // des erreurs qui seront ajoutés
-  getErrors(data: T): FieldErrors;
+  getErrors?: (data: T) => FieldErrors;
 }

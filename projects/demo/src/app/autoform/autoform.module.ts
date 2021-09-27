@@ -3,9 +3,10 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AutoFormModule, FormSaverModule } from '@berlingoqc/ngx-autoform';
 import { MatIconModule } from '@angular/material/icon';
 import { FancyLabel } from './models';
+import { AutoFormRegisterWrapperModule } from './wrapper';
+import { AutoFormBuilderModule, AutoFormModule } from 'projects/autoform/src/public-api';
 
 @NgModule({
     declarations: [FancyLabel],
@@ -17,6 +18,9 @@ import { FancyLabel } from './models';
         ReactiveFormsModule,
 
         AutoFormModule,
+        AutoFormBuilderModule,
+
+        AutoFormRegisterWrapperModule,
     ],
     entryComponents: [FancyLabel],
     providers: [DatePipe],

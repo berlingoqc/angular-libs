@@ -8,4 +8,9 @@ export const expansionPanelForm: AutoFormData = {
         linear: true,
         labelPosition: 'start',
     },
+    actionsButtons: {
+      submit: {
+        title: 'Submit',
+      }
+    }
 };

@@ -41,6 +41,11 @@ export class AuthService {
   loginObservable: Observable<any>;
   loginSub: Subscription;
 
+
+  get isAdmin(): boolean {
+    return this.profile?.roles.indexOf('ADMIN') > -1;
+  }
+
   getDefaultOrg(type: string = ''): Organisation {
     return this.getOrg(type)[0] ?? {};
   }

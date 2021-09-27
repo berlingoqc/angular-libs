@@ -4,9 +4,12 @@ import { FieldErrors } from '../models';
 
 @Pipe({
   name: 'errorFilter',
+  pure: false,
 })
 export class MatErrorPipe implements PipeTransform {
   transform(errors: FieldErrors, abstractControl: AbstractControl) {
+    if (errors?.hours) {
+    }
     if (!errors) {
       return [];
     }

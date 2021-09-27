@@ -24,8 +24,19 @@
   }
 }
 .truc {
+  width: 100%;
+
   .button-row {
-    width: 100%;
+      width: 100%;
+     div {
+          width: 100%;
+          margin-bottom: 10px;
+
+          button {
+            width: 100%;
+          }
+    }
+    flex-direction: column;
     display: flex;
     justify-content: space-around;
     button {
@@ -47,10 +58,6 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
-  }
-  img {
-    width: 200px;
-    height: 200px;
   }
 
   .spacer {

@@ -1,3 +1,4 @@
+export * from './lib/buttons-row';
 export * from './lib/chip-autocomplete/module';
 export * from './lib/chip-autocomplete/chip-autocomplete';
 
@@ -14,10 +15,16 @@ export * from './lib/pipe/subscription-message.pipe';
 export * from './lib/pipe/common-pipe.module';
 export * from './lib/pipe/img-src.pipe';
 export * from './lib/pipe/type-validation.pipe';
+export * from './lib/pipe/new.pipe';
+export * from './lib/pipe/async-all.pipe';
+export * from './lib/pipe/entries.pipe';
+export * from './lib/pipe/oneOrArray.pipe';
 
 export * from './lib/router-extra';
 
 export * from './lib/env';
+
+export * from './lib/dynamic';
 
 export * from './lib/form-extra/component/key-value-form/key-value-form.component';
 export * from './lib/form-extra/component/password-form-field/password-form-field.component';
@@ -52,4 +59,12 @@ export * from './lib/helper/data-decorator/handlers/style.handler';
 export * from './lib/helper/rxjs';
 export * from './lib/helper/unsubscriber';
 
+export * from './lib/mat-extra';
+
 export * from './lib/select-control';
+
+export * from './lib/loading-button';
+
+export * from './lib/theme';
+
+export * from './lib/rxjs';

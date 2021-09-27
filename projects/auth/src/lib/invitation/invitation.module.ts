@@ -9,6 +9,7 @@ import { DynamicStyleProviderModule, FormExtraModule } from '@berlingoqc/ngx-com
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AccountModule } from '../account';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatFormFieldModule,
     MatInputModule,
     MatBadgeModule,
+    MatButtonModule,
     MatProgressSpinnerModule,
 
     AccountModule,

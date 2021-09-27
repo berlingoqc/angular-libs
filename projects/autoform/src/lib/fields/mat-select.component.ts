@@ -1,6 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { resolveData, unsubscriber } from '@berlingoqc/ngx-common';
-import { Subject, Subscription } from 'rxjs';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { resolveData, OnDestroyMixin, untilComponentDestroyed } from '@berlingoqc/ngx-common';
 import { SelectComponent } from '../models/component/select.component';
 import { BaseFormField } from './base-form-field';
 
@@ -9,10 +8,10 @@ import { BaseFormField } from './base-form-field';
   template: `
     <mat-form-field
       style="width: 100%"
-      [autoFormDecorator]="data.decorators"
+      [autoFormDecorator]="data?.decorators"
       autoFormElementID="formField"
-      [appearance]="data.appearance"
-      [hideRequiredMarker]="data.hideRequired"
+      [appearance]="data?.appearance"
+      [hideRequiredMarker]="data?.hideRequired"
       [floatLabel]="data.floatLabel"
     >
       <mat-label>
@@ -31,6 +30,7 @@ import { BaseFormField } from './base-form-field';
         *ngIf="!component.type || component.type == 'mat'"
         [formControl]="abstractControl"
         [required]="data.required"
+        [compareWith]="(component.compareWith) ? component.compareWith : defaultCompare"
       >
         <ng-container *ngIf="component.noneOption">
           <mat-option>
@@ -117,21 +117,25 @@ import { BaseFormField } from './base-form-field';
       }}</mat-error>-->
     </mat-form-field>
   `,
+  inputs: [
+    'type', 'preffix', 'suffix', 'hint', 'hintAlign', 'data', 'abstractControl'
+  ]
 })
-@unsubscriber
-export class MyMatSelectComponent extends BaseFormField implements OnInit{
+export class MyMatSelectComponent extends OnDestroyMixin(BaseFormField) implements OnInit{
   @Input() component: SelectComponent;
 
-  @Input() options: any;
+  options: any;
 
-  resolvingSub: Subscription;
+  defaultCompare = (a , b) => (a === b);
 
   constructor(cdr: ChangeDetectorRef) {
     super(cdr);
   }
 
   ngOnInit() {
-    this.resolvingSub = resolveData((this.component.options.options as any).value).subscribe((data) => {
+    resolveData(this.component.options.value)
+      .pipe(untilComponentDestroyed(this))
+      .subscribe((data) => {
       this.options = data;
     });
   }

@@ -15,7 +15,7 @@ import { CVA } from '../service/cva';
 
 // qui wrappe autour d'un formfield
 @Directive({})
-export class BaseFormField extends CVA<any> implements AfterViewInit {
+export class BaseFormField<IP extends InputProperty = InputProperty> extends CVA<any> implements AfterViewInit {
     // Type of the mat-input
     @Input() type: string;
 
@@ -24,7 +24,7 @@ export class BaseFormField extends CVA<any> implements AfterViewInit {
     @Input() hint: TemplateContent;
     @Input() hintAlign: string;
 
-    @Input() data: InputProperty;
+    @Input() data: IP;
     @Input() abstractControl: FormControl;
 
     @ViewChildren('myInput') myInput: QueryList<any>;

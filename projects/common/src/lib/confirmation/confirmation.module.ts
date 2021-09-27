@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ActionConfirmationDialogComponent } from './action-confirmation-dialog/action-confirmation-dialog.component';
-import { DynamicStyleProviderModule } from '../dynamic-style-provider/dynamic-style-provider.modules';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
 @NgModule({
   imports: [
-    DynamicStyleProviderModule
+    MatButtonModule,
   ],
   declarations: [
     ActionConfirmationDialogComponent

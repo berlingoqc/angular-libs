@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+// @import 'scss/theme';
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 .example-second-header-row {
     font-style: italic;
 }
@@ -28,10 +30,16 @@ a:hover, a:active{
     margin: 0;
 }
 mat-toolbar{
-    border-radius: 3px;
+    border-radius: 0px;
 }
 @media(max-width: 959px){
     mat-toolbar{
         border-radius: 0px;
     }
+}
+
+.button-row {
+  button {
+    margin: 10px;
+  }
 }

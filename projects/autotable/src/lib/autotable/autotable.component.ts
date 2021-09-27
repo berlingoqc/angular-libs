@@ -29,6 +29,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
+import { unsubscriber, OnDestroyMixin, untilComponentDestroyed } from '@berlingoqc/ngx-common';
 
 class ExtraRow {
     aloneRowId: string[];
@@ -61,10 +62,15 @@ class ExtraRow {
     encapsulation: ViewEncapsulation.None,
 })
 export class AutoTableComponent<T = any>
+    extends OnDestroyMixin(Object)
     implements OnInit,OnDestroy {
 
     private _columns: TableColumn[];
     private _client: LoopbackRestClient<T>;
+
+    sub: Subscription;
+    subGet: Subscription;
+    subCount: Subscription;
 
     lbSource: CRUDDataSource<T>;
     dataSource = new MatTableDataSource<T>([]);
@@ -150,8 +156,6 @@ export class AutoTableComponent<T = any>
 
     expandedElement: T | null;
 
-    sub: Subscription;
-
     footerExtraRow: ExtraRow = { aloneRow: [], aloneRowId: [] };
     headerExtraRow: ExtraRow = { aloneRow: [], aloneRowId: [] };
 
@@ -177,7 +181,7 @@ export class AutoTableComponent<T = any>
         if (this.sub) {
             this.sub.unsubscribe();
         }
-        this.sub = ee.asObservable().subscribe(() => {
+        this.sub = ee.asObservable().pipe(untilComponentDestroyed(this)).subscribe(() => {
             this.refreshData();
             this.refreshCount();
         });
@@ -191,15 +195,12 @@ export class AutoTableComponent<T = any>
         }
     }
 
-    constructor(private detectorRef: ChangeDetectorRef) {}
+    constructor(private detectorRef: ChangeDetectorRef) {
+      super();
+    }
 
     ngOnInit() {}
 
-    ngOnDestroy() {
-        if (this.sub) {
-            this.sub.unsubscribe();
-        }
-    }
 
     onSortChange(sort: Sort) {
         this.orderBy = [
@@ -216,7 +217,8 @@ export class AutoTableComponent<T = any>
     }
 
     refreshData() {
-        this.source
+        this.subGet?.unsubscribe();
+        this.subGet = this.source
             .get({
                 offset: this.currentOffset * this.pageSize,
                 include: this.includes,
@@ -224,9 +226,9 @@ export class AutoTableComponent<T = any>
                 where: this.where,
                 order: this.orderBy,
             })
+            .pipe(untilComponentDestroyed(this))
             .subscribe((data) => {
                 this.dataSource.data = data;
-                // this.dataSource.connect().next(data);
             });
     }
 
@@ -240,8 +242,10 @@ export class AutoTableComponent<T = any>
 
     private refreshCount() {
         if (this.source.count) {
-            this.source
+            this.subCount?.unsubscribe();
+            this.subCount = this.source
                 .count(this.where)
+                .pipe(untilComponentDestroyed(this))
                 .subscribe((count) => (this.length = count.count));
         }
     }

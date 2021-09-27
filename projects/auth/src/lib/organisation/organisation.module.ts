@@ -7,6 +7,7 @@ import {
   OrganisationTableComponent,
   OrganisationCardComponent,
   AlbInvitationBottomSheet,
+  OrganisationDashboardComponent,
 } from './component';
 import {
   DynamicStyleProviderModule,
@@ -30,6 +31,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AutoTableModule } from '@berlingoqc/ngx-autotable';
+import { MatDialogModule } from '@angular/material/dialog';
+import { UserModule } from '../user';
+import { MatInputModule } from '@angular/material/input';
+import { ButtonsRowModule } from '@berlingoqc/ngx-common';
 
 @NgModule({
   imports: [
@@ -41,14 +46,19 @@ import { AutoTableModule } from '@berlingoqc/ngx-autotable';
 
     AdminPageModule,
     AdminModule,
+    UserModule,
 
     MatBadgeModule,
     MatIconModule,
+    MatInputModule,
+    MatDialogModule,
     MatChipsModule,
     MatBottomSheetModule,
     MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
+
+    ButtonsRowModule,
 
     ReactiveFormsModule,
 
@@ -62,6 +72,7 @@ import { AutoTableModule } from '@berlingoqc/ngx-autotable';
     OrganisationManagerDashboardComponent,
     OrganisationTableComponent,
     OrganisationCardComponent,
+    OrganisationDashboardComponent,
     AlbInvitationBottomSheet,
     OrgUserDirective,
     SelectOrganisationComponent,

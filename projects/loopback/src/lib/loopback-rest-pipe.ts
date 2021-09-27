@@ -1,5 +1,5 @@
 import { NgModule, Pipe, PipeTransform } from "@angular/core";
-import { LoopbackRelationAccessor } from "./loopback-rest";
+import { BaseRelationClient, LoopbackRelationAccessor } from "./loopback-rest";
 
 
 
@@ -8,7 +8,7 @@ export class AccessRelation implements PipeTransform {
 
   constructor() {}
 
-  transform<T, K>(client: LoopbackRelationAccessor<K,T>, fk: K) {
+  transform<T, K, TD extends BaseRelationClient<T>>(client: LoopbackRelationAccessor<K,T,TD>, fk: K) {
     return client(fk);
   }
 

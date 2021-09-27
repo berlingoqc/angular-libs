@@ -24,7 +24,7 @@ import { SSOSettingsService } from '../../../sso';
 @Component({
   selector: 'alb-admin-user-edit',
   templateUrl: './admin-user-edit.component.html',
-  styleUrls: ['./admin-user-edit.component.scss'],
+  styleUrls: ['./admin-user-edit.component.scss', '../../../common/shared.scss'],
 })
 export class AdminUserEditComponent extends BaseFormDialog implements OnInit {
   user: User;

@@ -2,14 +2,19 @@ import {
   Component,
   OnInit,
   AfterContentInit,
+  ViewChild,
+  Input,
 } from '@angular/core';
 import {
   CRUDDataSource,
   StaticDataSource,
 } from '@berlingoqc/ngx-loopback';
-import { TableColumn } from '@berlingoqc/ngx-autotable';
+import { AutoTableComponent, TableColumn } from '@berlingoqc/ngx-autotable';
+import { ButtonsRowComponent } from '@berlingoqc/ngx-common';
 import { AuthService } from '../../../auth';
 import { Organisation } from '../../model';
+import { OrganisationAPI } from '../../service/org.api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'alb-organisation-table',
@@ -17,30 +22,63 @@ import { Organisation } from '../../model';
   styleUrls: ['./organisation-table.component.scss'],
 })
 export class OrganisationTableComponent implements OnInit, AfterContentInit {
+  @ViewChild(AutoTableComponent) public autoTable: AutoTableComponent;
+  @Input() mode: 'user' | 'all' = 'user';
   columns: TableColumn[] = [
     {
-      content: {type: 'func', content: (e) => e.id},
-      title: {type: 'string', content: 'id'},
-      id: 'id'
+      content: (e) => e.id,
+      id: 'id',
+      title: 'ID',
     },
-/*    {
-      elementField: 'name',
+    {
+      content: (e) => e.name,
+      id: 'name',
       title: 'Nom',
     },
     {
-      elementField: 'type',
+      content: (e) => e.type,
+      id: 'type',
       title: 'Type',
     },
-    */
+    {
+      content: {
+        type: 'component',
+        content: ButtonsRowComponent,
+        extra: {
+          inputs: {
+            buttons: [
+              {
+                title: {
+                  type: 'icon',
+                  content: 'manage_accounts'
+                },
+                if: (context: Organisation) => this.authService.isAdmin || context.managerId === this.authService.profile.id,
+                style: 'mat-mini-fab',
+                click: (router: Router, org: Organisation) => router.navigate(['/','orgs', 'manage', org.id])
+              }
+            ]
+          }
+        }
+      },
+      id: 'options',
+      title: 'Options'
+    }
   ];
 
   source: CRUDDataSource<Organisation>;
 
-  constructor(public authService: AuthService) {
-    this.source = new StaticDataSource(this.authService.profile.organisations);
+  constructor(
+    private orgAPI: OrganisationAPI,
+    public authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.source =
+      this.mode === 'user'
+        ? new StaticDataSource(this.authService.profile.organisations)
+        : this.orgAPI;
+    console.log(this.source);
   }
 
-  ngOnInit(): void { }
-
-  ngAfterContentInit() { }
+  ngAfterContentInit() {}
 }

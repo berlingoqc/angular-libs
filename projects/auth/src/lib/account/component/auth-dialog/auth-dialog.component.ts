@@ -98,17 +98,6 @@ export class AuthDialogComponent {
     });
   }
 
-  getTitle() {
-    switch (this.mode) {
-      case 'login':
-        return 'Connectez-vous à votre compte';
-      case 'new':
-        return 'Créez votre compte';
-      case 'fpwd':
-        return 'Mot de passe oublié';
-    }
-  }
-
   onCancel(mode: DialogMode) {
     if (this.closeOnCancel || this.mode == 'new') {
       this.dialogRef.close();

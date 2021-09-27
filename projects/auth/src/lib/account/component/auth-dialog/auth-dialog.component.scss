@@ -1,19 +1,2 @@
 //@import '../../../common/shared.scss';
 
-.truc {
-    width: 100%;
-
-    .button-row {
-        div {
-          width: 100%;
-          margin-bottom: 10px;
-
-          button {
-            width: 100%;
-          }
-        }
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-}

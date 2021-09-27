@@ -2,11 +2,15 @@ import {
     ChangeDetectionStrategy,
     Component,
     Inject,
+    Injectable,
     OnInit,
     Optional,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { resolveData } from '@berlingoqc/ngx-common';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AutoFormData } from '../../models';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
 import {
@@ -24,23 +28,26 @@ import {
         </h2>
         <mat-dialog-content>
             <ng-container *ngIf="formData">
-                <autoform-object-field
-                    *ngFor="let item of data.formData.items"
-                    [data]="item"
-                    [abstractControl]="data.formGroup.controls[item.name]"
-                ></autoform-object-field>
+                <ng-template
+                  *ngFor="let item of data.formData.items"
+                  autoFormField
+                  [field]="item"
+                  [abstractControl]="data.formGroup.controls[item.name]"
+                ></ng-template>
             </ng-container>
         </mat-dialog-content>
 
         <mat-dialog-actions align="end">
             <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button [disabled]="!formGroup.valid" (click)="submit()">
+            <button mat-button [loading]="loading" [disabled]="!formGroup.valid" (click)="submit()">
                 Confirm
             </button>
         </mat-dialog-actions>
     `,
 })
 export class AutoFormDialogComponent implements OnInit {
+    public loading = false;
+
     get formData(): AutoFormData {
         return this.data?.formData;
     }
@@ -53,15 +60,31 @@ export class AutoFormDialogComponent implements OnInit {
       private dialogRef: MatDialogRef<any>,
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+            if (this.formData.event?.afterFormCreated) {
+              this.formData.event.afterFormCreated(this.formGroup);
+            }
+            if (this.formData.event?.initialData) {
+              resolveData(this.formData.event.initialData)
+                .pipe(take(1))
+                .subscribe((data) => {
+                  this.formGroup.patchValue(data);
+                });
+            }
+    }
 
     submit() {
-      this.dialogRef.close(this.formGroup.value);
       if (this.formData.event) {
-        this.formData.event.submit(this.formGroup.value).subscribe(() => {});
+        const ret = this.formData.event.submit(this.formGroup.value)
+        if(ret && ret instanceof Observable) {
+          this.loading = true;
+          ret.subscribe(() => {
+            this.dialogRef.close(this.formGroup.value);
+          }, (err) => {}, () => (this.loading = false));
+        } else {
+          this.dialogRef.close(this.formGroup.value);
+        }
       }
-      console.log('RESETING');
-      this.formGroup.reset({emitEvent: false});
     }
 }
 
@@ -98,4 +121,20 @@ export class AutoFormDialogPlaceholderComponent
             },
         });
     }
+}
+
+
+@Injectable()
+export class AutoFormDialogService {
+  constructor(private matDialog: MatDialog, private autoFormBuilder: AutoFormGroupBuilder) {}
+
+  open(formData: AutoFormData) {
+    return this.matDialog.open(AutoFormDialogComponent, {
+      ...formData.typeData,
+      data: {
+        formData: formData,
+        formGroup: this.autoFormBuilder.getFormGroup(formData),
+      }
+    })
+  }
 }

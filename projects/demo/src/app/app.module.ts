@@ -23,6 +23,7 @@ import { AutoTableModule } from '@berlingoqc/ngx-autotable';
 import { DataDecoratorModule } from '@berlingoqc/ngx-common';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home.component';
+import { ThemeModule } from 'projects/common/src/public-api';
 
 @NgModule({
     declarations: [
@@ -43,6 +44,8 @@ import { HomeComponent } from './home.component';
         AutoFormModule.forRoot(),
         AutoFormRegister,
         HttpClientModule,
+
+        ThemeModule,
 
         AutoTableModule,
 

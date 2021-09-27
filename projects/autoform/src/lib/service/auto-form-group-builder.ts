@@ -6,36 +6,88 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { AutoFormArray } from '../helper/form-group/auto-form-array';
+import { AbstractFormGroup } from '../helper/form-group/abstract-form-group';
+import { DictFormGroup } from '../helper/form-group/dict-form-group';
 import {
     ArrayProperty,
     AutoFormData,
+    DictionnayProperty,
     FormObject,
-    FormProperty,
     IProperty,
+    UnionProperty,
 } from '../models';
+import { FormAbstractObject } from '../models/properties/abstract-object';
 import { ComponentRegisterService } from './component-register';
+import { AutoFormGroup } from '../helper/form-group/auto-form-group';
+import { OptionalFormGroupMixin } from '../helper/form-group/optional-form-group';
 
+
+/**
+ * AutoFormGroupBuilder
+ *
+ * the service to convert a AutoFormData to a AbstractControl
+ *
+ * I NEED TO BE REWORK AND ORGANIZE , IM A MESSY SHIT
+ */
 @Injectable()
 export class AutoFormGroupBuilder {
     constructor(private componentRegister: ComponentRegisterService) {}
 
     getFormGroup(formData: AutoFormData): FormGroup {
         const controls = {};
-        formData.items.forEach((value) => {
-            controls[value.name] = new FormGroup(this.getObjectForm(value));
+        formData.items?.forEach((value) => {
+          controls[value.name] = this.loopFormProperty(value);
         });
         return new FormGroup(controls);
     }
-    loopFormProperty(value: FormProperty): AbstractControl {
+    loopFormProperty(value: IProperty): AbstractControl {
         if (value.type === 'object') {
-            return new FormGroup(this.getObjectForm(value as FormObject));
+            return this.getObjectForm(value as FormObject);
+        } else if(value.type === 'abstractobject') {
+            return new AbstractFormGroup(
+              value as FormAbstractObject,
+              (value) => this.loopFormProperty(value),
+              (value as FormAbstractObject).properties.reduce((result, property) => {
+                result[property.name] = this.loopFormProperty(property);
+                return result;
+              }, { [(value as FormAbstractObject).typeKey]: new FormControl((value as FormAbstractObject).abstractClassName)} as any),
+            );
+        } else if(value.type === 'union') {
+          // TEMPORARY FIX UNTIL I FOUND SOMETHING BETTER FOR UNION
+          /**
+           * ONLY WORK IF PROPERTIES ARE FORMGROUP
+           */
+          const tempForm = {};
+
+          Object.values((value as UnionProperty).types)
+            .flatMap(item => (item as FormObject).properties)
+            .forEach((item) => {
+              tempForm[item.name] = this.loopFormProperty(item);
+            });
+            return new FormGroup({
+              type: new FormControl(undefined, (value.required) ? [Validators.required]: []),
+              data: new FormGroup(tempForm),
+            });
         } else if (value.type === 'array') {
             const v = value as ArrayProperty;
-            let validators = [];
-            if (v.required) {
+            const validators = [];
+            const controls = [];
+            /*if (v.required) {
                 validators.push(Validators.required);
+            }*/
+            /*if (v.max) {
+                validators.push(Validators.maxLength(v.max));
             }
-            return new FormArray([], validators);
+            if (v.min) {
+                validators.push(Validators.minLength(v.min));
+            }
+            */
+            return new AutoFormArray(
+              v, (value) => this.loopFormProperty(value), controls
+            );
+        } else if (value.type === 'dic') {
+          return new DictFormGroup((value as DictionnayProperty), (value) => this.loopFormProperty(value));
         } else {
             const validators = [];
             const asyncValidators = [];
@@ -48,14 +100,25 @@ export class AutoFormGroupBuilder {
                     const handler = this.componentRegister.getSubTypeHandler(
                         subType.name,
                     );
-                    const ret = handler.getValidators(subType);
-                    if (ret) {
-                        if (ret[0]) {
-                            validators.push(...ret[0]);
+                    if (handler.getValidators) {
+                        const ret = handler.getValidators(subType);
+                        if (ret) {
+                            if (ret[0]) {
+                                validators.push(...ret[0]);
+                            }
+                            if (ret[1]) {
+                                asyncValidators.push(...ret[1]);
+                            }
                         }
-                        if (ret[1]) {
-                            asyncValidators.push(...ret[1]);
-                        }
+                    }
+                    if (handler.getFormControl) {
+                      return handler.getFormControl({
+                        value: (value as IProperty).value,
+                        disabled: (value as IProperty).disabled,
+                      },
+                        validators,
+                        asyncValidators
+                      );
                     }
                 } else {
                     // WARNING
@@ -63,7 +126,7 @@ export class AutoFormGroupBuilder {
             }
             return new FormControl(
                 {
-                    value: '',
+                    value: (value as IProperty).value,
                     disabled: (value as IProperty).disabled,
                 },
                 validators,
@@ -72,11 +135,15 @@ export class AutoFormGroupBuilder {
         }
     }
 
-    getObjectForm(obj: FormObject): any {
+    getObjectForm(obj: FormObject): FormGroup {
         let ret = {};
-        obj.properties.forEach((value) => {
+        obj.properties?.forEach((value) => {
             ret[value.name] = this.loopFormProperty(value);
         });
-        return ret;
+        let fgClass: any = AutoFormGroup;
+        if (obj.optional) {
+          fgClass = OptionalFormGroupMixin(fgClass)
+        }
+        return new fgClass(obj, ret);
     }
 }

@@ -32,7 +32,7 @@ export function notify<T>(config: NotifyConfig) {
                     body: config.bodyFailed,
                     bodyContext: error,
                 });
-                return error;
+                throw error;
             }),
         );
     };

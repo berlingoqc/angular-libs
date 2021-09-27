@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, FormControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
+import { FormObject } from '../../models';
 import { DateProperty } from '../../models/properties/date';
 import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 
@@ -10,14 +11,16 @@ import { BaseFieldComponent, ComponentRegisterService } from '../../service/comp
 })
 export class DateFieldComponent
   extends BaseFieldComponent<DateProperty, FormControl>
-  implements OnInit
 {
+
+  rangeFormControl: FormObject;
 
   constructor(componentRegistry: ComponentRegisterService) {
     super(componentRegistry);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    super.ngOnInit();
   }
 
 }

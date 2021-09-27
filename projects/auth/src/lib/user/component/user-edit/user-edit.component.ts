@@ -8,7 +8,7 @@ import { AuthSettingConfig } from '../../../auth/model/auth-setting-config';
 @Component({
     selector: 'alb-user-edit',
     templateUrl: './user-edit.component.html',
-    styleUrls: ['./user-edit.component.scss'],
+    styleUrls: ['./user-edit.component.scss', '../../../common/shared.scss'],
 })
 export class UserEditComponent implements OnInit {
     formGroup: FormGroup;

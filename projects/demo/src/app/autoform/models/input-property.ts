@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Validators } from "@angular/forms";
-import { FormObject, InputProperty } from "projects/autoform/src/public-api";
+import { FormObject, InputProperty, SelectComponent } from "projects/autoform/src/public-api";
 import { of } from "rxjs";
 
 @Component({
@@ -32,10 +32,7 @@ export const inputPropertyObject: FormObject[] = [
                     },
                 },
                 type: 'string',
-                hint: {
-                    content: 'Test bien simple',
-                    type: 'string',
-                },
+                hint: 'Test tres simple'
             } as InputProperty,
             {
                 name: 'telephoe',
@@ -105,7 +102,9 @@ export const inputPropertyObject: FormObject[] = [
                 hintAlign: 'end',
                 maxlength: 5,
                 hint: {
-                    content: (input) => input?.value.length + '/5',
+                    content: (property, input) => {
+                      return `${input?.value.length} / ${property.maxlength}`;
+                    },
                     type: 'func',
                 },
             } as InputProperty,
@@ -150,11 +149,9 @@ export const inputPropertyObject: FormObject[] = [
                         content: '--',
                     },
                     options: {
-                      options: {
-                        value: ['option1', 'option2']
-                      }
+                      value: ['option1', 'option2']
                     }
-                } as any,
+                } as SelectComponent,
             },
             {
                 name: 'multi-choice string',

@@ -1,13 +1,6 @@
-<div *ngIf="visible && formGroup" class="box">
-  <div class="center-center">
-    <img src="{{ config.config.img }}" height="200" />
-  </div>
-  <div>
-    <h3>Finalisation de votre compte</h3>
-
-    <p>Entrez votre mot de passe pour créer votre compte</p>
-  </div>
-  <div class="form-container" [formGroup]="formGroup">
+<div class="layout" *ngIf="formGroup">
+  <account-header text="Finalisation de votre compte"></account-header>
+  <div class="form-container truc" [formGroup]="formGroup">
     <div style="width: 100%;">
       <mat-form-field style="width: 100%;">
         <mat-label>OTP</mat-label>
@@ -45,7 +38,7 @@
     <div
       style="
         width: 100%;
-        height: 75px;
+        max-height: 75px;
         padding-top: 30px;
         padding-bottom: 30px;
       "
@@ -55,12 +48,16 @@
       </span>
     </div>
     <div class="button-row">
-      <button mat-stroked-button dynStyle itemId="FIRST_BTN" type="button" (click)="submit()">
+      <div>
+      <button mat-stroked-button class="accent" type="button" (click)="submit()">
         Finaliser
       </button>
-      <button mat-stroked-button dynStyle itemId="SECOND_BTN" type="button" (click)="onCancel()">
+      </div>
+      <div>
+      <button mat-stroked-button class="primary" type="button" (click)="onCancel()">
         Annuler
       </button>
+      </div>
     </div>
   </div>
 </div>

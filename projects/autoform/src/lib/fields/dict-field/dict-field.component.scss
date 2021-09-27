@@ -1,0 +1,41 @@
+
+mat-form-field {
+  width: 100%;
+}
+
+.spacer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+
+  h3 {
+    padding-right: 5px;
+  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dict-object {
+
+  display: flex;
+  flex-direction: column;
+
+  .property {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .property-mode {
+    width: 30%;
+  }
+
+  .value {
+    width: 70%;
+  }
+
+}
+

@@ -16,9 +16,15 @@ export interface OrgUserLink {
 
 @Injectable()
 export class OrgUserLinkAPI extends LoopbackRestClient<OrgUserLink> {
+  id: string;
+
   constructor(http: HttpClient, config: AuthSettingConfig) {
     super(http, '/users');
     this.baseURL = config.backend.url;
+  }
+
+  get url() {
+    return `${this.baseURL}/users/${this.id}/org-user-links`;
   }
 
   getPathWithId(id: string, ...items: string[]): string {

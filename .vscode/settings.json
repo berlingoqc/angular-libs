@@ -15,7 +15,7 @@
   "editor.tabSize": 2,
   "editor.wordWrap": "on",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": false
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
@@ -30,5 +30,6 @@
   "prettier.printWidth": 120,
   "prettier.bracketSpacing": true,
   "prettier.singleQuote": true,
-  "window.zoomLevel": 0
+  "window.zoomLevel": -1,
+  "jira-plugin.workingProject": ""
 }

@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Type } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { Where, Count, Filter, AnyObject, Include } from './loopback-model';
 
-import { CachingRequest } from '@berlingoqc/ngx-common';
+import { CachingRequest, StateChange } from '@berlingoqc/ngx-common';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Constructor } from '@angular/cdk/table';
-import { take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 function isNumeric(num) {
     return !isNaN(num);
@@ -65,8 +65,7 @@ function assembleQueryParams(
     return items;
 }
 
-export class LoopbackRelationClient<T> implements CRUDDataSource<T> {
-
+export class BaseRelationClient<T, TD = T> {
     get url(): string {
         return `${this.parent.baseURL}${this.parent.route}/${this.parentKey}/${this.name}`;
     }
@@ -76,6 +75,28 @@ export class LoopbackRelationClient<T> implements CRUDDataSource<T> {
         public name: string,
         public parentKey: string,
     ) {}
+
+
+    get?: (filter?: Filter) => Observable<TD>;
+}
+
+
+export class LoopbackHaveOneRelationClient<T> extends BaseRelationClient<T> {
+  get = (filter?: Filter) => {
+    return this.parent.httpClient.get<T>(
+      this.url + toQueryParams('filter', filter)
+    )
+  }
+
+  updateById = (id: any, data: T) => {
+    return this.parent.httpClient.put<T>(
+      `${this.url}/${id}`,
+      data
+    );
+  }
+}
+
+export class LoopbackRelationClient<T> extends BaseRelationClient<T, Array<T>> implements CRUDDataSource<T> {
 
     get = (filter?: Filter<any>) => {
         return this.parent.httpClient.get<T[]>(
@@ -108,17 +129,23 @@ export function LoopbackRelationClientMixin<T>(): Constructor<
     return class extends LoopbackRelationClient<T> {};
 }
 
-export type LoopbackRelationAccessor<K,T> = (key: K) => LoopbackRelationClient<T>;
-
-export interface WithRelations {
-  [id: string]: LoopbackRelationAccessor<any, any>;
+export function LoopbackHasOneRelationClientMixin<T>(): Constructor<
+  LoopbackHaveOneRelationClient<T>
+> {
+  return class extends LoopbackHaveOneRelationClient<T> {};
 }
 
-export function addLoopbackRelation<K,P,T>(
+export type LoopbackRelationAccessor<K,T, RC extends BaseRelationClient<T>> = (key: K) => RC;
+
+export interface WithRelations {
+  [id: string]: LoopbackRelationAccessor<any, any, BaseRelationClient<any>>;
+}
+
+export function addLoopbackRelation<K,P,T, RC extends BaseRelationClient<T>>(
   parent: LoopbackRestClient<P>,
-  type: Constructor<LoopbackRelationClient<T>>,
+  type: Constructor<RC>,
   name: string,
-): LoopbackRelationAccessor<K, T> {
+): LoopbackRelationAccessor<K, T, RC> {
   return (key) => new type(parent, name, key);
 }
 
@@ -183,8 +210,8 @@ export function LoopbackRestClientMixin<T>(): Constructor<LoopbackRestClient<T>>
   return class extends LoopbackRestClient<T> {}
 }
 
-export interface CRUDDataSource<T> {
-    get: (filter?: Filter) => Observable<T[]>;
+export interface CRUDDataSource<T, Wrapper = Array<T>> {
+    get: (filter?: Filter) => Observable<Wrapper>;
 
     patch?: (id: string, d: T) => Observable<void>;
 
@@ -198,7 +225,6 @@ export interface CRUDDataSource<T> {
 
     count?: (where?: Where) => Observable<Count>;
 }
-
 
 /**
  * ResolveSourceRouteData data that can be pass
@@ -224,32 +250,84 @@ export function Resolving<D extends Constructor<CRUDDataSource<T>>, T>(type: D) 
     }
 }
 
+
+export type CachingStoreHandlerFunc = (oldValue: any, change: any) => any;
+
+/**
+ * Handler configuration for the Caching Decorator
+ *
+ * custom function for every state change to handle to change of the data
+ */
+export interface CachingStoreHandler {
+  delete?: CachingStoreHandlerFunc;
+  update?: CachingStoreHandlerFunc;
+  post?: CachingStoreHandlerFunc;
+}
+
+
+export interface CachingOptions {
+  handlers?: { [id: string]: CachingStoreHandler };
+}
+
+
+const getCachingRequest = <T>(options: CachingOptions, operator: string) => {
+  return new CachingRequest<T>({
+          stateChange: (oldValue: T, change: StateChange<T>) => {
+            switch(change.operation) {
+              case 'delete':
+                return (options?.handlers?.[operator]?.delete) ? options.handlers?.[operator]?.delete(oldValue, change): null;
+              case 'update':
+                return (options?.handlers?.[operator]?.update) ? options.handlers?.[operator]?.update(oldValue, change): null;
+              default:
+                return change.data;
+            }
+          }
+        });
+}
+
+export function CachingRelation<D extends Constructor<BaseRelationClient<T, TD>>, T, TD>(type: D) {
+  const requestGet = getCachingRequest<TD>({}, 'get');
+  return class extends type {
+      get = (filter?: Filter) => {
+        return requestGet.getObs(filter, super.get(filter))
+      }
+  }
+}
+
 /**
  * Mixin to add Caching feature to your CRUDDataSource.
  * Using CachingRequest from @berlingoqc/ngx-common
  * @param type Constructor of a CRUDDataSource
  */
-export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
+export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D, options?: CachingOptions) {
     return class extends type {
-        requestGet = new CachingRequest();
-        requestFind = new CachingRequest();
-        requestCount = new CachingRequest();
+        requestGet = getCachingRequest<T[]>(options, 'get');
+        requestFind = getCachingRequest<T>(options, 'find');
+        requestCount = getCachingRequest<Count>(options, 'count');
 
         get = (filter?: Filter) => {
-            return this.requestGet.getObs(filter, super.get(filter)) as any;
+            return this.requestGet.getObs(filter, super.get(filter));
         };
         getById = super.getById
             ? (id: string, filter?: Filter) => {
                   return this.requestFind.getObs(
                       id,
                       super.getById(id, filter),
-                  ) as any;
+                  );
               }
             : undefined;
 
         patch = super.patch
             ? (id: string, d: T) => {
-                  return super.patch(id, d);
+                  return this.requestFind.onModif(
+                    super.patch(id, d).pipe(
+                      map(() => ({
+                        operation: 'update',
+                        id,
+                        data: d,
+                      })
+                    )
+                  )).pipe(map(() => {}));
               }
             : undefined;
         post = super.post
@@ -258,11 +336,24 @@ export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
               }
             : undefined;
         updateById = (id: string, data: Partial<T>) => {
-            return this.requestFind.onModif(super.updateById(id, data)) as Observable<void>;
+            return this.requestFind.onModif(
+                super.updateById(id, data).pipe(map(() => ({
+                operation: 'update',
+                id,
+                data
+              })))).pipe(map(() => {}))
         };
         delete = super.delete
             ? (id: string) => {
-                  return this.requestFind.onModif(super.delete(id)) as Observable<void>;
+                  return this.requestCount.onModif(
+                    this.requestGet.onModif(
+                      super.delete(id).pipe(
+                        map(() => ({operation: 'delete', id}))
+                      )
+                    ) as any
+                  ).pipe(
+                    map(() => {})
+                  );
               }
             : undefined;
         count = super.count
@@ -270,7 +361,7 @@ export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D) {
                   return this.requestCount.getObs(
                       where,
                       super.count(where),
-                  ) as any;
+                  );
               }
             : undefined;
     };

@@ -36,7 +36,7 @@ import { AutocompleteSubTypeHandler } from './models/properties/subtype/autocomp
 import { AutoFormGroupBuilder } from './service/auto-form-group-builder';
 import { AutoFormExpansionPanelComponent } from './auto-form/auto-form-expansion-panel/auto-form-expansion-panel.component';
 import { AutoFormCardComponent } from './auto-form/auto-form-card/auto-form-card.component';
-import { AutoFormDialogComponent, AutoFormDialogPlaceholderComponent } from './auto-form/auto-form-dialog/auto-form-dialog.component';
+import { AutoFormDialogComponent, AutoFormDialogPlaceholderComponent, AutoFormDialogService } from './auto-form/auto-form-dialog/auto-form-dialog.component';
 import { AutoFormStepperComponent } from './auto-form/auto-form-stepper/auto-form-stepper.component';
 import { AutoFormTabsComponent } from './auto-form/auto-form-tabs/auto-form-tabs.component';
 import { MatCardModule } from '@angular/material/card';
@@ -54,6 +54,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { ComponentFieldService } from './fields/field.service';
 import { MyMatDate } from './fields/mat-date.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DateRangeSubTypeHandler } from './models';
+import { FormActionsBarComponent } from './helper/form-actions/form-actions-bar.component';
+import { ButtonsRowModule, LoadingButtonModule } from '@berlingoqc/ngx-common';
+import { UnionFieldComponent } from './fields/union-field/union-field.component';
+import { InjectFieldDirecitve } from './fields/injector-base.component';
+import { ControlRawDataPipe } from './pipe/raw-value.pipe';
+import { AbstractClassFieldComponent } from './fields/abstract-class-field/abstract-class-field.component';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -71,14 +78,19 @@ import { MatNativeDateModule } from '@angular/material/core';
         BoolFieldComponent,
         ObjectFieldComponent,
         ArrayFieldComponent,
+        UnionFieldComponent,
+        AbstractClassFieldComponent,
 
         MultiPartMatInputComponent,
 
         MyMatInput,
         MyMatSelectComponent,
 
+        InjectFieldDirecitve,
+
         SliderControlComponent,
         MatErrorPipe,
+        ControlRawDataPipe,
         GetDecoratorDataPipe,
         DecoratorsDirective,
         FieldErrorComponent,
@@ -92,6 +104,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         DateFieldComponent,
         AutoFormSimpleComponent,
         AutoFormBottonSheetComponent,
+        FormActionsBarComponent,
         MyMatDate,
     ],
     imports: [
@@ -118,18 +131,21 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatExpansionModule,
         MatTabsModule,
         MatBottomSheetModule,
+        ButtonsRowModule,
         ReactiveFormsModule,
         FormsModule,
 
         DataResolverModule,
         TemplateContentModule,
         CommonPipeModule,
+        LoadingButtonModule,
     ],
     exports: [
         AutoFormComponent,
         ObjectFieldComponent,
         StringFieldComponent,
         NumberFieldComponent,
+        AbstractClassFieldComponent,
         MultiPartMatInputComponent,
         ReactiveFormsModule,
     ],
@@ -137,6 +153,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         ComponentRegisterService,
         AutoFormGroupBuilder,
         ComponentFieldService,
+        AutoFormDialogService,
         {
             provide: AUTO_FORM_TYPE_REGISTER,
             useValue: {
@@ -158,6 +175,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         NumberFieldComponent,
         ObjectFieldComponent,
         AutoFormComponent,
+        UnionFieldComponent,
         AutoFormSimpleComponent,
 
         AutoFormBottonSheetComponent,
@@ -175,7 +193,7 @@ export class AutoFormModule {
         };
     }
 
-    constructor(private register: ComponentRegisterService) {
+    constructor(register: ComponentRegisterService) {
         register.registerComponent({
             type: 'string',
             mainComponentType: StringFieldComponent,
@@ -186,6 +204,7 @@ export class AutoFormModule {
             mainComponentType: NumberFieldComponent,
             typeComponentHandler: [],
         });
+
         register.registerComponent({
             type: 'object',
             mainComponentType: ObjectFieldComponent,
@@ -195,11 +214,40 @@ export class AutoFormModule {
             'autocomplete',
             new AutocompleteSubTypeHandler(),
         );
+
+        register.registerComponent({
+          type: 'union',
+          mainComponentType: UnionFieldComponent,
+          typeComponentHandler: []
+        });
+
+        register.registerComponent({
+          type: 'array',
+          mainComponentType: ArrayFieldComponent,
+          typeComponentHandler: []
+        });
+
+        register.registerComponent({
+          type: 'abstractobject',
+          mainComponentType: AbstractClassFieldComponent,
+          typeComponentHandler: [],
+        });
+
         register.registerComponent({
             type: 'date',
             mainComponentType: DateFieldComponent,
             typeComponentHandler: []
         });
+
+        register.registerSubTypeHandler('date-range', new DateRangeSubTypeHandler())
+
+
+        register.registerComponent({
+          type: 'dic',
+          mainComponentType: DictFieldComponent,
+          typeComponentHandler: []
+        });
+
         register.registerComponent({
             type: 'bool',
             mainComponentType: BoolFieldComponent,

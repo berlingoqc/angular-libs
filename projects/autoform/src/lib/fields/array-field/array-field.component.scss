@@ -1,0 +1,23 @@
+
+
+.container-array {
+  .item-array {
+    display: flex;
+    flex-direction: row;
+
+    .item-wrapper {
+      width: 100%;
+    }
+  }
+}
+
+.heading {
+
+  h3 {
+    padding-right: 5px;
+  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+

@@ -1,1 +1,21 @@
-<p>new-organisation works!</p>
+<h2 mat-dialog-title>Créer une organisation</h2>
+<mat-dialog-content class="form">
+  <alb-user-combobox [myControl]="form.controls.managerId"></alb-user-combobox>
+  <mat-form-field>
+    <mat-label>Nom de l'organisation</mat-label>
+    <input matInput [formControl]="form.controls.name" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<div class="truc">
+
+<div class="button-row">
+  <div>
+    <button mat-stroked-button class="accent" cdkFocusInitial (click)="submit()">Créer</button>
+  </div>
+  <div>
+    <button mat-stroked-button class="primary" mat-dialog-close>Annuler</button>
+  </div>
+</div>
+
+</div>

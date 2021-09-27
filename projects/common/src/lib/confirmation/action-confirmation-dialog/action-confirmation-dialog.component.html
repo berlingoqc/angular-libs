@@ -3,6 +3,6 @@
   <p>Voulez-vous vraiment entreprendre cette action irréversible ?</p>
 </div>
 <div>
-  <button dynStyle itemId="FIRST_BTN" (click)="dialogRef.close()">Non</button>
-  <button dynStyle itemId="SECOND_BTN" (click)="dialogRef.close(true)">Oui</button>
+  <button mat-stroked-button class="primary" (click)="dialogRef.close()">Non</button>
+  <button mat-stroked-button class="accent" (click)="dialogRef.close(true)">Oui</button>
 </div>

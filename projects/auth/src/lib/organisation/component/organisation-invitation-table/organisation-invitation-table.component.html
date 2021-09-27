@@ -1,12 +1,2 @@
-<ngx-autotable [columns]="columns | appendArray: [{ title: 'Options', elementField: options}]" [source]="lbSource">
+<ngx-autotable [columns]="columns" [source]="lbSource">
 </ngx-autotable>
-
-<ng-template #options let-element="element">
-
-  <mat-chip-list>
-    <mat-chip (click)="delete(element)">
-      <mat-icon>delete</mat-icon>
-    </mat-chip>
-  </mat-chip-list>
-
-</ng-template>

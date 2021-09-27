@@ -1,0 +1,25 @@
+<div
+  [autoFormDecorator]="data.decorators"
+  autoFormElementID="container"
+  [formGroup]="abstractControl"
+>
+  <h3 [style.display]="(data.templates) ? 'box' : 'none'">
+    {{(data.templates) ? data.templates['header'] : ''}}
+  </h3>
+
+  <div>
+    <autoform-mat-select
+      [data]="dataSelect"
+      [component]="dataSelect.select"
+      [abstractControl]="abstractControl.controls[data.typeKey]"
+    ></autoform-mat-select>
+
+  </div>
+
+  <ng-template
+    *ngFor="let prop of abstractControl.properties"
+    autoFormField
+    [field]="prop"
+    [abstractControl]="abstractControl.controls[prop.name]"
+  ></ng-template>
+</div>

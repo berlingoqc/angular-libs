@@ -1,0 +1,14 @@
+<div style="width: 100%;" autoFormElementID="container">
+  <autoform-mat-select
+    [data]="data"
+    [component]="data.select"
+    [abstractControl]="abstractControl.controls.type"
+  ></autoform-mat-select>
+  <ng-template
+    *ngIf="selectedProperty"
+    autoFormField
+    [field]="selectedProperty"
+    [abstractControl]="abstractControl.controls.data"
+  ></ng-template>
+
+</div>

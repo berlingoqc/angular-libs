@@ -10,13 +10,5 @@ export class AutoFormSimpleComponent
   implements OnInit {
   ngOnInit(): void {}
 
-  submit() {
-    if (this.formGroup.valid && this.formData.event) {
-      this.formData.event.submit(this.formGroup.value).subscribe();
-    } else {
-      this.formGroup.markAllAsTouched();
-    }
-  }
-
   clearAll() {}
 }

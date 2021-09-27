@@ -8,6 +8,13 @@ import { AbstractControl } from '@angular/forms';
 import { IPropertyComponentHandler, SubTypeHandler } from '../models';
 import { IProperty, IPropertyType } from '../models/properties/iproperty';
 
+
+/**
+ * BaseFieldComponent, base class for all of property component.
+ *
+ * there is no logic but it contains the @Input that are shared
+ * by all property component.
+ */
 @Directive()
 export abstract class BaseFieldComponent<
   T extends IProperty,
@@ -20,16 +27,18 @@ export abstract class BaseFieldComponent<
   @Input()
   set data(t: T) {
     this.innerData = t;
-    if (this.data?.subtype) {
+    if (this.data?.subtype?.name) {
       const handler = this.componentRegister.getSubTypeHandler(
         this.data.subtype.name
       );
-      const errors = handler.getErrors(this.data.subtype);
-      Object.entries(errors).forEach(([k, v]) => {
-        if (!this.data.errors[k]) {
-          this.data.errors[k] = v;
-        }
-      });
+      if (handler.getErrors) {
+        const errors = handler.getErrors(this.data.subtype);
+        Object.entries(errors).forEach(([k, v]) => {
+          if (!this.data.errors[k]) {
+            this.data.errors[k] = v;
+          }
+        });
+      }
     }
   }
   get data(): T {
@@ -45,6 +54,13 @@ export abstract class BaseFieldComponent<
   }
 }
 
+
+/**
+ * ComponentRegisterService
+ *
+ * This service is a root service that contains the mapping
+ * for the component property and the available subtype and subcomponent.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -62,7 +78,7 @@ export class ComponentRegisterService {
   getSubTypeHandler(name: string): SubTypeHandler<any> {
     const d = this.subTypeHandlers[name];
     if (!d) {
-      throw 'Subtype not found';
+      throw `Subtype not found ${name}`;
     }
     return d;
   }
