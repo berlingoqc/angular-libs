@@ -1,0 +1,145 @@
+<div class="table-container">
+  <div class="toolbar">
+    <bsl-top-bar [name]="name" [right]="right" [rows]="rows"></bsl-top-bar>
+    <ng-template #right>
+      <mat-chip-list>
+        <mat-chip *ngIf="invitation" (click)="clickInvite()">
+          <mat-icon
+            class="example-icon"
+            aria-hidden="false"
+            aria-label="Example heart icon"
+            >add</mat-icon
+          >
+        </mat-chip>
+      </mat-chip-list>
+      <ng-container [ngTemplateOutlet]="chipsOption"></ng-container>
+    </ng-template>
+  </div>
+  <table
+    mat-table
+    [dataSource]="models"
+    class="mat-elevation-z8"
+    [trackBy]="trackById"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nom complet</th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          (element.firstName ? element.firstName : '') +
+            ' ' +
+            (element.lastName ? element.lastName : '')
+        }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Courriel</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.email }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.phone }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="activated">
+      <th mat-header-cell *matHeaderCellDef>Activer</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-template [ngIf]="element.userCredentials">
+          <span *ngIf="element.userCredentials.activationCode">
+            <mat-checkbox [checked]="false" disabled></mat-checkbox>
+            <button
+              mat-icon-button
+              [cdkCopyToClipboard]="getInvitationURL(element)"
+              (click)="afterCopyClipboard()"
+            >
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </span>
+          <span *ngIf="!element.userCredentials.activationCode">
+            <mat-checkbox [checked]="true" disabled></mat-checkbox>
+          </span>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="blocked">
+      <th mat-header-cell *matHeaderCellDef>Bloquer</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox
+          [disabled]="true"
+          [(ngModel)]="element.blocked"
+        ></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="validUntil">
+      <th mat-header-cell *matHeaderCellDef>Expire le</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.validUntil && element.validUntil != 0">
+          {{ element.validUntil * 1000 | date }}
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="roles">
+      <th mat-header-cell *matHeaderCellDef>Rôles</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-chip-list>
+          <mat-chip *ngFor="let e of element.roles">{{ e.role }}</mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+
+    <ng-container *ngFor="let c of extraColumn" [matColumnDef]="c.name">
+      <th mat-header-cell *matHeaderCellDef>{{ c.name | translate }}</th>
+      <td mat-cell *matCellDef="let element; index as i">
+        <ng-container
+          [ngTemplateOutlet]="c.template"
+          [ngTemplateOutletContext]="{ element: element, index: i }"
+        >
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef>Options</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-chip-list>
+          <ng-container
+            [ngTemplateOutlet]="actionTemplate"
+            [ngTemplateOutletContext]="{ element: element }"
+          >
+          </ng-container>
+          <mat-chip (click)="clickUpdate(element)">
+            <mat-icon>edit</mat-icon>
+          </mat-chip>
+          <mat-chip (click)="clickdelete(element)">
+            <mat-icon>delete</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+  </table>
+
+  <mat-paginator
+    (page)="updateData($event)"
+    [length]="count"
+    [pageSize]="filter.limit"
+    [pageSizeOptions]="[5, 10, 15, 25]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
+<ng-template #defaultTabButtons let-element>
+  <div class="default-tab-buttons"></div>
+</ng-template>
+
+<ng-template #birthday let-element="element">
+  {{ element.extraFields.birthday | date }}
+</ng-template>

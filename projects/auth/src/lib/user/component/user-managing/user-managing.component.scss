@@ -1,0 +1,14 @@
+.table-container {
+  table {
+    margin: auto;
+    width: 100%;
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+}
+
+td {
+  text-align: left;
+}

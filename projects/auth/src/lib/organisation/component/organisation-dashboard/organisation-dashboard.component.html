@@ -1,0 +1,18 @@
+<alb-admin-page>
+  <alb-top-card>
+    Administrations des organisations
+  </alb-top-card>
+
+  <ng-template albTabSection="Organisations">
+    <bsl-top-bar name="Organisations" [right]="right"></bsl-top-bar>
+    <ng-template #right>
+      <mat-chip-list>
+        <mat-chip (click)="addOrganisation()"
+          ><mat-icon>add</mat-icon></mat-chip
+        >
+      </mat-chip-list>
+    </ng-template>
+    <alb-organisation-table [mode]="'all'"></alb-organisation-table>
+  </ng-template>
+
+</alb-admin-page>

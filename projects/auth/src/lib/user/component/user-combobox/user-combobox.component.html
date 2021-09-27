@@ -1,0 +1,8 @@
+<mat-form-field style="width: 100%;">
+  <mat-label>Manager</mat-label>
+  <mat-select [formControl]="myControl">
+    <mat-option *ngFor="let user of users" [value]="user.id">
+      {{ user.email }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
