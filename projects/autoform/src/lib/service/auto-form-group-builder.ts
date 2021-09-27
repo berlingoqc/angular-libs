@@ -22,6 +22,7 @@ import { ComponentRegisterService } from './component-register';
 import { AutoFormGroup } from '../helper/form-group/auto-form-group';
 import { OptionalFormGroupMixin } from '../helper/form-group/optional-form-group';
 
+
 /**
  * AutoFormGroupBuilder
  *
@@ -139,7 +140,7 @@ export class AutoFormGroupBuilder {
         obj.properties?.forEach((value) => {
             ret[value.name] = this.loopFormProperty(value);
         });
-        let fgClass = AutoFormGroup;
+        let fgClass: any = AutoFormGroup;
         if (obj.optional) {
           fgClass = OptionalFormGroupMixin(fgClass)
         }

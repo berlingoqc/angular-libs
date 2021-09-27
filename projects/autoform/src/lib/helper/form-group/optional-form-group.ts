@@ -1,11 +1,10 @@
-import { Constructor } from "@angular/material/core/common-behaviors/constructor";
+import { Constructor } from "@angular/cdk/table";
 import { Observable } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
 import { AutoFormGroup } from "./auto-form-group";
 
 
-export interface IOptionalFormGroupMixin extends AutoFormGroup {}
-
+type OptionalFormGroupMixin = <T extends Constructor<AutoFormGroup>> (base: T) => T;
 export const OptionalFormGroupMixin = <T extends Constructor<AutoFormGroup>> (base: T) => {
   return class extends base {
     getActionObservable(): Observable<void> {
