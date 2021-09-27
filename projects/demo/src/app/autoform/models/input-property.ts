@@ -149,7 +149,8 @@ export const inputPropertyObject: FormObject[] = [
                         content: '--',
                     },
                     options: {
-                      value: ['option1', 'option2']
+                      displayContent: (e) => e,
+                      value: of(['option1', 'option2'])
                     }
                 } as SelectComponent,
             },

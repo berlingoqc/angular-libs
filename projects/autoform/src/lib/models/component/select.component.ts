@@ -29,6 +29,9 @@ export class SelectComponent implements PropertyComponent {
     // compareFunction
     compareWith?: (object1: any, object2: any) => boolean;
 
+    // transform the value for the [value] binding of the optioons
+    transformValue?: (value: any) => any;
+
     // Les options du mat-select
     options: SelectOptionGroup;
 }

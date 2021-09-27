@@ -61,6 +61,7 @@ import { UnionFieldComponent } from './fields/union-field/union-field.component'
 import { InjectFieldDirecitve } from './fields/injector-base.component';
 import { ControlRawDataPipe } from './pipe/raw-value.pipe';
 import { AbstractClassFieldComponent } from './fields/abstract-class-field/abstract-class-field.component';
+import { TransformValuePipe } from 'projects/autoform/src/lib/pipe/transform-value.pipe';
 
 /* AutoForm, automatic form power by Angular Material and Reactive Form
  *
@@ -90,6 +91,7 @@ import { AbstractClassFieldComponent } from './fields/abstract-class-field/abstr
 
         SliderControlComponent,
         MatErrorPipe,
+        TransformValuePipe,
         ControlRawDataPipe,
         GetDecoratorDataPipe,
         DecoratorsDirective,

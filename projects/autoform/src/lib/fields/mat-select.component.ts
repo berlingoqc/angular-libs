@@ -42,7 +42,7 @@ import { BaseFormField } from './base-form-field';
         <ng-container>
           <mat-option
             *ngFor="let value of options"
-            [value]="value"
+            [value]="value | transform: component.transformValue"
           >
             <template-content [content]="component.options.displayContent" [context]="value"></template-content>
           </mat-option>
