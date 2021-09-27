@@ -1,7 +1,7 @@
 import { takeUntil } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { OnDestroy } from '@angular/core';
-import { Constructor } from '@angular/material/core/common-behaviors/constructor';
+import { Constructor } from '@angular/cdk/table';
 
 export type ComponentWithOnDestroyObservable = {
   observeOnDestroy(): Observable<void>;

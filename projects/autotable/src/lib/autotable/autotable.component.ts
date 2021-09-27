@@ -29,8 +29,7 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
-import { unsubscriber } from '@berlingoqc/ngx-common';
-import { OnDestroyMixin, untilComponentDestroyed } from 'projects/common/src/public-api';
+import { unsubscriber, OnDestroyMixin, untilComponentDestroyed } from '@berlingoqc/ngx-common';
 
 class ExtraRow {
     aloneRowId: string[];

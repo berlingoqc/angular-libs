@@ -9,3 +9,5 @@ const pkgData = require(pathPackage);
 delete pkgData.scripts;
 
 fs.writeFileSync(pathPackage, JSON.stringify(pkgData, null, 2));
+
+console.log('DONE');
