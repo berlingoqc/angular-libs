@@ -16,7 +16,7 @@ jobs:
           node-version: "12.x"
           registry-url: "https://npm.pkg.github.com"
           scope: "@berlingoqc"
-      - run: 'npm ci && ./scripts/make.sh build-site'
+      - run: 'npm ci && ./scripts/make.sh build && ./scripts/make.sh build-site'
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
