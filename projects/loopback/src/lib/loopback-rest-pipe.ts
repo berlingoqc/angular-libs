@@ -1,5 +1,5 @@
 import { NgModule, Pipe, PipeTransform } from "@angular/core";
-import { BaseRelationClient, LoopbackRelationAccessor } from "./loopback-rest";
+import { BaseRelationClient, LoopbackRelationAccessor } from "./clients";
 
 
 
@@ -14,9 +14,5 @@ export class AccessRelation implements PipeTransform {
 
 }
 
-
-
 @NgModule({imports: [], declarations: [AccessRelation], exports: [AccessRelation]})
-export class LoopbackRestPipeModule {
-
-}
+export class LoopbackRestPipeModule {}
