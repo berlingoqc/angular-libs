@@ -16,14 +16,11 @@ import { AutoFormBuilderModule, AutoFormModule } from 'projects/autoform/src/pub
         MatIconModule,
         MatInputModule,
         ReactiveFormsModule,
-
         AutoFormModule,
         AutoFormBuilderModule,
-
         AutoFormRegisterWrapperModule,
     ],
-    entryComponents: [FancyLabel],
     providers: [DatePipe],
-    exports: [],
+    exports: []
 })
 export class AutoformModule {}

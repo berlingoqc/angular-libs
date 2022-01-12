@@ -35,9 +35,7 @@ export interface NotificationModuleConfig {
     ],
     imports: [
         CommonModule,
-
         TemplateContentModule,
-
         MatBottomSheetModule,
         MatSnackBarModule,
         MatButtonModule,
@@ -52,8 +50,7 @@ export interface NotificationModuleConfig {
         NotificationButton,
         NotificationDialogComponent,
         NotificationBottomSheet,
-    ],
-    entryComponents: [NotificationBottomSheet, NotificationDialogComponent],
+    ]
 })
 export class NotificationModule {
     public static forRoot(

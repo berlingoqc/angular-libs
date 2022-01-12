@@ -4,15 +4,14 @@ import { CommonModule } from '@angular/common';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  declarations: [
-    AuthServiceErrorComponent
-  ],
-  exports: [
-    AuthServiceErrorComponent
-  ],
-  entryComponents: []
+    imports: [
+        CommonModule,
+    ],
+    declarations: [
+        AuthServiceErrorComponent
+    ],
+    exports: [
+        AuthServiceErrorComponent
+    ]
 })
 export class AuthCommonModule { }

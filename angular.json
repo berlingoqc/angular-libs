@@ -33,16 +33,6 @@
                         "tsConfig": "projects/common/tsconfig.spec.json",
                         "karmaConfig": "projects/common/karma.conf.js"
                     }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/common/tsconfig.lib.json",
-                            "projects/common/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
-                    }
                 }
             }
         },
@@ -75,16 +65,6 @@
                         "main": "projects/pwa/src/test.ts",
                         "tsConfig": "projects/pwa/tsconfig.spec.json",
                         "karmaConfig": "projects/pwa/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/pwa/tsconfig.lib.json",
-                            "projects/pwa/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
@@ -119,16 +99,6 @@
                         "tsConfig": "projects/auth/tsconfig.spec.json",
                         "karmaConfig": "projects/auth/karma.conf.js"
                     }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/auth/tsconfig.lib.json",
-                            "projects/auth/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
-                    }
                 }
             }
         },
@@ -162,16 +132,6 @@
                         "tsConfig": "projects/loopback/tsconfig.spec.json",
                         "karmaConfig": "projects/loopback/karma.conf.js"
                     }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/loopback/tsconfig.lib.json",
-                            "projects/loopback/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
-                    }
                 }
             }
         },
@@ -199,16 +159,6 @@
                         "main": "projects/autoform/src/test.ts",
                         "tsConfig": "projects/autoform/tsconfig.spec.json",
                         "karmaConfig": "projects/autoform/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/autoform/tsconfig.lib.json",
-                            "projects/autoform/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
@@ -348,16 +298,6 @@
                         "tsConfig": "projects/autotable/tsconfig.spec.json",
                         "karmaConfig": "projects/autotable/karma.conf.js"
                     }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/autotable/tsconfig.lib.json",
-                            "projects/autotable/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
-                    }
                 }
             }
         },
@@ -385,18 +325,6 @@
                         "main": "projects/notification/src/test.ts",
                         "tsConfig": "projects/notification/tsconfig.spec.json",
                         "karmaConfig": "projects/notification/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/notification/tsconfig.lib.json",
-                            "projects/notification/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
                     }
                 }
             }

@@ -12,30 +12,26 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-
-    AccountModule,
-
-    FormExtraModule,
-
-    DynamicStyleProviderModule,
-  ],
-  declarations: [
-    InviteUserDialogComponent,
-    MyInvitationsComponent,
-    TableInvitationsComponent,
-  ],
-  exports: [
-    InviteUserDialogComponent,
-  ],
-  entryComponents: [InviteUserDialogComponent]
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatBadgeModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        AccountModule,
+        FormExtraModule,
+        DynamicStyleProviderModule,
+    ],
+    declarations: [
+        InviteUserDialogComponent,
+        MyInvitationsComponent,
+        TableInvitationsComponent,
+    ],
+    exports: [
+        InviteUserDialogComponent,
+    ]
 })
 export class InvitationModule { }

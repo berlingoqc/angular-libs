@@ -81,14 +81,10 @@ import { TransformValuePipe } from './pipe/transform-value.pipe';
         ArrayFieldComponent,
         UnionFieldComponent,
         AbstractClassFieldComponent,
-
         MultiPartMatInputComponent,
-
         MyMatInput,
         MyMatSelectComponent,
-
         InjectFieldDirecitve,
-
         SliderControlComponent,
         MatErrorPipe,
         TransformValuePipe,
@@ -136,7 +132,6 @@ import { TransformValuePipe } from './pipe/transform-value.pipe';
         ButtonsRowModule,
         ReactiveFormsModule,
         FormsModule,
-
         DataResolverModule,
         TemplateContentModule,
         CommonPipeModule,
@@ -168,24 +163,7 @@ import { TransformValuePipe } from './pipe/transform-value.pipe';
                 tabs: AutoFormTabsComponent,
             },
         },
-    ],
-    entryComponents: [
-        StringFieldComponent,
-        BoolFieldComponent,
-        ArrayFieldComponent,
-        BlobFieldComponent,
-        NumberFieldComponent,
-        ObjectFieldComponent,
-        AutoFormComponent,
-        UnionFieldComponent,
-        AutoFormSimpleComponent,
-
-        AutoFormBottonSheetComponent,
-        AutoFormCardComponent,
-        AutoFormExpansionPanelComponent,
-        AutoFormStepperComponent,
-        AutoFormTabsComponent,
-    ],
+    ]
 })
 export class AutoFormModule {
     public static forRoot(): ModuleWithProviders<AutoFormModule> {

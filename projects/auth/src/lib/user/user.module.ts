@@ -23,57 +23,48 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AdminPageModule } from '../common/admin-page.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-
-    CommonPipeModule,
-    AuthCommonModule,
-    FormExtraModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatChipsModule,
-    MatCardModule,
-    MatSelectModule,
-    MatButtonModule,
-
-    MatIconModule,
-    MatDialogModule,
-    MatTableModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatPaginatorModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ClipboardModule,
-
-    AdminPageModule,
-    LayoutExtraModule,
-
-
-    TranslateModule,
-    DynamicStyleProviderModule,
-
-  ],
-  declarations: [
-    OpenUserEditButton,
-    UserNameComponent,
-    UserEditComponent,
-    UserManagingComponent,
-    UserComboboxComponent,
-    ExtraFieldsFormComponent,
-  ],
-  exports: [
-    OpenUserEditButton,
-    UserNameComponent,
-    UserEditComponent,
-    UserManagingComponent,
-    UserComboboxComponent,
-    ExtraFieldsFormComponent,
-  ],
-  entryComponents: [
-    UserEditComponent
-  ]
+    imports: [
+        CommonModule,
+        CommonPipeModule,
+        AuthCommonModule,
+        FormExtraModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatChipsModule,
+        MatCardModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatTableModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatPaginatorModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ClipboardModule,
+        AdminPageModule,
+        LayoutExtraModule,
+        TranslateModule,
+        DynamicStyleProviderModule,
+    ],
+    declarations: [
+        OpenUserEditButton,
+        UserNameComponent,
+        UserEditComponent,
+        UserManagingComponent,
+        UserComboboxComponent,
+        ExtraFieldsFormComponent,
+    ],
+    exports: [
+        OpenUserEditButton,
+        UserNameComponent,
+        UserEditComponent,
+        UserManagingComponent,
+        UserComboboxComponent,
+        ExtraFieldsFormComponent,
+    ]
 })
 export class UserModule { }

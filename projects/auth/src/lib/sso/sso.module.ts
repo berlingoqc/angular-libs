@@ -9,19 +9,18 @@ import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatChipsModule,
-  ],
-  declarations: [
-    SsoInfoComponent
-  ],
-  exports: [SsoInfoComponent],
-  providers: [SSOSettingsService],
-  entryComponents: [SsoInfoComponent]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatChipsModule,
+    ],
+    declarations: [
+        SsoInfoComponent
+    ],
+    exports: [SsoInfoComponent],
+    providers: [SSOSettingsService]
 })
 export class SSOModule {
 

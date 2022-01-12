@@ -5,14 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
-  imports: [
-    MatButtonModule,
-  ],
-  declarations: [
-    ActionConfirmationDialogComponent
-  ],
-  exports: [],
-  entryComponents: [ActionConfirmationDialogComponent]
+    imports: [
+        MatButtonModule,
+    ],
+    declarations: [
+        ActionConfirmationDialogComponent
+    ],
+    exports: []
 })
 export class ConfirmationModule {
 

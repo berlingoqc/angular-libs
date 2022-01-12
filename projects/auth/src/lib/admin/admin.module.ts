@@ -23,45 +23,37 @@ import { InvitationModule } from '../invitation';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [
-    CommonModule,
-
-
-    FormExtraModule,
-    AdminPageModule,
-    LayoutExtraModule,
-    UserModule,
-    EmailModule,
-    SSOModule,
-
-    InvitationModule,
-
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSlideToggleModule,
-    MatDatepickerModule,
-    MatChipsModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    ClipboardModule,
-    MatIconModule,
-
-    TranslateModule,
-  ],
-  declarations: [
-    AdminControlComponent,
-    AdminUserEditComponent,
-  ],
-  exports: [
-    AdminControlComponent,
-  ],
-  entryComponents: [
-    AdminUserEditComponent
-  ]
+    imports: [
+        CommonModule,
+        FormExtraModule,
+        AdminPageModule,
+        LayoutExtraModule,
+        UserModule,
+        EmailModule,
+        SSOModule,
+        InvitationModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSlideToggleModule,
+        MatDatepickerModule,
+        MatChipsModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatCheckboxModule,
+        ClipboardModule,
+        MatIconModule,
+        TranslateModule,
+    ],
+    declarations: [
+        AdminControlComponent,
+        AdminUserEditComponent,
+    ],
+    exports: [
+        AdminControlComponent,
+    ]
 })
 export class AdminModule { }
