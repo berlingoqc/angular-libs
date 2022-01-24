@@ -5,7 +5,16 @@ import { toQueryParams } from "../query-params";
 import { CRUDDataSource } from "./datasource";
 import { LoopbackRestClient } from "./loopback-api";
 
-export class BaseRelationClient<T, TD = T> {
+
+export interface RelationCustomPath {
+  delete?: string
+}
+
+export interface LoopbackRelationConfig {
+  customPath?: RelationCustomPath,
+}
+
+export abstract class BaseRelationClient<T, TD = T> {
     get url(): string {
         return `${this.parent.url}/${this.parentKey}/${this.name}`;
     }
@@ -14,21 +23,22 @@ export class BaseRelationClient<T, TD = T> {
         public parent: LoopbackRestClient<any>,
         public name: string,
         public parentKey: string,
+        public config?: LoopbackRelationConfig,
     ) {}
 
 
-    get?: (filter?: Filter) => Observable<TD>;
+    abstract get(filter?: Filter): Observable<TD>;
 }
 
 
 export class LoopbackHaveOneRelationClient<T> extends BaseRelationClient<T> {
-  get = (filter?: Filter) => {
+  get(filter?: Filter) {
     return this.parent.httpClient.get<T>(
       this.url + toQueryParams('filter', filter)
     )
   }
 
-  updateById = (id: any, data: T) => {
+  updateById(id: any, data: T) {
     return this.parent.httpClient.put<T>(
       `${this.url}/${id}`,
       data
@@ -38,28 +48,28 @@ export class LoopbackHaveOneRelationClient<T> extends BaseRelationClient<T> {
 
 export class LoopbackRelationClient<T> extends BaseRelationClient<T, Array<T>> implements CRUDDataSource<T> {
 
-    get = (filter?: Filter<any>) => {
+    get(filter?: Filter<any>) {
         return this.parent.httpClient.get<T[]>(
             this.url + toQueryParams('filter', filter),
         );
     };
 
-    post = (body: T) => {
+    post(body: T) {
         return this.parent.httpClient.post<T>(this.url, body);
     };
 
-    getById = (id: string, filter?: Filter<any>) => {
+    getById(id: string, filter?: Filter<any>) {
         return this.parent.httpClient.get<T>(
             `${this.url}/${id}` + toQueryParams('filter', filter),
         );
     };
 
-    updateById = (id: string, data: Partial<T>) => {
+    updateById(id: string, data: Partial<T>) {
         return this.parent.httpClient.put<void>(`${this.url}/${id}`, data);
     };
 
-    delete = (id: string) => {
-        return this.parent.httpClient.delete<void>(`${this.url}/${id}`);
+    delete(id: string) {
+        return this.parent.httpClient.delete<void>(`${this.url}/${id}${this.config?.customPath?.delete || ''}`);
     };
 }
 
@@ -85,6 +95,14 @@ export function addLoopbackRelation<K,P,T, RC extends BaseRelationClient<T>>(
   parent: LoopbackRestClient<P>,
   type: Constructor<RC>,
   name: string,
+  config?: LoopbackRelationConfig,
 ): LoopbackRelationAccessor<K, T, RC> {
-  return (key) => new type(parent, name, key);
+  let clientMap: {[id: string]: RC} = {};
+  return (key) => {
+    const id = `${name}:${key}`;
+    if (!clientMap[id]) {
+      clientMap[id] = new type(parent, name, key, config);
+    }
+    return clientMap[id];
+  };
 }

@@ -2,8 +2,9 @@ import { Where, Count, Filter } from '../loopback-model';
 import { CachingRequest, StateChange } from '@berlingoqc/ngx-common';
 import { Constructor } from '@angular/cdk/table';
 import { map } from 'rxjs/operators';
-import { BaseRelationClient } from '../clients/loopback-relation';
+import { LoopbackRelationClient } from '../clients/loopback-relation';
 import { CRUDDataSource } from '../clients/datasource';
+import { Observable } from 'rxjs';
 
 export type CachingStoreHandlerFunc = (oldValue: any, change: any) => any;
 
@@ -39,12 +40,24 @@ const getCachingRequest = <T>(options: CachingOptions, operator: string) => {
         });
 }
 
-export function CachingRelation<D extends Constructor<BaseRelationClient<T, TD>>, T, TD>(type: D) {
-  const requestGet = getCachingRequest<TD>({}, 'get');
+export function CachingRelation<D extends Constructor<CRUDDataSource<T>>, T>(type: D, cachingOption: CachingOptions = {}) {
   return class extends type {
-      get = (filter?: Filter) => {
-        return requestGet.getObs(filter, super.get(filter))
-      }
+      requestGet = getCachingRequest<T[]>(cachingOption, 'get');
+      get = super.get ? (filter: Filter = {}) => {
+        return  this.requestGet.getObs(filter, super.get(filter))
+      } : undefined
+
+      delete = super.delete
+            ? (id: string) => {
+                  return this.requestGet.onModif(
+                      super.delete(id).pipe(
+                        map(() => ({operation: 'delete', id}))
+                      )
+                  ).pipe(
+                    map(() => {})
+                  );
+              }
+            : undefined;
   }
 }
 
