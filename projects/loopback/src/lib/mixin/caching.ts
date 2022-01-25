@@ -1,7 +1,7 @@
 import { Where, Count, Filter } from '../loopback-model';
 import { CachingRequest, StateChange } from '@berlingoqc/ngx-common';
 import { Constructor } from '@angular/cdk/table';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { LoopbackRelationClient } from '../clients/loopback-relation';
 import { CRUDDataSource } from '../clients/datasource';
 import { Observable } from 'rxjs';
@@ -46,6 +46,16 @@ export function CachingRelation<D extends Constructor<CRUDDataSource<T>>, T>(typ
       get = super.get ? (filter: Filter = {}) => {
         return  this.requestGet.getObs(filter, super.get(filter))
       } : undefined
+
+      post = super.post ? (body: T) => {
+        let d: T;
+        return this.requestGet.onModif(
+          super.post(body).pipe(
+            tap((ret) => (d = ret)),
+            map(() => ({operation: 'create', body}))
+          )
+        ).pipe(map(() => d))
+      } : undefined;
 
       delete = super.delete
             ? (id: string) => {
