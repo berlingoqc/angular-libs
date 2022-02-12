@@ -184,7 +184,7 @@ export class TemplateContentComponent
     contentIcon() {
        const content = (this.innerContent.content as any);
        if (typeof content === 'function') {
-           return content(this.content, this.parent);
+           return content(this.context, this.parent);
        }
        return content;
     }
