@@ -1,6 +1,6 @@
 import { Constructor } from "@angular/material/core/common-behaviors/constructor";
 import { Observable } from "rxjs";
-import { Count, Filter } from "../loopback-model";
+import { AnyObject, Count, Filter, Where } from "../loopback-model";
 import { toQueryParams } from "../query-params";
 import { CRUDDataSource } from "./datasource";
 import { LoopbackRestClient } from "./loopback-api";
@@ -53,6 +53,12 @@ export class LoopbackRelationClient<T> extends BaseRelationClient<T, Array<T>> i
             this.url + toQueryParams('filter', filter),
         );
     };
+
+    count(where: Where<AnyObject> = {}): Observable<Count> {
+      return this.parent.httpClient.get<Count>(
+          `${this.url}/count` + toQueryParams('where', where),
+      )
+    }
 
     post(body: T) {
         return this.parent.httpClient.post<T>(this.url, body);
