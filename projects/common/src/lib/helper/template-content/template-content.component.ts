@@ -186,7 +186,7 @@ export class TemplateContentComponent
        if (typeof content === 'function') {
            return content(this.content, this.parent);
        }
-       return content(this.content, this.parent);
+       return content;
     }
 
     // Render pipe
