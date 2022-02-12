@@ -77,6 +77,7 @@ export class AutoTableComponent<T = any>
 
     currentOffset = 0;
     // Nombre d'item par page
+    @Input() disablePaginator = false;
     @Input() pageSize = 10;
     @Input() pageSizeOptions: number[] = [2, 5, 10, 25, 50];
     @Input() showFirstLastButtons: boolean = true;
@@ -240,7 +241,7 @@ export class AutoTableComponent<T = any>
         }
     }
 
-    private refreshCount() {
+    refreshCount() {
         if (this.source.count) {
             this.subCount?.unsubscribe();
             this.subCount = this.source
