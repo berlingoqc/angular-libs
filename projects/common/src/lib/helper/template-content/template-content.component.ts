@@ -130,7 +130,7 @@ export class ServiceTest {
                 {{ callFunction() | asyncAll }}
             </ng-container>
             <div *ngSwitchCase="'html'" [innerHTML]="innerContent.content"></div>
-            <mat-icon *ngSwitchCase="'icon'"> {{ innerContent.content }}</mat-icon>
+            <mat-icon *ngSwitchCase="'icon'"> {{ contentIcon() }}</mat-icon>
         </ng-container>
     `,
     changeDetection: ChangeDetectionStrategy.Default,
@@ -179,6 +179,14 @@ export class TemplateContentComponent
     // Dans le cas d'une fonction comme contenu
     callFunction() {
         return (this.innerContent.content as any)(this.context, this.parent);
+    }
+
+    contentIcon() {
+       const content = (this.innerContent.content as any);
+       if (typeof content === 'function') {
+           return content(this.content, this.parent);
+       }
+       return content(this.content, this.parent);
     }
 
     // Render pipe
