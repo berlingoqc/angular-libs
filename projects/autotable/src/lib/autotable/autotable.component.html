@@ -100,7 +100,7 @@
 </table>
 </div>
 <mat-paginator
-    *ngIf="pageSize > 0"
+    *ngIf="!disablePaginator && pageSize > 0"
     [length]="length"
     [pageSize]="pageSize"
     (page)="handlePage($event)"
