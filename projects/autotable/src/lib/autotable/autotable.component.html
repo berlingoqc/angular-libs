@@ -1,3 +1,4 @@
+<div [autoFormDecorator]="config?.decorators" autoFormElementID="container">
 <table
     mat-table
     matSort
@@ -97,6 +98,7 @@
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"></tr>
     </ng-container>
 </table>
+</div>
 <mat-paginator
     *ngIf="pageSize > 0"
     [length]="length"
