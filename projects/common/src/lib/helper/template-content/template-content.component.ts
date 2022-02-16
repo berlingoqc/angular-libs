@@ -13,6 +13,8 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import { OnDestroyMixin, untilComponentDestroyed } from '../../rxjs';
 import {
     ComponentExtra,
     TemplateContentData,
@@ -127,7 +129,7 @@ export class ServiceTest {
                 </ng-container>
             </ng-container>
             <ng-container *ngSwitchCase="'func'">
-                {{ callFunction() | asyncAll }}
+                {{ functionOutput}}
             </ng-container>
             <div *ngSwitchCase="'html'" [innerHTML]="innerContent.content"></div>
             <mat-icon *ngSwitchCase="'icon'"> {{ contentIcon() }}</mat-icon>
@@ -136,6 +138,7 @@ export class ServiceTest {
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class TemplateContentComponent
+    extends OnDestroyMixin(Object)
     implements AfterViewInit, OnInit, AfterViewInit {
     shadowThis;
     @Input() content: TemplateContentData;
@@ -150,7 +153,10 @@ export class TemplateContentComponent
         parent: this.injector,
     });
 
+    functionOutput?: any;
+
     constructor(private sanitizer: DomSanitizer, private injector: Injector) {
+        super();
         this.shadowThis = this;
     }
 
@@ -161,7 +167,13 @@ export class TemplateContentComponent
           return;
         } else if(typeContent == 'function') {
           this.innerContent = {type: 'func', content: this.content as any}
-          return;
+          this.functionOutput = this.callFunction();
+            if (this.functionOutput instanceof Observable) {
+                let obs = this.functionOutput;
+                obs.pipe(untilComponentDestroyed(this)).subscribe((v) => {
+                    this.functionOutput = v;
+                });
+            }
         } else {
           this.innerContent = this.content as TemplateContentDataStructure;
         }
