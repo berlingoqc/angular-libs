@@ -30,6 +30,7 @@ import {
     trigger,
 } from '@angular/animations';
 import { unsubscriber, OnDestroyMixin, untilComponentDestroyed } from '@berlingoqc/ngx-common';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 class ExtraRow {
     aloneRowId: string[];
@@ -65,6 +66,9 @@ export class AutoTableComponent<T = any>
     extends OnDestroyMixin(Object)
     implements OnInit,OnDestroy {
 
+
+    private haveInit = false;
+
     private _columns: TableColumn[];
     private _client: LoopbackRestClient<T>;
 
@@ -83,8 +87,21 @@ export class AutoTableComponent<T = any>
 
     length: number;
 
+
+    _where: Where = {}
     // Where pour requête loopback
-    @Input() where: Where = {};
+    @Input() set where(where: Where) {
+        this._where = where;
+        console.log('WHERE IS CHANGING', this.where);
+
+        if (this.haveInit && this.where) {
+            this.refreshData();
+            this.refreshCount();
+        }
+    }
+    get where() {
+        return this._where;
+    }
     // Include pour requête loopback
     @Input() includes: Include[] = [];
     // Order poure requête loopback
@@ -151,8 +168,22 @@ export class AutoTableComponent<T = any>
             }
         });
         this.detectorRef.detectChanges();
+        if (this.subBreakPoint) { this.subBreakPoint.unsubscribe(); }
+        const breakpoints = this._columns.filter(x => x.breakPoints).map(x => x.breakPoints)
+
+        if (breakpoints.length === 0) { return; }
+
+        this.subBreakPoint = this.breakpointObserver.observe(
+            breakpoints
+        ).subscribe((state) => {
+            this._columns.filter((c) => c.breakPoints && state.breakpoints[c.breakPoints] !== undefined).forEach((x) => {
+                const stateBreakPoint = state.breakpoints[x.breakPoints];
+                x.display = stateBreakPoint;
+            });
+        });
     }
 
+    subBreakPoint: Subscription;
 
     expandedElement: T | null;
 
@@ -195,11 +226,15 @@ export class AutoTableComponent<T = any>
         }
     }
 
-    constructor(private detectorRef: ChangeDetectorRef) {
+    constructor(
+        private detectorRef: ChangeDetectorRef,
+        private breakpointObserver: BreakpointObserver,
+    ) {
       super();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
 
     onSortChange(sort: Sort) {
@@ -229,6 +264,7 @@ export class AutoTableComponent<T = any>
             .pipe(untilComponentDestroyed(this))
             .subscribe((data) => {
                 this.dataSource.data = data;
+                this.haveInit = true;
             });
     }
 

@@ -16,4 +16,8 @@ export interface TableColumn extends AdditionalRow {
      * (T) => string: Fonction utilisé pour transformer l'object
      */
     content: TemplateContentData;
+
+
+    breakPoints?: string;
+
 }

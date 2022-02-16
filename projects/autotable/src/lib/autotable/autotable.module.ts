@@ -10,6 +10,7 @@ import {
     TemplateContentModule,
     DataDecoratorModule,
 } from '@berlingoqc/ngx-common';
+import { LayoutModule } from '@angular/cdk/layout';
 
 /**
  * Truc a implenter
@@ -32,6 +33,9 @@ import {
         CommonPipeModule,
         DataDecoratorModule,
         TemplateContentModule,
+
+        // From cdk
+        LayoutModule,
 
         // From material
         MatButtonModule,
