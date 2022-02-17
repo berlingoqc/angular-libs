@@ -115,21 +115,21 @@ export class ServiceTest {
                 {{ innerContent.content | translate }}
             </ng-container>
             <div *ngSwitchCase="'component'">
-                <div *templateMarker="{ content: content, context: context, parent: parent }"></div>
+                <div *templateMarker="{ content: content, context: _context, parent: parent }"></div>
             </div>
             <ng-container *ngSwitchCase="'template'">
                 <ng-container
                     [ngTemplateOutlet]="innerContent.content"
                     [ngTemplateOutletContext]="{
                         parent: parent,
-                        context: context,
+                        context: _context,
                         extra: innerContent.extra
                     }"
                 >
                 </ng-container>
             </ng-container>
             <ng-container *ngSwitchCase="'func'">
-                {{ functionOutput}}
+                {{ functionOutput }}
             </ng-container>
             <div *ngSwitchCase="'html'" [innerHTML]="innerContent.content"></div>
             <mat-icon *ngSwitchCase="'icon'"> {{ contentIcon() }}</mat-icon>
@@ -145,8 +145,19 @@ export class TemplateContentComponent
     @Input() innerContent: TemplateContentDataStructure;
     // Reference to the parent component
     @Input() parent: Type<any>;
+
+
     // Reference to the exection content
-    @Input() context: any;
+    _context: any;
+    @Input() set context(c: any) {
+        this._context = c;
+        if (this.innerContent && this.innerContent.type === 'func') {
+            this.handleFunction();
+        }
+    }
+    get context() {
+        return this._context;
+    }
 
     customInjector: Injector = Injector.create({
         providers: [{ provide: ServiceTest, useValue: new ServiceTest() }],
@@ -154,6 +165,7 @@ export class TemplateContentComponent
     });
 
     functionOutput?: any;
+    functionObsSub?: any;
 
     constructor(private sanitizer: DomSanitizer, private injector: Injector) {
         super();
@@ -167,13 +179,7 @@ export class TemplateContentComponent
           return;
         } else if(typeContent == 'function') {
           this.innerContent = {type: 'func', content: this.content as any}
-          this.functionOutput = this.callFunction();
-            if (this.functionOutput instanceof Observable) {
-                let obs = this.functionOutput;
-                obs.pipe(untilComponentDestroyed(this)).subscribe((v) => {
-                    this.functionOutput = v;
-                });
-            }
+          this.handleFunction();
         } else {
           this.innerContent = this.content as TemplateContentDataStructure;
         }
@@ -204,5 +210,16 @@ export class TemplateContentComponent
     // Render pipe
     renderPipe() {
         const d = this.injector.get(this.innerContent.extra.pipe) as PipeTransform;
+    }
+
+    private handleFunction() {
+        this.functionOutput = this.callFunction();
+        if (this.functionOutput instanceof Observable) {
+            let obs = this.functionOutput;
+            this.functionObsSub?.unsubscribe();
+            this.functionObsSub = obs.pipe(untilComponentDestroyed(this)).subscribe((v) => {
+                this.functionOutput = v;
+            });
+        }
     }
 }
