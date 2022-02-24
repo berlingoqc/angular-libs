@@ -8,6 +8,8 @@ export interface NotifyConfig {
     titleFailed?: string;
     body?: (d: any) => string;
     bodyFailed?: (d: any) => string;
+    disableSuccess?: boolean;
+    disableError?: boolean;
 }
 
 let service: NotificationService;
@@ -17,21 +19,25 @@ export function notify<T>(config: NotifyConfig) {
     return (source: Observable<T>) => {
         return source.pipe(
             map((data) => {
-                service.openNotification({
-                    title: config.title ? config.title : 'Opération terminée',
-                    body: config.body,
-                    bodyContext: data,
-                });
+                if (!config.disableSuccess) {
+                    service.openNotification({
+                        title: config.title ? config.title : 'Opération terminée',
+                        body: config.body,
+                        bodyContext: data,
+                    });
+                }
                 return data;
             }),
             catchError((error) => {
-                service.openNotification({
-                    title: config.titleFailed
-                        ? config.titleFailed
-                        : "Échec de l'opération",
-                    body: config.bodyFailed,
-                    bodyContext: error,
-                });
+                if (!config.disableError) {
+                    service.openNotification({
+                        title: config.titleFailed
+                            ? config.titleFailed
+                            : "Échec de l'opération",
+                        body: config.bodyFailed,
+                        bodyContext: error,
+                    });
+                }
                 throw error;
             }),
         );

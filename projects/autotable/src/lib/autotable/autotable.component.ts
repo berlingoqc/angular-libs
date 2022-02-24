@@ -278,7 +278,7 @@ export class AutoTableComponent<T = any>
     }
 
     refreshCount() {
-        if (this.source.count) {
+        if (this.source.count && !this.disablePaginator) {
             this.subCount?.unsubscribe();
             this.subCount = this.source
                 .count(this.where)
