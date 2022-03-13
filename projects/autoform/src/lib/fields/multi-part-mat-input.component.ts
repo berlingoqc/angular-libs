@@ -41,6 +41,7 @@ import { MultiInputMatInput } from '../models/component/multi-input-mat-input';
         <input
           #myInput
           class="input-element"
+          [type]="input[1].type ? input[1].type : ''"
           [formControlName]="input[0]"
           [size]="input[1].size"
           [maxLength]="input[1].size"
@@ -75,6 +76,17 @@ import { MultiInputMatInput } from '../models/component/multi-input-mat-input';
 
       :host.floating .input-container {
         opacity: 1;
+      }
+
+      input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
       }
     `,
   ],
