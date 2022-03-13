@@ -5,6 +5,7 @@
             mat-stroked-button
             [loading]="loading"
             [color]="button.color"
+            [disabled]="(button.disabled !== undefinied ? (button.disabled | async) : false)"
             (click)="handleClick(button)"
         >
             <template-content
@@ -17,6 +18,7 @@
             [loading]="loading"
             mat-flat-button
             [color]="button.color"
+            [disabled]="(button.disabled !== undefinied ? (button.disabled | async) : false)"
             (click)="handleClick(button)"
         >
             <template-content
@@ -28,6 +30,7 @@
             *ngSwitchCase="'mat-button'"
             [loading]="loading"
             mat-button
+            [disabled]="(button.disabled !== undefinied ? (button.disabled | async) : false)"
             [color]="button.color"
             (click)="handleClick(button)"
         >
@@ -40,6 +43,7 @@
             *ngSwitchCase="'mat-icon-button'"
             [loading]="loading"
             mat-icon-button
+            [disabled]="(button.disabled !== undefinied ? (button.disabled | async) : false)"
             [color]="button.color"
             (click)="handleClick(button)"
         >
@@ -49,6 +53,7 @@
             *ngSwitchCase="'mat-fab'"
             [loading]="loading"
             mat-fab
+            [disabled]="(button.disabled !== undefinied ? (button.disabled | async) : false)"
             [color]="button.color"
             (click)="handleClick(button)"
         >
@@ -62,6 +67,7 @@
             [loading]="loading"
             mat-mini-fab
             [color]="button.color"
+            [disabled]="(button.disabled !== undefinied ? (button.disabled | async) : false)"
             (click)="handleClick(button)"
         >
             <template-content

@@ -8,7 +8,9 @@ export interface Button {
     title: TemplateContentData;
     style?: string;
     color?: string;
+    // call on render only , if false hide the element
     if?: (data: any) => boolean;
+    disabled?: Observable<boolean>;
     click?: (router: Router, data: any) => void | Observable<void>;
 }
 
@@ -21,17 +23,27 @@ export interface Button {
 export class ButtonsRowComponent implements OnInit {
     @Input() buttons: Button[];
 
+    @Input() context: any;
+    @Input() parent: any;
+
     loading = false;
 
     constructor(
         @Optional()
         @Inject(TEMPLATE_CONTENT_CONTEXT)
-        public context: any,
+        context: any,
         @Optional()
         @Inject(TEMPLATE_CONTENT_PARENT)
-        public parent: any,
+        parent: any,
         public router: Router,
-    ) {}
+    ) {
+      if (context) {
+        this.context = context;
+      }
+      if (parent) {
+        this.parent = parent;
+      }
+    }
 
     ngOnInit(): void {
       // filter the buttons to resolve enabled or if
