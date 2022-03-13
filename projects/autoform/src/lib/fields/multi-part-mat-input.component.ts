@@ -116,6 +116,8 @@ export class MultiPartMatInputComponent
     } else {
       this.pValue = v;
     }
+
+    console.log('VALID', this.ngControl.valid);
   }
 
   get value() {
@@ -246,14 +248,16 @@ export class MultiPartMatInputComponent
     this.disabled = isDisabled;
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+  }
 
   ngOnDestroy() {
     this.stateChanges.complete();
   }
 
   onContainerClick(): void {
-    let isFocus = false;
+    // disable this i think it's better without
+    /*let isFocus = false;
     const items = Object.entries(this.partsFormGroup.controls);
     items.forEach(([k, v], i) => {
       if (v.valid) {
@@ -264,7 +268,7 @@ export class MultiPartMatInputComponent
       if (i === items.length - 1 && !isFocus) {
         this.focusMonitor.focusVia(this.inputs.toArray()[0], 'program');
       }
-    });
+    });*/
   }
 
   handleInput(control: AbstractControl, index: number) {
@@ -274,6 +278,11 @@ export class MultiPartMatInputComponent
       .reduce((previous, current) => Object.assign(previous ?? {}, current))
     this.autoFocusNext(control, index);
     this.onChange(this.value);
+    if (Object.keys(errors).length > 0 && errors) {
+      (this.ngControl as any).form.setErrors(errors);
+    } else {
+      (this.ngControl as any).form.setErrors(null);
+    }
   }
 
   autoFocusNext(control: AbstractControl, index: number): void {
