@@ -80,7 +80,9 @@ export class AutoFormDialogComponent implements OnInit {
           this.loading = true;
           ret.subscribe(() => {
             this.dialogRef.close(this.formGroup.value);
-          }, (err) => {}, () => (this.loading = false));
+          }, (err) => {
+            this.loading = false;
+          }, () => (this.loading = false));
         } else {
           this.dialogRef.close(this.formGroup.value);
         }
