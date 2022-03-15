@@ -48,6 +48,9 @@ export class CachingRequest<T> {
     }
 
     private getCachingItem(context: any, chain: Observable<T>) {
+      if (!context) {
+        context = {};
+      }
       const contextHash = hash(context) as string;
       if (!this.items[contextHash]) {
             const subject = new BehaviorSubject(null);
