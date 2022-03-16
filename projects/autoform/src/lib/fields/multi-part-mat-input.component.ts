@@ -41,12 +41,11 @@ import { MultiInputMatInput } from '../models/component/multi-input-mat-input';
         <input
           #myInput
           class="input-element"
-          [type]="input[1].type ? input[1].type : ''"
           [formControlName]="input[0]"
           [size]="input[1].size"
           [maxLength]="input[1].size"
           [placeholder]="placeholder[input[0]]"
-          (input)="handleInput(partsFormGroup.controls[input[0]], i)"
+          (input)="handleInput(partsFormGroup.controls[input[0]], i, $event)"
         />
         <ng-container *ngIf="i < this.partsLength - 1">
           <template-content
@@ -82,6 +81,7 @@ import { MultiInputMatInput } from '../models/component/multi-input-mat-input';
         input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
+        width: 40px;
       }
 
       /* Firefox */
@@ -207,7 +207,7 @@ export class MultiPartMatInputComponent
   static nextId = 0;
   @Input() iProperty: IProperty;
 
-  @ViewChildren('myInput') inputs: QueryList<HTMLInputElement>;
+  @ViewChildren('myInput') inputs: QueryList<ElementRef<HTMLInputElement>>;
 
   pComponent: MultiInputMatInput;
 
@@ -268,7 +268,18 @@ export class MultiPartMatInputComponent
   }
 
   onContainerClick(): void {
-    // disable this i think it's better without
+    // only when empty redirect to first input
+    // if not empty do as ask
+
+    if (this.inputs.toArray().every(element => {
+      const value = element.nativeElement.value
+      return !value;
+    })) {
+      console.log('doing it');
+      this.focusMonitor.focusVia(this.inputs.toArray()[0], 'program');
+    }
+
+
     /*let isFocus = false;
     const items = Object.entries(this.partsFormGroup.controls);
     items.forEach(([k, v], i) => {
@@ -283,7 +294,12 @@ export class MultiPartMatInputComponent
     });*/
   }
 
-  handleInput(control: AbstractControl, index: number) {
+  handleInput(control: AbstractControl, index: number, event: any) {
+    if (event.inputType === "deleteContentBackward" && index > 0 && (!control.value || control.value.length === 0 )) {
+      this.focusMonitor.focusVia(this.inputs.toArray()[index - 1], 'program');
+      this.onChange(this.value);
+      return;
+    }
     this.pValue = this.partsFormGroup.value;
     const errors = Object.values(this.partsFormGroup.controls)
       .map((fc) => fc.errors)
