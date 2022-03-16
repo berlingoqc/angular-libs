@@ -1,14 +1,6 @@
 <div style="width: 100%;" [autoFormDecorator]="data.decorators" autoFormElementID="container">
 
   <div class="heading">
-  <h3
-    [style.display]="(data.templates) ? 'box' : 'none'">
-      {{(data.templates) ? data.templates['header'] : ''}}
-  </h3>
-  <div>
-
-  </div>
-
   <button mat-icon-button
     *ngIf="!abstractControl.staticSize"
     [disabled]="!abstractControl.canAdd"
@@ -16,6 +8,12 @@
   >
     <mat-icon>add</mat-icon>
   </button>
+
+
+  <h3
+    [style.display]="(data.templates) ? 'box' : 'none'">
+      {{(data.templates) ? data.templates['header'] : ''}}
+  </h3>
 
 </div>
 
