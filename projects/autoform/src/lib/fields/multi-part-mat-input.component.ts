@@ -275,7 +275,6 @@ export class MultiPartMatInputComponent
       const value = element.nativeElement.value
       return !value;
     })) {
-      console.log('doing it');
       this.focusMonitor.focusVia(this.inputs.toArray()[0], 'program');
     }
 
