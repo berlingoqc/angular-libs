@@ -11,12 +11,13 @@ export interface RelationCustomPath {
 }
 
 export interface LoopbackRelationConfig {
+  extraPath?: string,
   customPath?: RelationCustomPath,
 }
 
 export abstract class BaseRelationClient<T, TD = T> {
     get url(): string {
-        return `${this.parent.url}/${this.parentKey}/${this.name}`;
+        return `${this.parent.url}/${this.parentKey}/${this.name}${this.config.extraPath ? this.config.extraPath: ''}`;
     }
 
     constructor(

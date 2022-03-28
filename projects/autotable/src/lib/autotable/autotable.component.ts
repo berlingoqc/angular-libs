@@ -8,6 +8,7 @@ import {
     EventEmitter,
     OnDestroy,
     ViewEncapsulation,
+    Output,
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -160,6 +161,8 @@ export class AutoTableComponent<T = any>
         return this._columns;
     }
 
+    @Output() dataLoading = new EventEmitter<'starting' | 'ended'>()
+
     // Liste des columns actives
     @Input() set columns(c: TableColumn[]) {
         this._columns = c;
@@ -254,6 +257,7 @@ export class AutoTableComponent<T = any>
 
     refreshData() {
         this.subGet?.unsubscribe();
+        this.dataLoading.next('starting');
         this.subGet = this.source
             .get({
                 offset: this.currentOffset * this.pageSize,
@@ -264,6 +268,7 @@ export class AutoTableComponent<T = any>
             })
             .pipe(untilComponentDestroyed(this))
             .subscribe((data) => {
+                this.dataLoading.next('ended');
                 this.dataSource.data = data;
                 this.haveInit = true;
             });
