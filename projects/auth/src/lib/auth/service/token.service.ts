@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { NotificationService } from '@berlingoqc/ngx-notification';
-import { NavigateService } from './navigate.service';
 import { Subject } from 'rxjs';
 
 @Injectable()
@@ -48,7 +46,7 @@ export class TokenService {
             clearTimeout(this.beforeExpiredTimeoutVar);
         }
         this.beforeExpiredTimeoutVar = setTimeout(
-            () => this.beforeTokenExpired.next(),
+            () => this.beforeTokenExpired.next(null),
             timeDiff - TokenService.TimeoutBeforeExpired,
         );
         // Set event quand la session expire
@@ -56,7 +54,7 @@ export class TokenService {
             clearTimeout(this.onExpiredTimeoutVar);
         }
         this.onExpiredTimeoutVar = setTimeout(
-            () => this.tokenExpired.next(),
+            () => this.tokenExpired.next(null),
             timeDiff,
         );
         return pro;
