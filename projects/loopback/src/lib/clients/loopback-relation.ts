@@ -1,4 +1,4 @@
-import { Constructor } from "@angular/material/core/common-behaviors/constructor";
+import { Constructor } from "@angular/cdk/table";
 import { Observable } from "rxjs";
 import { AnyObject, Count, Filter, Where } from "../loopback-model";
 import { toQueryParams } from "../query-params";

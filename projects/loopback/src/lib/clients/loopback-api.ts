@@ -1,5 +1,5 @@
+import { Constructor } from "@angular/cdk/table";
 import { HttpClient } from "@angular/common/http";
-import { Constructor } from "@angular/material/core/common-behaviors/constructor";
 import { Observable } from "rxjs";
 import { Count, Filter, Where } from "../loopback-model";
 import { toQueryParams } from "../query-params";
