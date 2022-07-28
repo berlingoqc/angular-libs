@@ -5,7 +5,7 @@ import {
   EventEmitter,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PasswordValidatorService } from '@berlingoqc/ngx-common';
@@ -24,19 +24,19 @@ export class ForgotPasswordComponent implements OnInit {
 
   inputMode: string = 'password';
 
-  forgotPasswordFormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+  forgotPasswordFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required]),
   });
 
-  factorFormGroup = new FormGroup({
-    factor: new FormControl('', [Validators.required]),
+  factorFormGroup = new UntypedFormGroup({
+    factor: new UntypedFormControl('', [Validators.required]),
   });
 
-  factorDataGroup = new FormGroup({
-    data: new FormControl('', [Validators.required]),
+  factorDataGroup = new UntypedFormGroup({
+    data: new UntypedFormControl('', [Validators.required]),
   });
 
-  tokenFormGroup: FormGroup;
+  tokenFormGroup: UntypedFormGroup;
 
   typeData = '';
   placeholderData = '';
@@ -52,11 +52,11 @@ export class ForgotPasswordComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
   ) {
-    this.forgotPasswordFormGroup = new FormGroup({
-      email: new FormControl('', this.passwordService.getEmailValidator()),
+    this.forgotPasswordFormGroup = new UntypedFormGroup({
+      email: new UntypedFormControl('', this.passwordService.getEmailValidator()),
     });
-    this.tokenFormGroup = new FormGroup({
-      otp: new FormControl('', [
+    this.tokenFormGroup = new UntypedFormGroup({
+      otp: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(6),
@@ -79,7 +79,7 @@ export class ForgotPasswordComponent implements OnInit {
       case 'textsms':
         this.typeData = 'tel';
         this.placeholderData = 'Numéro de téléphone';
-        this.factorDataGroup.controls.data = new FormControl('', [
+        this.factorDataGroup.controls.data = new UntypedFormControl('', [
           Validators.required,
         ]);
         break;

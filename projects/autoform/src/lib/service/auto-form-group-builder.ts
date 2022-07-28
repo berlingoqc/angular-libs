@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {
     AbstractControl,
     FormArray,
-    FormControl,
-    FormGroup,
+    UntypedFormControl,
+    UntypedFormGroup,
     Validators,
 } from '@angular/forms';
 import { AutoFormArray } from '../helper/form-group/auto-form-array';
@@ -34,12 +34,12 @@ import { OptionalFormGroupMixin } from '../helper/form-group/optional-form-group
 export class AutoFormGroupBuilder {
     constructor(private componentRegister: ComponentRegisterService) {}
 
-    getFormGroup(formData: AutoFormData): FormGroup {
+    getFormGroup(formData: AutoFormData): UntypedFormGroup {
         const controls = {};
         formData.items?.forEach((value) => {
           controls[value.name] = this.loopFormProperty(value);
         });
-        return new FormGroup(controls);
+        return new UntypedFormGroup(controls);
     }
     loopFormProperty(value: IProperty): AbstractControl {
         if (value.type === 'object') {
@@ -51,7 +51,7 @@ export class AutoFormGroupBuilder {
               (value as FormAbstractObject).properties.reduce((result, property) => {
                 result[property.name] = this.loopFormProperty(property);
                 return result;
-              }, { [(value as FormAbstractObject).typeKey]: new FormControl((value as FormAbstractObject).abstractClassName)} as any),
+              }, { [(value as FormAbstractObject).typeKey]: new UntypedFormControl((value as FormAbstractObject).abstractClassName)} as any),
             );
         } else if(value.type === 'union') {
           // TEMPORARY FIX UNTIL I FOUND SOMETHING BETTER FOR UNION
@@ -65,9 +65,9 @@ export class AutoFormGroupBuilder {
             .forEach((item) => {
               tempForm[item.name] = this.loopFormProperty(item);
             });
-            return new FormGroup({
-              type: new FormControl(undefined, (value.required) ? [Validators.required]: []),
-              data: new FormGroup(tempForm),
+            return new UntypedFormGroup({
+              type: new UntypedFormControl(undefined, (value.required) ? [Validators.required]: []),
+              data: new UntypedFormGroup(tempForm),
             });
         } else if (value.type === 'array') {
             const v = value as ArrayProperty;
@@ -124,7 +124,7 @@ export class AutoFormGroupBuilder {
                     // WARNING
                 }
             }
-            return new FormControl(
+            return new UntypedFormControl(
                 {
                     value: (value as IProperty).value,
                     disabled: (value as IProperty).disabled,
@@ -135,7 +135,7 @@ export class AutoFormGroupBuilder {
         }
     }
 
-    getObjectForm(obj: FormObject): FormGroup {
+    getObjectForm(obj: FormObject): UntypedFormGroup {
         let ret = {};
         obj.properties?.forEach((value) => {
             ret[value.name] = this.loopFormProperty(value);

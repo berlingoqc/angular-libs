@@ -6,7 +6,7 @@ import {
     OnDestroy,
     Output,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 /**
@@ -28,7 +28,7 @@ export class FormSaverDirective implements OnDestroy {
     }
 
     // Garde la référence au formgroup
-    _formGroup: FormGroup;
+    _formGroup: UntypedFormGroup;
 
     changedSub: Subscription;
 
@@ -40,7 +40,7 @@ export class FormSaverDirective implements OnDestroy {
 
     // Recoit la reference du FormGroup a observer
     @Input('bslFormSaver')
-    set formGroup(formGroup: FormGroup) {
+    set formGroup(formGroup: UntypedFormGroup) {
         this._formGroup = formGroup;
         const data = localStorage.getItem(FormSaverDirective.getLSId(this.id));
         if (data) {

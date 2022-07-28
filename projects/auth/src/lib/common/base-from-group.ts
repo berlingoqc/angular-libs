@@ -1,9 +1,9 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { EventEmitter, Output, Directive } from '@angular/core';
 
 @Directive()
 export abstract class BaseFormDialog {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   exceptionRequest: string;
 

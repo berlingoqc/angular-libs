@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import {
     FormArray,
-    FormGroup,
+    UntypedFormGroup,
     ControlValueAccessor,
     NG_VALUE_ACCESSOR,
-    FormControl,
+    UntypedFormControl,
 } from '@angular/forms';
 
 @Component({
@@ -25,10 +25,10 @@ export class KeyValueFormComponent implements OnInit, ControlValueAccessor {
         this._keys = s;
         const ctl = {};
         Object.entries(s).forEach(([k, v]) => {
-            ctl[k] = new FormControl('');
+            ctl[k] = new UntypedFormControl('');
             this.items.push({ k, v });
         });
-        this.formGroup = new FormGroup(ctl);
+        this.formGroup = new UntypedFormGroup(ctl);
         this.formGroup.valueChanges.subscribe((data) => {
             if (this.fnChange) {
                 this.fnChange(data);
@@ -40,7 +40,7 @@ export class KeyValueFormComponent implements OnInit, ControlValueAccessor {
         return this._keys;
     }
 
-    formGroup: FormGroup;
+    formGroup: UntypedFormGroup;
 
     fnChange;
 

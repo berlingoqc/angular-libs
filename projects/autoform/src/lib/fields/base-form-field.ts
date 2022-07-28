@@ -8,7 +8,7 @@ import {
     QueryList,
     ViewChildren,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { TemplateContent } from '@berlingoqc/ngx-common';
 import { InputProperty } from '../models';
 import { CVA } from '../service/cva';
@@ -25,7 +25,7 @@ export class BaseFormField<IP extends InputProperty = InputProperty> extends CVA
     @Input() hintAlign: string;
 
     @Input() data: IP;
-    @Input() abstractControl: FormControl;
+    @Input() abstractControl: UntypedFormControl;
 
     @ViewChildren('myInput') myInput: QueryList<any>;
     currentInput: HTMLInputElement | any;

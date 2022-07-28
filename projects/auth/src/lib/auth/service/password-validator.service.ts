@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   Validators,
   AbstractControl,
   ValidationErrors,
@@ -131,17 +131,17 @@ export class PasswordValidatorService {
     return errors;
   }
 
-  getPasswordFormGroup(): FormGroup {
-    return new FormGroup({
+  getPasswordFormGroup(): UntypedFormGroup {
+    return new UntypedFormGroup({
       password: this.getPasswordFormControl(''),
-      confirmPassword: new FormControl('', [Validators.required])
+      confirmPassword: new UntypedFormControl('', [Validators.required])
     }, {
       validators: this.getMatchingPasswordFormControl('password', 'confirmPassword')
     })
   }
 
   getPasswordFormControl(value: string) {
-    return new FormControl(value, [Validators.required, ...this.getLengthValidators(), ...this.getCaseValidator(), ...this.getSymbolValidator(), ...this.getSimilarValidator(3)]);
+    return new UntypedFormControl(value, [Validators.required, ...this.getLengthValidators(), ...this.getCaseValidator(), ...this.getSymbolValidator(), ...this.getSimilarValidator(3)]);
   }
 
   getMatchingPasswordFormControl(
@@ -149,7 +149,7 @@ export class PasswordValidatorService {
     matchingControlName: string
   ): ((control: AbstractControl) => any)[] {
     return [
-      (formGroup: FormGroup) => {
+      (formGroup: UntypedFormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];
 

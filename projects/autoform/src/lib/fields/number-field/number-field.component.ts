@@ -3,7 +3,7 @@ import {
   BaseFieldComponent,
   ComponentRegisterService,
 } from '../../service/component-register';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { NumberProperty } from '../../models/properties/number';
 
 @Component({
@@ -13,7 +13,7 @@ import { NumberProperty } from '../../models/properties/number';
   encapsulation: ViewEncapsulation.None,
 })
 export class NumberFieldComponent
-  extends BaseFieldComponent<NumberProperty, FormControl>
+  extends BaseFieldComponent<NumberProperty, UntypedFormControl>
   implements OnInit {
   prefix: string;
   suffix: string;

@@ -1,4 +1,4 @@
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DictionnayProperty, IProperty } from '../../models';
 
@@ -15,7 +15,7 @@ export interface DictFieldInstance {
  * it's purpose is to recreate the control
  * when the data is patch
  */
-export class DictFormGroup extends FormGroup {
+export class DictFormGroup extends UntypedFormGroup {
     properties: DictFieldInstance[] = [];
     mode: string;
     propertiesAvailable: IPropertyItem[] = [];
@@ -120,9 +120,9 @@ export class DictFormGroup extends FormGroup {
 
     addProperty(propertie?: any, recreate = false) {
         const item = {
-            control: new FormGroup({
-                property: new FormControl(),
-                type: new FormControl(propertie),
+            control: new UntypedFormGroup({
+                property: new UntypedFormControl(),
+                type: new UntypedFormControl(propertie),
             }),
             subChange: null,
             propertie: '',

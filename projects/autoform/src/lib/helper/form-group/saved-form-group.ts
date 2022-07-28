@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 /**
  * SavedFormGroup is a implementation of FormGroup
@@ -9,4 +9,4 @@ import { FormGroup } from '@angular/forms';
  * can use different backend to save the
  * crucial DaTa.
  */
-export class SavedFormGroup extends FormGroup {}
+export class SavedFormGroup extends UntypedFormGroup {}

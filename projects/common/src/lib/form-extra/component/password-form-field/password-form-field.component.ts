@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-    FormControl,
-    FormGroup,
+    UntypedFormControl,
+    UntypedFormGroup,
     FormGroupDirective,
     NgForm,
 } from '@angular/forms';
@@ -11,7 +11,7 @@ import { PasswordValidatorService } from '../../service/password-validator.servi
 
 class CrossFieldErrorMatcher implements ErrorStateMatcher {
     isErrorState(
-        control: FormControl | null,
+        control: UntypedFormControl | null,
         form: FormGroupDirective | NgForm | null,
     ): boolean {
         return control.dirty && form.invalid;
@@ -30,7 +30,7 @@ export class PasswordFormFieldComponent implements OnInit {
     matcher = new CrossFieldErrorMatcher();
 
     @Input() passwordConfig: PasswordConfig;
-    @Input() myGroup: FormGroup;
+    @Input() myGroup: UntypedFormGroup;
     @Input() autoComplete = true;
 
     onChange: (value: boolean) => void;

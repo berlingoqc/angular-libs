@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
   ValidatorFn,
   AbstractControl,
@@ -46,9 +46,9 @@ export function extraFieldToFormGroup(
       disabled: mode === 'patch' && field.editable === false,
     };
     console.log('FORM STATE', formState, field);
-    group[field.name] = new FormControl(formState, edit ? [] : validators);
+    group[field.name] = new UntypedFormControl(formState, edit ? [] : validators);
   });
-  return new FormGroup(group);
+  return new UntypedFormGroup(group);
 }
 
 function calculateAge(birthDate: Date) {
@@ -99,7 +99,7 @@ extraFieldValidatorMap.birthday = (extraField: ExtraField): ValidatorFn[] => {
 })
 export class ExtraFieldsFormComponent implements OnInit {
   @Input() mode: 'post' | 'patch' = 'post';
-  @Input() extraFieldFormGroup: FormGroup;
+  @Input() extraFieldFormGroup: UntypedFormGroup;
 
   constructor(public ssoService: SSOSettingsService) { }
 

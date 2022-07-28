@@ -1,5 +1,5 @@
 import { Directive, Inject, InjectionToken, Input, Optional, Type } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { resolveData } from '@berlingoqc/ngx-common';
 import { take } from 'rxjs/operators';
 import { AutoFormData } from '../models';
@@ -31,7 +31,7 @@ export const AUTO_FORM_TYPE_REGISTER = new InjectionToken<FormTypeRegister>(
 export class BaseAutoFormComponent<T extends BaseFormContainer = BaseFormContainer> {
     private pFormData: AutoFormData;
 
-    formGroup: FormGroup;
+    formGroup: UntypedFormGroup;
 
     @Input()
     set formData(formData: AutoFormData) {

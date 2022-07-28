@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { DataResolver } from "@berlingoqc/ngx-common";
 
 export interface AutoFormEvent {
@@ -6,5 +6,5 @@ export interface AutoFormEvent {
   submit: DataResolver<any>,
   initialData?: DataResolver<any>,
 
-  afterFormCreated?: (form: FormGroup) => void;
+  afterFormCreated?: (form: UntypedFormGroup) => void;
 }

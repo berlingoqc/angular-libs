@@ -8,7 +8,7 @@ import {
 import {
   EmailTemplateAPI,
 } from '../../service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
 import { TableColumn } from '@berlingoqc/ngx-autotable';
@@ -29,7 +29,7 @@ export class EmailTemplateTableComponent implements OnInit, AfterViewInit {
   currentPreview: RenderEmail;
   currentEmail: EmailTemplate;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   constructor(
     public client: EmailTemplateAPI,
@@ -60,10 +60,10 @@ export class EmailTemplateTableComponent implements OnInit, AfterViewInit {
     this.mode = 'form';
     this.currentEmail = template;
 
-    this.formGroup = new FormGroup({
-      title: new FormControl(this.currentEmail.title),
-      template: new FormControl(this.currentEmail.template),
-      args: new FormControl(this.currentEmail.args),
+    this.formGroup = new UntypedFormGroup({
+      title: new UntypedFormControl(this.currentEmail.title),
+      template: new UntypedFormControl(this.currentEmail.template),
+      args: new UntypedFormControl(this.currentEmail.args),
     });
     this.render();
   }
@@ -71,9 +71,9 @@ export class EmailTemplateTableComponent implements OnInit, AfterViewInit {
   toSend(item: EmailTemplate) {
     this.mode = 'send';
     this.currentEmail = item;
-    this.formGroup = new FormGroup({
-      to: new FormControl('', [Validators.required]),
-      args: new FormControl({}, [Validators.required]),
+    this.formGroup = new UntypedFormGroup({
+      to: new UntypedFormControl('', [Validators.required]),
+      args: new UntypedFormControl({}, [Validators.required]),
     });
     this.render();
   }

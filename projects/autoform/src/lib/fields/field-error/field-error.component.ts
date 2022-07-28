@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'autoform-field-error',
@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 export class FieldErrorComponent implements OnInit {
 
   @Input() text: string;
-  @Input() control: FormControl;
+  @Input() control: UntypedFormControl;
   @Input() errorName: string;
 
   constructor() { }

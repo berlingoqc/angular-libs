@@ -1,5 +1,5 @@
 import { Component, OnInit, Optional } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { NotificationService } from '@berlingoqc/ngx-notification';
 import { UserProfile, AuthService } from '../../../auth';
@@ -11,7 +11,7 @@ import { AuthSettingConfig } from '../../../auth/model/auth-setting-config';
     styleUrls: ['./user-edit.component.scss', '../../../common/shared.scss'],
 })
 export class UserEditComponent implements OnInit {
-    formGroup: FormGroup;
+    formGroup: UntypedFormGroup;
 
     exceptionRequest: string;
     detail: UserProfile;
@@ -26,11 +26,11 @@ export class UserEditComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.formGroup = new FormGroup({
-            email: new FormControl(this.detail.email),
-            telephone: new FormControl(''),
-            firstname: new FormControl(this.detail.firstname),
-            lastname: new FormControl(this.detail.lastname),
+        this.formGroup = new UntypedFormGroup({
+            email: new UntypedFormControl(this.detail.email),
+            telephone: new UntypedFormControl(''),
+            firstname: new UntypedFormControl(this.detail.firstname),
+            lastname: new UntypedFormControl(this.detail.lastname),
         });
     }
 

@@ -7,7 +7,7 @@ import {
   Inject,
   Optional,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -26,7 +26,7 @@ export interface InviteUserSettings {
   styleUrls: ['./invite-user-dialog.component.scss', '../../../common/shared.scss'],
 })
 export class InviteUserDialogComponent implements OnInit {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   exceptionRequest: string;
 
@@ -46,8 +46,8 @@ export class InviteUserDialogComponent implements OnInit {
     private InvitationService: InvitationService,
     private snackBar: MatSnackBar
   ) {
-    this.formGroup = new FormGroup({
-      email: new FormControl('', this.passwordService.getEmailValidator()),
+    this.formGroup = new UntypedFormGroup({
+      email: new UntypedFormControl('', this.passwordService.getEmailValidator()),
     });
     if (this.settings && this.settings.orgId) {
       this.fnInviteToOrg = (email) =>

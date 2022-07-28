@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, ComponentRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { AutoFormComponent } from '../auto-form/auto-form.component';
 import { AutoFormData } from '../models';
@@ -20,7 +20,7 @@ export class AutoFormRegisterComponent implements OnInit, OnDestroy {
 
     @Input() autoFormEvent?: AutoFormEvent;
     @Output() formDataApply = new EventEmitter<AutoFormData>();
-    @Output() formGroupApply = new EventEmitter<FormGroup>();
+    @Output() formGroupApply = new EventEmitter<UntypedFormGroup>();
 
     formData: AutoFormData;
     autoFormComponent: ComponentRef<AutoFormComponent>;

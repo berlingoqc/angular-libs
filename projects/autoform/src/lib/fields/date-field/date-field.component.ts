@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
+import { ControlValueAccessor, UntypedFormControl, FormGroup } from '@angular/forms';
 import { FormObject } from '../../models';
 import { DateProperty } from '../../models/properties/date';
 import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
@@ -10,7 +10,7 @@ import { BaseFieldComponent, ComponentRegisterService } from '../../service/comp
   encapsulation: ViewEncapsulation.None,
 })
 export class DateFieldComponent
-  extends BaseFieldComponent<DateProperty, FormControl>
+  extends BaseFieldComponent<DateProperty, UntypedFormControl>
 {
 
   rangeFormControl: FormObject;

@@ -1,7 +1,7 @@
-import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn } from "@angular/forms";
+import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, UntypedFormArray, ValidatorFn } from "@angular/forms";
 import { ArrayProperty, IProperty } from "../../models";
 
-export class AutoFormArray extends FormArray {
+export class AutoFormArray extends UntypedFormArray {
     staticSize: boolean;
     canAdd: boolean;
     canDelete: boolean;

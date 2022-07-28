@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { startWith, map } from 'rxjs/operators';
@@ -33,7 +33,7 @@ export class AdminUserEditComponent extends BaseFormDialog implements OnInit {
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
+  fruitCtrl = new UntypedFormControl();
   filteredFruits: Observable<Role[]>;
   originalRole: Role[] = [];
   fruits: Role[] = [];
@@ -56,11 +56,11 @@ export class AdminUserEditComponent extends BaseFormDialog implements OnInit {
   ) {
     super();
     this.user = data as User;
-    this.formGroup = new FormGroup({
-      email: new FormControl(this.user.email),
-      telephone: new FormControl(this.user.phone),
-      blocked: new FormControl(this.user.blocked),
-      validUntil: new FormControl(
+    this.formGroup = new UntypedFormGroup({
+      email: new UntypedFormControl(this.user.email),
+      telephone: new UntypedFormControl(this.user.phone),
+      blocked: new UntypedFormControl(this.user.blocked),
+      validUntil: new UntypedFormControl(
         this.user.validUntil && this.user.validUntil !== 0
           ? new Date(this.user.validUntil * 1000)
           : null

@@ -1,10 +1,10 @@
-import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn } from "@angular/forms";
+import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, UntypedFormGroup, ValidatorFn } from "@angular/forms";
 import { Observable, of } from "rxjs";
 import { FormObject } from "../../models";
 
 
 
-export class AutoFormGroup extends FormGroup {
+export class AutoFormGroup extends UntypedFormGroup {
 
   constructor(
     public formObject: FormObject,

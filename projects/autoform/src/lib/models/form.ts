@@ -1,5 +1,5 @@
 import { TemplateRef, Type } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Container } from './container';
 import { TemplateContent } from '@berlingoqc/ngx-common';
 import { BaseFormContainer } from './form-container/form-container';
@@ -20,7 +20,7 @@ export interface AutoFormData extends Container {
      * tab : chaque object a sont propres tab
      * stepper: Chaque object est sont propre step
      */
-    formGroupType?: Type<FormGroup>;
+    formGroupType?: Type<UntypedFormGroup>;
 
     type:
         | 'simple'

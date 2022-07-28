@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, Form } from '@angular/forms';
+import { UntypedFormControl, Form } from '@angular/forms';
 
 export interface Error<T> {
   code: number;
@@ -27,9 +27,9 @@ export enum UserServiceError {
 export class AuthServiceErrorComponent implements OnInit {
   exceptionRequest: string;
 
-  @Input() emailControl: FormControl;
-  @Input() passwordControl: FormControl;
-  @Input() otpControl: FormControl;
+  @Input() emailControl: UntypedFormControl;
+  @Input() passwordControl: UntypedFormControl;
+  @Input() otpControl: UntypedFormControl;
 
   @Output() errorCode = new EventEmitter<Error<any>>();
 

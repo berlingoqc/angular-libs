@@ -3,7 +3,7 @@ import {
   BaseFieldComponent,
   ComponentRegisterService,
 } from '../../service/component-register';
-import { FormControl, ControlValueAccessor } from '@angular/forms';
+import { UntypedFormControl, ControlValueAccessor } from '@angular/forms';
 import { StringProperty } from '../../models/properties/string';
 
 @Component({
@@ -13,7 +13,7 @@ import { StringProperty } from '../../models/properties/string';
   encapsulation: ViewEncapsulation.None,
 })
 export class StringFieldComponent
-  extends BaseFieldComponent<StringProperty, FormControl>
+  extends BaseFieldComponent<StringProperty, UntypedFormControl>
   implements OnInit, ControlValueAccessor {
   constructor(componentRegister: ComponentRegisterService) {
     super(componentRegister);

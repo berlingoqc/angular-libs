@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseFieldComponent } from '../../service/component-register';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { BoolProperty } from '../../models';
 
 @Component({
@@ -10,7 +10,7 @@ import { BoolProperty } from '../../models';
     encapsulation: ViewEncapsulation.None,
 })
 export class BoolFieldComponent
-    extends BaseFieldComponent<BoolProperty, FormControl>
+    extends BaseFieldComponent<BoolProperty, UntypedFormControl>
     implements OnInit {
     ngOnInit(): void {
         if (!this.data.subtype) {

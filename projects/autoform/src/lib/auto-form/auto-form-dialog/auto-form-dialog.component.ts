@@ -6,7 +6,7 @@ import {
     OnInit,
     Optional,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { resolveData } from '@berlingoqc/ngx-common';
 import { Observable } from 'rxjs';
@@ -51,7 +51,7 @@ export class AutoFormDialogComponent implements OnInit {
     get formData(): AutoFormData {
         return this.data?.formData;
     }
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this.data?.formGroup;
     }
 

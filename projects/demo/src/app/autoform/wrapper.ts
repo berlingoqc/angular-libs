@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { arrayDefault, arrayObject } from 'projects/demo/src/app/autoform/models/array';
 import { abstractClassDefaultValue, abstractClassForm } from './models/abstract-class';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
     template: `
@@ -61,7 +61,7 @@ export class BaseComponent implements AfterViewInit {
     value;
 
     formData: AutoFormData;
-    formGroup: FormGroup;
+    formGroup: UntypedFormGroup;
 
     modelSelected: any;
 

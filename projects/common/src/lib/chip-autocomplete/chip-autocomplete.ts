@@ -7,7 +7,7 @@ import {
     EventEmitter,
     Output,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
@@ -29,7 +29,7 @@ export class ChipAutoCompleteComponent<T = any> implements OnInit {
     selectable = true;
     removable = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
-    fruitCtrl = new FormControl();
+    fruitCtrl = new UntypedFormControl();
     filteredFruits: Observable<T[]>;
     fruits: T[] = [];
     allFruits: T[] = [];

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { map, switchMap } from 'rxjs/operators';
 import { UserAPI } from '../../../auth/service/user.api';
@@ -12,7 +12,7 @@ import { OrganisationAPI, OrgUserLinkAPI } from '../../service';
   styleUrls: ['./new-organisation.component.scss', '../../../common/shared.scss'],
 })
 export class NewOrganisationComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   constructor(
     private ref: MatDialogRef<NewOrganisationComponent>,
     private orgAPI: OrganisationAPI,
@@ -21,10 +21,10 @@ export class NewOrganisationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      managerId: new FormControl('', [Validators.required]),
-      name: new FormControl('', [Validators.required]),
-      type: new FormControl('orgUser'),
+    this.form = new UntypedFormGroup({
+      managerId: new UntypedFormControl('', [Validators.required]),
+      name: new UntypedFormControl('', [Validators.required]),
+      type: new UntypedFormControl('orgUser'),
     });
   }
 

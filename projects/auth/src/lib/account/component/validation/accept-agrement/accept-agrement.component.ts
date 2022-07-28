@@ -2,7 +2,7 @@ import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
-  FormControl,
+  UntypedFormControl,
 } from '@angular/forms';
 
 import { AuthSettingConfig } from '../../../../auth/model/auth-setting-config';
@@ -26,7 +26,7 @@ export class AcceptAgrementComponent implements OnInit, ControlValueAccessor {
 
   innerAccepted = false;
 
-  @Input() theControl: FormControl;
+  @Input() theControl: UntypedFormControl;
 
   get style(): any {
     if (this.theControl.touched) {

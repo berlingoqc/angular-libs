@@ -1,10 +1,10 @@
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormGroup } from '@angular/forms';
 import { FormAbstractObject, FormObject, IProperty } from '../../models';
 
 
 function selectChildType(
   type: string, selectedSubType: FormObject, abstractObjectProperty: FormAbstractObject,
-  control: FormGroup,resolvePropertyControl: (value: IProperty) => AbstractControl
+  control: UntypedFormGroup,resolvePropertyControl: (value: IProperty) => AbstractControl
 ): [FormObject, IProperty[], string] {
         if (selectedSubType) {
             selectedSubType.properties?.forEach((prop) =>
@@ -37,7 +37,7 @@ function selectChildType(
         }
     }
 
-export class AbstractFormGroup extends FormGroup {
+export class AbstractFormGroup extends UntypedFormGroup {
     selectedSubType: FormObject;
 
     properties: IProperty[] = [];

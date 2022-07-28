@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AsyncAllValue } from '../../pipe/async-all.pipe';
 
@@ -17,7 +17,7 @@ export class SelectControlComponent implements OnInit {
         value: (a: any) => AsyncAllValue<string>;
     };
 
-    @Input() myControl: FormControl;
+    @Input() myControl: UntypedFormControl;
 
     constructor() {}
 

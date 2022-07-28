@@ -6,7 +6,7 @@ import {
     Optional,
     Output,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import {
     PasswordConfig,
     PasswordValidatorService,
@@ -24,7 +24,7 @@ import { SSOSettingsService } from '../../../../sso';
     styleUrls: ['./valid-invitation.component.scss', '../../../../common/shared.scss'],
 })
 export class ValidInvitationComponent implements OnInit {
-    formGroup: FormGroup;
+    formGroup: UntypedFormGroup;
 
     exceptionRequest: string;
 
@@ -47,15 +47,15 @@ export class ValidInvitationComponent implements OnInit {
     ) {
 
             this.passwordConfig = this.ssoSettings.settings.password
-            this.formGroup = new FormGroup({
-                otp: new FormControl(''),
-                email: new FormControl(''),
+            this.formGroup = new UntypedFormGroup({
+                otp: new UntypedFormControl(''),
+                email: new UntypedFormControl(''),
                 password: this.passwordValidatorService.getPasswordFormGroup(),
             });
             if (this.config.usingContract) {
                 this.formGroup.addControl(
                     'contract',
-                    new FormControl(false, [Validators.requiredTrue]),
+                    new UntypedFormControl(false, [Validators.requiredTrue]),
                 );
             }
             const search = window.location.search;

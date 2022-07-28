@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { SSOSettingsService } from '../../service/sso.service';
 
 @Component({
@@ -9,30 +9,30 @@ import { SSOSettingsService } from '../../service/sso.service';
 })
 export class SsoInfoComponent implements OnInit {
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   constructor(
     public sso: SSOSettingsService
   ) { }
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      emailRedirect: new FormControl(this.sso.settings.emailRedirect),
-      emailFrom: new FormControl(this.sso.settings.emailFrom),
-      emailHost: new FormControl(this.sso.settings.email.host + ' ' + this.sso.settings.email.auth.user),
+    this.formGroup = new UntypedFormGroup({
+      emailRedirect: new UntypedFormControl(this.sso.settings.emailRedirect),
+      emailFrom: new UntypedFormControl(this.sso.settings.emailFrom),
+      emailHost: new UntypedFormControl(this.sso.settings.email.host + ' ' + this.sso.settings.email.auth.user),
 
-      tokenExpiresIn: new FormControl(this.sso.settings.tokenExpiresIn),
+      tokenExpiresIn: new UntypedFormControl(this.sso.settings.tokenExpiresIn),
 
-      publicCreation: new FormControl(this.sso.settings.sso.publicCreation),
-      multiFactor: new FormControl(this.sso.settings.sso.multiFactor),
-      accountValidation: new FormControl(this.sso.settings.sso.accountValidation),
+      publicCreation: new UntypedFormControl(this.sso.settings.sso.publicCreation),
+      multiFactor: new UntypedFormControl(this.sso.settings.sso.multiFactor),
+      accountValidation: new UntypedFormControl(this.sso.settings.sso.accountValidation),
 
-      min: new FormControl(this.sso.settings.password.min),
-      max: new FormControl(this.sso.settings.password.max),
-      caseLetter: new FormControl(this.sso.settings.password.upperLetter),
-      symbol: new FormControl(this.sso.settings.password.symbol),
-      repetition: new FormControl(true),
-      numeric: new FormControl(false),
+      min: new UntypedFormControl(this.sso.settings.password.min),
+      max: new UntypedFormControl(this.sso.settings.password.max),
+      caseLetter: new UntypedFormControl(this.sso.settings.password.upperLetter),
+      symbol: new UntypedFormControl(this.sso.settings.password.symbol),
+      repetition: new UntypedFormControl(true),
+      numeric: new UntypedFormControl(false),
     });
   }
 

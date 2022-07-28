@@ -5,7 +5,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { IProperty, UnionProperty } from '../../models';
 import { BaseFieldComponent, ComponentRegisterService } from '../../service/component-register';
 import { AutoFormGroupBuilder } from '../../service/auto-form-group-builder';
@@ -16,7 +16,7 @@ export interface UnionData {
   [id: string]: any;
 }
 
-export class BFC extends BaseFieldComponent<UnionProperty, FormGroup> {}
+export class BFC extends BaseFieldComponent<UnionProperty, UntypedFormGroup> {}
 
 @Component({
   selector: 'autoform-array-field',

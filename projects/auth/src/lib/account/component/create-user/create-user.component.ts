@@ -6,7 +6,7 @@ import {
     Output,
     ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { NotificationService } from '@berlingoqc/ngx-notification';
 import { AuthServiceErrorComponent } from '../../../common/component/auth-service-error/auth-service-error.component';
 import { PasswordValidatorService } from '@berlingoqc/ngx-common';
@@ -27,7 +27,7 @@ export class CreateUserComponent implements OnInit {
 
     exceptionRequest = '';
 
-    formGroup: FormGroup;
+    formGroup: UntypedFormGroup;
 
     constructor(
         private notificationService: NotificationService,
@@ -36,12 +36,12 @@ export class CreateUserComponent implements OnInit {
         public authService: AuthService,
         private router: Router,
     ) {
-        this.formGroup = new FormGroup({
-            name: new FormGroup({
-                firstName: new FormControl(''),
-                lastName: new FormControl(''),
+        this.formGroup = new UntypedFormGroup({
+            name: new UntypedFormGroup({
+                firstName: new UntypedFormControl(''),
+                lastName: new UntypedFormControl(''),
             }),
-            email: new FormControl(
+            email: new UntypedFormControl(
                 '',
                 this.passwordValidatorService.getEmailValidator(),
             ),

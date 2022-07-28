@@ -1,3 +1,3 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
-export class SavedFormGroup extends FormGroup {}
+export class SavedFormGroup extends UntypedFormGroup {}

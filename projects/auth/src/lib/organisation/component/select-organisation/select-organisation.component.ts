@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Filter } from '@berlingoqc/ngx-loopback';
 import { Organisation } from '../../model';
 import { OrganisationAPI } from '../../service';
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class SelectOrganisationComponent implements OnInit {
   @Input() selectLabel = 'Organisations';
   @Input() selectHint = '';
-  @Input() selectFormControl: FormControl;
+  @Input() selectFormControl: UntypedFormControl;
 
   @Input() filter: Filter = {};
   @Input() orgs: Observable<Organisation[]>;

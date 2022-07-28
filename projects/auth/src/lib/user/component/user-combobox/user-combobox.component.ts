@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Where } from '@berlingoqc/ngx-loopback';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { UserAPI } from '../../../auth/service/user.api';
 import { take } from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ import { take } from 'rxjs/operators';
 })
 export class UserComboboxComponent implements OnInit {
   @Input() where: Where = {};
-  @Input() myControl = new FormControl();
+  @Input() myControl = new UntypedFormControl();
 
   users: any[] = [];
 

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../../../auth/service/auth.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { SSOSettingsService } from '../../../sso/service/sso.service';
 import { AuthDialogConfig } from '../../../auth/model/auth-dialog-config';
@@ -39,9 +39,9 @@ export class AuthDialogComponent {
 
   closeOnCancel = false;
 
-  loginFormGroup = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+  loginFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', Validators.required),
+    password: new UntypedFormControl('', Validators.required),
   });
 
   constructor(

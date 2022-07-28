@@ -16,8 +16,8 @@ import {
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   NgControl,
   ValidatorFn,
   Validators,
@@ -211,7 +211,7 @@ export class MultiPartMatInputComponent
 
   pComponent: MultiInputMatInput;
 
-  partsFormGroup: FormGroup = new FormGroup({});
+  partsFormGroup: UntypedFormGroup = new UntypedFormGroup({});
   partsLength: number;
 
   pValue: any;
@@ -334,13 +334,13 @@ export class MultiPartMatInputComponent
     const controls: { [id: string]: AbstractControl } = {};
     entries.forEach(([k, v]) => {
       // Crée des validators pour le configuration du field
-      controls[k] = new FormControl(this.pValue?.[k], [
+      controls[k] = new UntypedFormControl(this.pValue?.[k], [
         Validators.required,
         Validators.minLength(v.size),
         Validators.maxLength(v.size),
         ...((v.validators as ValidatorFn[]) ?? []),
       ]);
     });
-    this.partsFormGroup = new FormGroup(controls);
+    this.partsFormGroup = new UntypedFormGroup(controls);
   }
 }
