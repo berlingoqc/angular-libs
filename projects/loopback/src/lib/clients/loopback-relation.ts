@@ -17,7 +17,7 @@ export interface LoopbackRelationConfig {
 
 export abstract class BaseRelationClient<T, TD = T> {
     get url(): string {
-        return `${this.parent.url}/${this.parentKey}/${this.name}${this.config.extraPath ? this.config.extraPath: ''}`;
+        return `${this.parent.url}/${this.parentKey}/${this.name}${this.config.extraPath ? this.config?.extraPath: ''}`;
     }
 
     constructor(
