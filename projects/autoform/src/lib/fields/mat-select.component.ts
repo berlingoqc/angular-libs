@@ -124,7 +124,7 @@ import { BaseFormField } from './base-form-field';
 export class MyMatSelectComponent extends OnDestroyMixin(BaseFormField) implements OnInit{
   @Input() component: SelectComponent;
 
-  options: any;
+  options: any[];
 
   defaultCompare = (a , b) => (a === b);
 
@@ -137,6 +137,9 @@ export class MyMatSelectComponent extends OnDestroyMixin(BaseFormField) implemen
       .pipe(untilComponentDestroyed(this))
       .subscribe((data) => {
       this.options = data;
+      if (this.options.findIndex(x => (this.component.compareWith || this.defaultCompare)(this.component.transformValue(x), this.abstractControl.value)) == -1) {
+        this.abstractControl.reset();
+      }
     });
   }
 }
