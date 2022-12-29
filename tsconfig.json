@@ -1,39 +1,51 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "downlevelIteration": true,
-        "experimentalDecorators": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "importHelpers": true,
-        "target": "es2020",
-        "resolveJsonModule": true,
-        "typeRoots": ["node_modules/@types"],
-        "lib": ["esnext", "dom"],
-        "paths": {
-            "@berlingoqc/ngx-common": ["dist/common/common", "dist/common"],
-            "@berlingoqc/ngx-loopback": [
-                "dist/loopback/loopback",
-                "dist/loopback"
-            ],
-            "@berlingoqc/ngx-autoform": [
-                "dist/autoform/autoform",
-                "dist/autoform"
-            ],
-            "@berlingoqc/ngx-autotable": [
-                "dist/autotable/autotable",
-                "dist/autotable"
-            ],
-            "@berlingoqc/ngx-pwa": ["dist/pwa/pwa", "dist/pwa"],
-            "@berlingoqc/ngx-notification": [
-                "dist/notification/notification",
-                "dist/notification"
-            ]
-        }
+      "baseUrl": "./",
+      "outDir": "./dist/out-tsc",
+      "sourceMap": true,
+      "declaration": false,
+      "downlevelIteration": true,
+      "experimentalDecorators": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "importHelpers": true,
+      "target": "ES2022",
+      "resolveJsonModule": true,
+      "typeRoots": [
+        "node_modules/@types"
+      ],
+      "lib": [
+        "esnext",
+        "dom"
+      ],
+      "paths": {
+        "@berlingoqc/ngx-common": [
+          "dist/common/common",
+          "dist/common"
+        ],
+        "@berlingoqc/ngx-loopback": [
+          "dist/loopback/loopback",
+          "dist/loopback"
+        ],
+        "@berlingoqc/ngx-autoform": [
+          "dist/autoform/autoform",
+          "dist/autoform"
+        ],
+        "@berlingoqc/ngx-autotable": [
+          "dist/autotable/autotable",
+          "dist/autotable"
+        ],
+        "@berlingoqc/ngx-pwa": [
+          "dist/pwa/pwa",
+          "dist/pwa"
+        ],
+        "@berlingoqc/ngx-notification": [
+          "dist/notification/notification",
+          "dist/notification"
+        ]
+      },
+      "useDefineForClassFields": false
     },
     "angularCompilerOptions": {
         "enableIvy": false,
