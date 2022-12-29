@@ -1,7 +1,7 @@
 {
     "name": "@berlingoqc/ngx-loopback",
     "description": "Ensemble d'outils pour accéder et exposer les API du serveur loopback 4",
-    "version": "0.0.0",
+    "version": "2.2.30",
     "author": {
         "name": "William Quintal"
     },

@@ -1,6 +1,6 @@
 {
     "name": "@berlingoqc/auth",
-    "version": "0.0.0",
+    "version": "2.2.30",
     "description": "Libraire pour les composantes partagés pour l'authentification",
     "repository": {
         "type": "git",

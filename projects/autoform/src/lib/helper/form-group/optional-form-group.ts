@@ -1,4 +1,4 @@
-import { Constructor } from "@angular/cdk/table";
+import {Constructor} from "@angular/cdk/table";
 import { Observable } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
 import { AutoFormGroup } from "./auto-form-group";

@@ -20,7 +20,7 @@ import {
 import { FormAbstractObject } from '../models/properties/abstract-object';
 import { ComponentRegisterService } from './component-register';
 import { AutoFormGroup } from '../helper/form-group/auto-form-group';
-import { OptionalFormGroupMixin } from '../helper/form-group/optional-form-group';
+//import { OptionalFormGroupMixin } from '../helper/form-group/optional-form-group';
 
 
 /**
@@ -142,7 +142,8 @@ export class AutoFormGroupBuilder {
         });
         let fgClass: any = AutoFormGroup;
         if (obj.optional) {
-          fgClass = OptionalFormGroupMixin(fgClass)
+          console.error("OptionalFormGroupMixin are disabled sorry");
+          //fgClass = OptionalFormGroupMixin(fgClass)
         }
         return new fgClass(obj, ret);
     }

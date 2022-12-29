@@ -1,6 +1,6 @@
 {
     "name": "@berlingoqc/ngx-notification",
-    "version": "0.0.0",
+    "version": "2.2.30",
     "repository": {
         "type": "git",
         "url": "ssh://git@github.com:berlingoqc/angular-libs"
