@@ -1,7 +1,7 @@
 {
   "name": "@berlingoqc/ng-lib",
   "description": "Project for all of @berlingoqc librairies",
-  "version": "2.2.29",
+  "version": "2.2.30",
   "scripts": {
     "build:all": "ng build common && ng build loopback && ng build autoform && ng build autotable && ng build notification && ng build pwa",
     "build:all:prod": "ng build --configuration production common && ng build --configuration production loopback && ng build --configuration production autoform && ng build --configuration production autotable",
@@ -33,12 +33,12 @@
     "@angular/platform-browser-dynamic": "^15.0.4",
     "@angular/router": "^15.0.4",
     "@angular/service-worker": "^15.0.4",
-    "@auth0/angular-jwt": "^5.0.2",
+    "@auth0/angular-jwt": "^5.1.2",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
-    "ngx-permissions": "^13.0.1",
+    "ngx-permissions": "^14.0.0",
     "object-hash": "^3.0.0",
-    "prismjs": "^1.28.0",
+    "prismjs": "^1.29.0",
     "rxjs": "^7.4.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
