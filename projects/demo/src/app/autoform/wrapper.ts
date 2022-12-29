@@ -19,7 +19,7 @@ import { AutoFormEvent } from 'projects/autoform/src/lib/models/event';
 import { stepperForm } from './forms/stepper';
 import { defaultValueDict, dictObject } from './models/dict';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { arrayDefault, arrayObject } from 'projects/demo/src/app/autoform/models/array';
 import { abstractClassDefaultValue, abstractClassForm } from './models/abstract-class';
 import { UntypedFormGroup } from '@angular/forms';

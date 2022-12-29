@@ -23,10 +23,10 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  MatFormField,
-  MatFormFieldControl,
-  MAT_FORM_FIELD,
-} from '@angular/material/form-field';
+  MatLegacyFormField as MatFormField,
+  MatLegacyFormFieldControl as MatFormFieldControl,
+  MAT_LEGACY_FORM_FIELD as MAT_FORM_FIELD,
+} from '@angular/material/legacy-form-field';
 import { Subject, Subscription } from 'rxjs';
 import { IProperty } from '../models';
 import { MultiInputMatInput } from '../models/component/multi-input-mat-input';

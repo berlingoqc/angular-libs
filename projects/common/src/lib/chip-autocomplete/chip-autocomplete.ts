@@ -11,10 +11,10 @@ import { UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
-    MatAutocomplete,
-    MatAutocompleteSelectedEvent,
-} from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
+    MatLegacyAutocomplete as MatAutocomplete,
+    MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent,
+} from '@angular/material/legacy-autocomplete';
+import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips';
 import { startWith, map } from 'rxjs/operators';
 
 const defaultGetterFn = (s) => (s ? s.toString() : '');

@@ -3,11 +3,11 @@ import { EmailPreviewComponent, EmailTemplateTableComponent } from './component'
 import { EmailTemplateAPI } from './service/email-render.api';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 import { FormExtraModule } from '@berlingoqc/ngx-common';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { AutoTableModule } from '@berlingoqc/ngx-autotable';
 
 @NgModule({

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { ActionConfirmationDialogComponent } from './action-confirmation-dialog/action-confirmation-dialog.component';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { ActionConfirmationService } from './action-confirmation.service';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 
 
 

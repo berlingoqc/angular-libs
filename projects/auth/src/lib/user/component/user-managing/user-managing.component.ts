@@ -10,12 +10,12 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { Filter, Count } from '@berlingoqc/ngx-loopback';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { AdminUserEditComponent } from '../../../admin/component/admin-user-edit/admin-user-edit.component';
 import { Observable } from 'rxjs';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { NotificationService } from '@berlingoqc/ngx-notification';
 import {
   User,

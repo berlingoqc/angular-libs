@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { SSOSettingsService } from './service';
 import { SsoInfoComponent } from './component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 import { CommonModule } from '@angular/common';
 
 @NgModule({

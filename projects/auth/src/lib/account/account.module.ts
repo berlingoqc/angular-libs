@@ -4,20 +4,20 @@ import { CreateUserComponent } from './component/create-user/create-user.compone
 import { AuthDialogComponent } from './component/auth-dialog/auth-dialog.component';
 import { ForgotPasswordComponent, SelectAuthFactorComponent, ValidAccountComponent, AcceptAgrementComponent, ValidInvitationComponent, AccountHeaderComponent } from './component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { AuthCommonModule } from '../common';
 import { FormExtraModule, DynamicStyleProviderModule } from '@berlingoqc/ngx-common';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { UserModule } from '../user';
 import { AskConnectDirective, CatchRedirectionDirective, AskConnectComponent } from './directive';
 import { RoleGuard } from './guard';
-import { MatButtonModule } from "@angular/material/button";
+import { MatLegacyButtonModule as MatButtonModule } from "@angular/material/legacy-button";
 import { RouterModule } from "@angular/router";
 
 @NgModule({

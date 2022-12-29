@@ -8,7 +8,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';

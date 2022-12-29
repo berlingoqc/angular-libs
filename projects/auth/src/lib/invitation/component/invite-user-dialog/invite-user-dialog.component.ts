@@ -8,9 +8,9 @@ import {
   Optional,
 } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { Subscription, Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { AuthSettingConfig } from '../../../auth/model/auth-setting-config';
 import { PasswordValidatorService } from '@berlingoqc/ngx-common';
 import { UserProfile } from '../../../auth/model/user';

@@ -2,7 +2,7 @@ import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { ComponentType } from '@angular/cdk/portal';
 import { Location } from '@angular/common';
 import { Inject, Injectable, Injector, Optional, SkipSelf } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS, MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MAT_LEGACY_DIALOG_DEFAULT_OPTIONS as MAT_DIALOG_DEFAULT_OPTIONS, MAT_LEGACY_DIALOG_SCROLL_STRATEGY as MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/legacy-dialog';
 import { Observable, of, Subject } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 

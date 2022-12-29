@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { AuthFactor } from '../../../auth/model/factor';
-import { MatSelectionList, MatListOption } from '@angular/material/list';
+import { MatLegacySelectionList as MatSelectionList, MatLegacyListOption as MatListOption } from '@angular/material/legacy-list';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({

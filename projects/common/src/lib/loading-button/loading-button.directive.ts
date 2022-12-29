@@ -1,7 +1,7 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, Renderer2, SimpleChanges, ViewContainerRef } from "@angular/core";
-import { MatButton } from "@angular/material/button";
+import { MatLegacyButton as MatButton } from "@angular/material/legacy-button";
 import { ThemePalette } from "@angular/material/core";
-import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { MatLegacyProgressSpinner as MatProgressSpinner } from "@angular/material/legacy-progress-spinner";
 
 
 

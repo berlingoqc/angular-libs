@@ -5,7 +5,7 @@ import { AuthService } from '../../../auth/service/auth.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as errorJSON from '../../error.json';
 import { ErrorDetail } from '../../unauthorized-data';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { AuthDialogService } from '../../../auth/service/auth-dialog.service';
 
 @Component({

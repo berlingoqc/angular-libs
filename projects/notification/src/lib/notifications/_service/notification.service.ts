@@ -1,7 +1,7 @@
 import { Injectable, Injector, Type } from '@angular/core';
 import { NotificationD } from '../_model/notification';
 import { Subject } from 'rxjs';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar';
 import { take } from 'rxjs/operators';
 import { setInjector } from '../global';
 

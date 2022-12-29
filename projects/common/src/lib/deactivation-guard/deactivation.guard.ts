@@ -9,7 +9,7 @@ import {
   Optional,
 } from '@angular/core';
 import { CanDeactivate } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 
 export const PENDING_CHANGE_COMPONENT = new InjectionToken<Type<any>>(
   'pending_change_component'

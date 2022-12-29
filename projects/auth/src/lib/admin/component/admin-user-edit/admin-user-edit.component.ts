@@ -5,16 +5,16 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { startWith, map } from 'rxjs/operators';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips';
 import {
-  MatAutocompleteSelectedEvent,
-  MatAutocomplete,
-} from '@angular/material/autocomplete';
+  MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent,
+  MatLegacyAutocomplete as MatAutocomplete,
+} from '@angular/material/legacy-autocomplete';
 import { User, Role, RoleAPI } from '../../../auth';
 import { UserAPI } from '../../../auth/service/user.api';
 import { extraFieldToFormGroup } from '../../../user/component';

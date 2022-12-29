@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { AuthService } from './auth.service';
 import { AuthSettingConfig } from '../model/auth-setting-config';
 import { TokenService } from '.';

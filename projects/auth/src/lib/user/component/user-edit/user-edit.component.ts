@@ -1,6 +1,6 @@
 import { Component, OnInit, Optional } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { NotificationService } from '@berlingoqc/ngx-notification';
 import { UserProfile, AuthService } from '../../../auth';
 import { AuthSettingConfig } from '../../../auth/model/auth-setting-config';

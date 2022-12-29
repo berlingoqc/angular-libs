@@ -13,11 +13,11 @@ import {
 } from 'projects/autoform/src/public-api';
 
 
-import {MatListModule} from '@angular/material/list';
+import {MatLegacyListModule as MatListModule} from '@angular/material/legacy-list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { DemoAutoTableComponent } from './autotable/demo-auto-table.component';
 import { AutoTableModule } from '@berlingoqc/ngx-autotable';
 import { DataDecoratorModule } from '@berlingoqc/ngx-common';
