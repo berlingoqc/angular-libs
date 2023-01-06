@@ -32,6 +32,20 @@ export class CachingRequest<T> {
         this.items = {};
     }
 
+    defaultValueObs(context: any, value: any) {
+      if (!context) {
+        context = {};
+      }
+      const contextHash = hash(context) as string;
+
+      let item = this.items[contextHash];
+      if (!item) {
+         throw "failed to get item"
+      }
+
+      item.subject.next(value);
+    }
+
     getObs(context: any, chain: Observable<T>) {
         const item = this.getCachingItem(context, chain);
         return item.obs;
@@ -61,7 +75,7 @@ export class CachingRequest<T> {
               subject,
               obs: subject.pipe(
                 switchMap((value) => {
-                  if (lastValue && value && this.options.stateChange) {
+                  if ((lastValue || value) && this.options.stateChange) {
                     const v = this.options.stateChange(lastValue, value);
                     if (v) {
                       return of(v);
