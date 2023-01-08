@@ -46,8 +46,8 @@ export class CachingRequest<T> {
       item.subject.next(value);
     }
 
-    getObs(context: any, chain: Observable<T>) {
-        const item = this.getCachingItem(context, chain);
+    getObs(context: any, chain: Observable<T>, defaultValue = undefined) {
+        const item = this.getCachingItem(context, chain, defaultValue);
         return item.obs;
     }
 
@@ -61,21 +61,21 @@ export class CachingRequest<T> {
         );
     }
 
-    private getCachingItem(context: any, chain: Observable<T>) {
+    private getCachingItem(context: any, chain: Observable<T>, defaultValue = undefined) {
       if (!context) {
         context = {};
       }
       const contextHash = hash(context) as string;
       if (!this.items[contextHash]) {
-            const subject = new BehaviorSubject(null);
-            let lastValue: T;
+            const subject = new BehaviorSubject(defaultValue);
+            let lastValue: T = defaultValue
             this.items[contextHash] = {
               hash: contextHash,
               context,
               subject,
               obs: subject.pipe(
                 switchMap((value) => {
-                  if ((lastValue || value) && this.options.stateChange) {
+                  if (lastValue && value && this.options.stateChange) {
                     const v = this.options.stateChange(lastValue, value);
                     if (v) {
                       return of(v);

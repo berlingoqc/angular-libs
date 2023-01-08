@@ -1,7 +1,7 @@
 {
     "name": "@berlingoqc/ngx-autoform",
     "description": "Librarie pour la génération de formulaire de façon déclarative",
-    "version": "2.2.30",
+    "version": "2.2.32",
     "author": {
         "name": "William Quintal"
     },

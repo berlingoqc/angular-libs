@@ -86,10 +86,11 @@ export function Caching<D extends Constructor<CRUDDataSource<T>>, T>(type: D, op
             return this.requestGet.getObs(filter, super.get(filter));
         };
         getById = super.getById
-            ? (id: string, filter?: Filter) => {
+            ? (id: string, filter?: Filter, defaultValue = undefined) => {
                   return this.requestFind.getObs(
                       id,
                       super.getById(id, filter),
+                      defaultValue
                   );
               }
             : undefined;

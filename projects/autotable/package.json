@@ -1,6 +1,6 @@
 {
     "name": "@berlingoqc/ngx-autotable",
-    "version": "2.2.30",
+    "version": "2.2.32",
     "repository": {
         "type": "git",
         "url": "ssh://git@github.com:berlingoqc/angular-libs"
